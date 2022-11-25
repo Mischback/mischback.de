@@ -40,8 +40,17 @@ MAKEFLAGS += --no-builtin-rules
 pre-commit_id ?= ""
 pre-commit_files ?= ""
 util/pre-commit : $(PRE_COMMIT_READY)
-	$(TOX_CMD) -e pre-commit -- pre-commit run $(pre-commit_files) $(pre-commit_id)
+	$(TOX_CMD) -q -e pre-commit -- pre-commit run $(pre-commit_files) $(pre-commit_id)
 .PHONY : util/pre-commit
+
+# (Re-) Generate the requirements files using pip-tools (``pip-compile``)
+#
+# ``pip-compile`` is run through a ``tox`` environment. The actual command is
+# included in ``tox``'s configuration in ``pyproject.toml``. That's why that
+# file is an additional prerequisite. This may lead to additional
+# regenerations, but these will most likely not affect the generated files.
+requirements/%.txt : requirements/%.in pyproject.toml $(TOX_VENV_INSTALLED)
+	$(TOX_CMD) -q -e pip-tools -- $<
 
 # Internal utility stuff
 

@@ -14,4 +14,15 @@ passenv = SSH_AUTH_SOCK
 skip_install = true
 commands =
   {posargs:pre-commit run}
+
+[testenv:pip-tools]
+basepython = python3
+deps =
+  -r {toxinidir}/requirements/pip-tools.txt
+envdir = {toxworkdir}/pip-tools
+setenv =
+  PYTHONDONTWRITEBYTECODE=1
+skip_install = true
+commands =
+  pip-compile --resolver=backtracking {posargs}
 """
