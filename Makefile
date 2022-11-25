@@ -37,6 +37,11 @@ MAKEFLAGS += --no-builtin-rules
 
 # ### RECIPES
 
+# Run ``pre-commit``
+#
+# This is the actual recipe that runs ``pre-commit``. It is used by other
+# recipes, that will set the required ``pre-commit_id`` and
+# ``pre-commit_files`` variables.
 pre-commit_id ?= ""
 pre-commit_files ?= ""
 util/pre-commit : $(PRE_COMMIT_READY)
