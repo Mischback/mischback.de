@@ -1,3 +1,6 @@
+# The actual release
+.build/
+
 # Python virtual environments
 .tox-venv/
 
