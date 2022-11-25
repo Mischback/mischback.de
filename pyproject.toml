@@ -1,0 +1,17 @@
+# ### tox configuration
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+minversion = 3.26.0
+[testenv:pre-commit]
+basepython = python3
+deps =
+  -r {toxinidir}/requirements/pre-commit.txt
+envdir = {toxworkdir}/pre-commit
+setenv =
+  PYTHONDONTWRITEBYTECODE=1
+passenv = SSH_AUTH_SOCK
+skip_install = true
+commands =
+  {posargs:pre-commit run}
+"""
