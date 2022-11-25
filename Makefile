@@ -17,7 +17,7 @@ REPO_ROOT := $(patsubst %/, %, $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
 # Internal Python environments
 TOX_VENV_DIR := $(REPO_ROOT)/.tox-venv
-TOX_VENV_CREATED := $(TOX_VENV_DIR)/.pyvenv.cfg
+TOX_VENV_CREATED := $(TOX_VENV_DIR)/pyvenv.cfg
 TOX_VENV_INSTALLED := $(TOX_VENV_DIR)/packages.txt
 TOX_CMD := $(TOX_VENV_DIR)/bin/tox
 
@@ -59,7 +59,7 @@ $(TOX_VENV_CREATED) :
 	/usr/bin/env python3 -m venv $(TOX_VENV_DIR)
 
 # Install the required packages in tox's virtual environment
-$(TOX_VENV_INSTALLED) : $(TOX_VENV_CREATED) requirements/tox.txt
+$(TOX_VENV_INSTALLED) : $(TOX_VENV_CREATED)
 	$(TOX_VENV_DIR)/bin/pip install -r requirements/tox.txt
 	$(TOX_VENV_DIR)/bin/pip freeze > $@
 
