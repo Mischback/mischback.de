@@ -37,6 +37,11 @@ MAKEFLAGS += --no-builtin-rules
 
 # ### RECIPES
 
+# Run ``sphinx`` to create the actual release files
+build/sphinx : requirements/build-sphinx.txt
+	$(TOX_CMD) -e build-sphinx
+.PHONY : build/sphinx
+
 # Run ``pre-commit``
 #
 # This is the actual recipe that runs ``pre-commit``. It is used by other
