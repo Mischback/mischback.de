@@ -47,6 +47,11 @@ build/sphinx : requirements/build-sphinx.txt
 	$(TOX_CMD) -e build-sphinx
 .PHONY : build/sphinx
 
+# Run ``sphinx-lint``
+util/lint/sphinx-lint :
+	$(MAKE) util/pre-commit pre-commit_id="sphinx-lint" pre-commit_files="--all-files"
+.PHONY : util/lint/sphinx-lint
+
 # Run ``pre-commit``
 #
 # This is the actual recipe that runs ``pre-commit``. It is used by other
