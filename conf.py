@@ -37,6 +37,41 @@ copyright = "{}, {}".format(datetime.datetime.now().year, author)
 version = "0.0.1-alpha"
 release = get_current_git_commit_hash()
 
+
+# ### General configuration
+
+# Activate extensions.
+#
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-extensions
+#
+# For a list of built-in extensions, see
+# https://www.sphinx-doc.org/en/master/usage/extensions/index.html#built-in-extensions
+extensions = [
+    # Automatically generate labels for sections.
+    #
+    # https://www.sphinx-doc.org/en/master/usage/extensions/autosectionlabel.html
+    "sphinx.ext.autosectionlabel",
+    # Measures ``sphinx``'s processing, primarily for debugging.
+    #
+    # https://www.sphinx-doc.org/en/master/usage/extensions/duration.html
+    "sphinx.ext.duration",
+    # Shorter notation for external links.
+    #
+    # Not really sure, if this will be useful for this project, but it works
+    # really well for my *real* documentation repositories.
+    #
+    # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html
+    "sphinx.ext.extlinks",
+    # TODO: "sphinx.ext.graphviz"
+    #       If there is a use-case for these diagrams.
+    # TODO: "sphinx.ext.ifconfig"
+    #       Conditional content. Most likely not required.
+    # TODO: "sphinx.ext.intersphinx"
+    #       If there is a use-case for this. Might better be realized using
+    #       ``extlinks``.
+]
+
+
 # This document contains the *master TOC*.
 #
 # It is not necessarily the ``index.rst``, so we can build the actual
@@ -50,3 +85,44 @@ release = get_current_git_commit_hash()
 #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-root_doc
 root_doc = "sitemap"
+
+# Set the default domain.
+#
+# As ``sphinx`` is primarily intended for software documentation, the default
+# domain may be used to define the primary programming language of a project.
+# However, since this is just a website, disable the default domain. Hopefully
+# this will also work out, while addressing different programming languages
+# in different postings.
+primary_domain = None
+
+# Set the default highlight language.
+#
+# As ``sphinx`` was initially developed for Python projects, the default
+# language is (a superset of) Python.
+#
+# The website will (most likely) address different programming languages, so
+# the default language is set to pure text, requiring to be explicit while
+# including source code.
+highlight_language = "text"
+
+# Define the minimum required version of ``sphinx``.
+#
+# This is most likely not relevant, as the project uses *requirements files*
+# to define the required versions while setting up the ``tox`` environment
+# to run ``sphinx``.
+needs_sphinx = "4.5"
+
+
+# ### Plugin configuration
+
+# Prefix the automatically generated section labels with the document.
+autosectionlabel_prefix_document = True
+
+# The shortcuts for ``sphinx.ext.extlinks``.
+extlinks = {
+    "commit": ("https://github.com/Mischback/static-web/commit/%s", "%s"),
+    "wikipedia": ("https://en.wikipedia.org/wiki/%s", "Wikipedia: %s"),
+}
+
+# Make ``sphinx.ext.extlinks`` emit warnings, if a shortcut is available.
+extlinks_detect_hardcoded_links = True
