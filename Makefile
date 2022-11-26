@@ -47,6 +47,16 @@ build/sphinx : requirements/build-sphinx.txt
 	$(TOX_CMD) -e build-sphinx
 .PHONY : build/sphinx
 
+# Run ``black``
+util/lint/black :
+	$(MAKE) util/pre-commit pre-commit_id="black" pre-commit_files="--all-files"
+.PHONY : util/lint/black
+
+# Run ``isort``
+util/lint/isort :
+	$(MAKE) util/pre-commit pre-commit_id="isort" pre-commit_files="--all-files"
+.PHONY : util/lint/isort
+
 # Run ``sphinx-lint``
 util/lint/sphinx-lint :
 	$(MAKE) util/pre-commit pre-commit_id="sphinx-lint" pre-commit_files="--all-files"
