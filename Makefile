@@ -37,6 +37,11 @@ MAKEFLAGS += --no-builtin-rules
 
 # ### RECIPES
 
+# Build and serve the actual generated website
+dev/srv : build/sphinx
+	$(TOX_CMD) -q -e build-serve
+.PHONY : dev/srv
+
 # Run ``sphinx`` to create the actual release files
 build/sphinx : requirements/build-sphinx.txt
 	$(TOX_CMD) -e build-sphinx

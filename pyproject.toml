@@ -15,6 +15,16 @@ skip_install = true
 commands =
   {posargs:sphinx-build -b dirhtml -c ./ "content" ".build"}
 
+[testenv:build-serve]
+basepython = {[testenv:build-sphinx]basepython}
+changedir = {toxinidir}/.build
+deps = {[testenv:build-sphinx]deps}
+envdir = {[testenv:build-sphinx]envdir}
+setenv = {[testenv:build-sphinx]setenv}
+skip_install = {[testenv:build-sphinx]skip_install}
+commands =
+  python -m http.server {posargs:8082}
+
 [testenv:pre-commit]
 basepython = python3
 deps =
