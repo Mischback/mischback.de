@@ -11,6 +11,10 @@ repos:
     rev: v0.6.7
     hooks:
       - id: sphinx-lint
+  - repo: https://github.com/pycqa/doc8
+    rev: 0.10.1
+    hooks:
+      - id: doc8
   # black (Python: code formatting)
   - repo: https://github.com/psf/black
     rev: 22.6.0
@@ -27,10 +31,6 @@ repos:
     hooks:
       - id: flake8
         additional_dependencies: [flake8-bugbear, flake8-comprehensions, flake8-docstrings, flake8-logging-format]
-  - repo: https://github.com/pycqa/doc8
-    rev: 0.10.1
-    hooks:
-      - id: doc8
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
