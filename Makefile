@@ -52,6 +52,16 @@ util/lint/black :
 	$(MAKE) util/pre-commit pre-commit_id="black" pre-commit_files="--all-files"
 .PHONY : util/lint/black
 
+# Run ``doc8``
+util/lint/doc8 :
+	$(MAKE) util/pre-commit pre-commit_id="doc8" pre-commit_files="--all-files"
+.PHONY : util/lint/doc8
+
+# Run ``flake8``
+util/lint/flake8 :
+	$(MAKE) util/pre-commit pre-commit_id="flake8" pre-commit_files="--all-files"
+.PHONY : util/lint/flake8
+
 # Run ``isort``
 util/lint/isort :
 	$(MAKE) util/pre-commit pre-commit_id="isort" pre-commit_files="--all-files"
