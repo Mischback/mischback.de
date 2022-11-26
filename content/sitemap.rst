@@ -7,5 +7,5 @@ Sitemap (Humans)
    :name: mastertoc
    :glob:
 
+   development/index
    *
-   development/*
