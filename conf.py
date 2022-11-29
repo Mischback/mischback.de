@@ -15,6 +15,10 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 # Python imports
 import datetime
 import subprocess
+from os.path import abspath, dirname, join
+
+# Determine the absolute path of the repository's root
+REPO_ROOT = dirname(abspath(__file__))
 
 
 def get_current_git_commit_hash():
@@ -126,3 +130,16 @@ extlinks = {
 
 # Make ``sphinx.ext.extlinks`` emit warnings, if a shortcut is available.
 extlinks_detect_hardcoded_links = True
+
+
+# ### HTML configuration
+
+# The custom theme is placed in a folder ``theme``
+#
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_theme_path
+html_theme_path = [join(REPO_ROOT, "theme")]
+
+# The name of the custom theme
+#
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_theme
+html_theme = "mischback"
