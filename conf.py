@@ -143,3 +143,28 @@ html_theme_path = [join(REPO_ROOT, "theme")]
 #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_theme
 html_theme = "mischback"
+
+
+# ### Internal plugin stuff
+#
+# ``Sphinx``'s configuration file actually works like an extension.
+
+
+def activate_jinja2_debug_ext(app):
+    """Activate Jinja2 debug extension.
+
+    This function is intended to be connected to ``Sphinx``'s
+    ``builder-inited`` event (see
+    https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx-core-events)
+    and will then navigate from the app to the ``jinja.Environment`` and call
+    its ``add_extension()`` method.
+    """
+    app.builder.templates.environment.add_extension("jinja2.ext.debug")
+
+
+def setup(app):
+    """Use this ``conf.py`` as its project's own extension."""
+    # Connect a custom handler to the ``builder-inited`` event.
+    #
+    # https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx-core-events
+    app.connect("builder-inited", activate_jinja2_debug_ext)
