@@ -77,6 +77,11 @@ util/lint/isort :
 	$(MAKE) util/pre-commit pre-commit_id="isort" pre-commit_files="--all-files"
 .PHONY : util/lint/isort
 
+# Run ``prettier``
+util/lint/prettier :
+	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
+.PHONY : util/lint/prettier
+
 # Run ``sphinx-lint``
 util/lint/sphinx-lint :
 	$(MAKE) util/pre-commit pre-commit_id="sphinx-lint" pre-commit_files="--all-files"
