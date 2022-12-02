@@ -15,7 +15,8 @@ html_has_lang = true
 image_alt = true
 # use 2 spaces for indentation.
 # NOTE: This must be synchronized with ``.editorconfig``.
-indent = 2
+# TODO: Seems broken atm, see https://github.com/thibaudcolas/curlylint/issues/6
+#indent = 2
 # allow users to zoom
 meta_viewport = true
 # don't use the ``autofocus`` attribute on any element
