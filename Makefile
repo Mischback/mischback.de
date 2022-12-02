@@ -87,6 +87,11 @@ util/lint/sphinx-lint :
 	$(MAKE) util/pre-commit pre-commit_id="sphinx-lint" pre-commit_files="--all-files"
 .PHONY : util/lint/sphinx-lint
 
+# Verify that all articles have the "summary" meta value
+util/lint/content/summary :
+	$(MAKE) util/pre-commit pre-commit_id="content_summary" pre-commit_files="--all-files"
+.PHONY : util/lint/content/summary
+
 # Run ``pre-commit``
 #
 # This is the actual recipe that runs ``pre-commit``. It is used by other

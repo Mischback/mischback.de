@@ -6,7 +6,7 @@ fail_fast: true
 minimum_pre_commit_version: "1.14.0"
 
 repos:
-  # lint rST-files
+  # lint reST-files
   - repo: https://github.com/sphinx-contrib/sphinx-lint
     rev: v0.6.7
     hooks:
@@ -15,6 +15,17 @@ repos:
     rev: 0.10.1
     hooks:
       - id: doc8
+  # require some attributes in the content files
+  - repo: local
+    hooks:
+      - id: content_summary
+        name: All articles must have a summary
+        language: pygrep
+        entry: ":summary:"
+        args: [--negate]
+        files: ^content/
+        exclude: index.rst
+        verbose: true
   # prettier (formatting for various file types)
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1
