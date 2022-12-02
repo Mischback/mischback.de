@@ -26,6 +26,18 @@ no_autofocus = true
 tabindex_no_positive = true
 
 
+# ### DJLINT configuration
+#
+# ``djlint`` is run through ``pre-commit`` and may be run manually using
+# ``make util/lint/djlint``.
+
+# https://www.djlint.com/docs/configuration/#per_file_ignores
+[tool.djlint.per-file-ignores]
+# ignore recommendation to add meta description / keywords. These are provided
+# using ``theme/mischback/seo.html``.
+"theme/mischback/base.html" = "H030,H031"
+
+
 # ### ISORT configuration
 #
 # ``isort`` us run through ``pre-commit`` and may be run manually using

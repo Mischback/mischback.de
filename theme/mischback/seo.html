@@ -1,0 +1,9 @@
+{% block html_meta_desc %}
+  {% if meta.summary %}
+  <meta name="description" content="{{ meta.summary }}" />
+  {% endif %}
+
+  {% if meta.keywords %}
+  <meta name="keywords" content="{{ meta.keywords }}" />
+  {% endif %}
+{% endblock html_meta_desc %}
