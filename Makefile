@@ -52,6 +52,11 @@ util/lint/black :
 	$(MAKE) util/pre-commit pre-commit_id="black" pre-commit_files="--all-files"
 .PHONY : util/lint/black
 
+# Run ``djlint``
+util/lint/djlint :
+	$(MAKE) util/pre-commit pre-commit_id="djlint-jinja" pre-commit_files="--all-files"
+.PHONY : util/lint/djlint
+
 # Run ``doc8``
 util/lint/doc8 :
 	$(MAKE) util/pre-commit pre-commit_id="doc8" pre-commit_files="--all-files"

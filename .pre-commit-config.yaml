@@ -31,6 +31,14 @@ repos:
     hooks:
       - id: flake8
         additional_dependencies: [flake8-bugbear, flake8-comprehensions, flake8-docstrings, flake8-logging-format]
+  # lint templates
+  - repo: https://github.com/Riverside-Healthcare/djLint
+    rev: v1.19.7
+    hooks:
+      - id: djlint-jinja
+        files: ^theme/mischback/
+        types_or: ['html']
+        verbose: true
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
