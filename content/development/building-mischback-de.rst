@@ -1,3 +1,7 @@
+
+:summary: Describing the process of building this website from scratch.
+:keywords: personal website,build log,webdesign,sphinx
+
 #####################
 Building mischback.de
 #####################

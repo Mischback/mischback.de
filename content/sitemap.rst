@@ -1,3 +1,7 @@
+
+:summary: This human-readable sitemap contains all articles of mischback.de
+:keywords: personal website,structure,sitemap
+
 ################
 Sitemap (Humans)
 ################
