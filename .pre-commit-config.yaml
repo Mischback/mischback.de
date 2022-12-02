@@ -38,7 +38,11 @@ repos:
       - id: djlint-jinja
         files: ^theme/mischback/
         types_or: ['html']
-        verbose: true
+  - repo: https://github.com/thibaudcolas/curlylint
+    rev: v0.13.1
+    hooks:
+      - id: curlylint
+        files: ^theme/mischback/
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
