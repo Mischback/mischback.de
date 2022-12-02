@@ -52,6 +52,16 @@ util/lint/black :
 	$(MAKE) util/pre-commit pre-commit_id="black" pre-commit_files="--all-files"
 .PHONY : util/lint/black
 
+# Verify that all articles have the "keywords" meta value
+util/lint/content/keywords :
+	$(MAKE) util/pre-commit pre-commit_id="content_keywords" pre-commit_files="--all-files"
+.PHONY : util/lint/content/keywords
+
+# Verify that all articles have the "summary" meta value
+util/lint/content/summary :
+	$(MAKE) util/pre-commit pre-commit_id="content_summary" pre-commit_files="--all-files"
+.PHONY : util/lint/content/summary
+
 # Run ``curlylint``
 util/lint/curlylint :
 	$(MAKE) util/pre-commit pre-commit_id="curlylint" pre-commit_files="--all-files"
@@ -86,11 +96,6 @@ util/lint/prettier :
 util/lint/sphinx-lint :
 	$(MAKE) util/pre-commit pre-commit_id="sphinx-lint" pre-commit_files="--all-files"
 .PHONY : util/lint/sphinx-lint
-
-# Verify that all articles have the "summary" meta value
-util/lint/content/summary :
-	$(MAKE) util/pre-commit pre-commit_id="content_summary" pre-commit_files="--all-files"
-.PHONY : util/lint/content/summary
 
 # Run ``pre-commit``
 #
