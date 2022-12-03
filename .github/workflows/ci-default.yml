@@ -40,7 +40,7 @@ jobs:
         run: sphinx-build -b dirhtml -c ./ "content" ".build"
 
   dependabot:
-    needs: linting, building
+    needs: [linting, building]
     uses: mischback/development-meta/.github/workflows/dependabot-auto-approve.yml@development
     with:
       pr_url: ${{ github.event.pull_request.html_url }}
