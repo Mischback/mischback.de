@@ -19,27 +19,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
-      - name: Install pre-commit
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements/pre-commit.txt
-      - name: Lint reST files
-        run: |
-          make util/lint/sphinx-lint
-          make util/lint/doc8
-          make util/lint/content/summary
-          make util/lint/content/keywords
-      - name: Lint templates
-        run: |
-          make util/lint/djlint
-          make util/lint/curlylint
-      - name: Prettier
-        run: make util/lint/prettier
-      - name: Lint Python files
-        run: |
-          make util/lint/black
-          make util/lint/isort
-          make util/lint/flake8
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.0
   dependabot:
     uses: mischback/development-meta/.github/workflows/dependabot-auto-approve.yml@development
     with:
