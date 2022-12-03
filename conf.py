@@ -164,7 +164,8 @@ def activate_jinja2_debug_ext(app):
     and will then navigate from the app to the ``jinja.Environment`` and call
     its ``add_extension()`` method.
     """
-    app.builder.templates.environment.add_extension("jinja2.ext.debug")
+    if hasattr(app.builder, "templates"):
+        app.builder.templates.environment.add_extension("jinja2.ext.debug")
 
 
 def setup(app):
