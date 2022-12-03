@@ -92,6 +92,11 @@ util/lint/prettier :
 	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
 .PHONY : util/lint/prettier
 
+# Run ``Sphinx``'s linkcheck builder
+util/lint/sphinx-linkcheck :
+	$(TOX_CMD) -e build-sphinx -- sphinx-build -b linkcheck -c ./ "content" ".build"
+.PHONY : util/lint/sphinx-linkcheck
+
 # Run ``sphinx-lint``
 util/lint/sphinx-lint :
 	$(MAKE) util/pre-commit pre-commit_id="sphinx-lint" pre-commit_files="--all-files"
