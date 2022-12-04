@@ -152,3 +152,56 @@ a TOC that includes all documents of that category.
 
 *Most likely* this means, that the actual navigation has to be built by hand.
 But let's solve that problem later.
+
+
+2022-12-02
+==========
+
+``Jekyll`` let the user determine, which template (or *layout* in ``Jekyll``'s
+terminology) is used to render the content.
+
+``Sphinx`` on the other hand uses a hardcoded call which will use the template
+``page.html`` for any user-provided content.
+
+The fix is actually really easy. The custom theme will provide some logic in
+its ``page.html``, which evaluates a meta variable specifying the desired
+template to be used and then just includes that template.
+
+.. note::
+   ``Sphinx`` will treat any field before a document's first headline as
+   `file-wide metadata <https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html#file-wide-metadata>`_
+   which is accessible from the rendering context in templates as ``meta``
+   mapping/dictionary.
+
+   This is comparable to ``Jekyll``'s *front matter*.
+
+The implementation does provide a *fallback template*, if a document doesn't
+specify the desired template. And for whatever it is worth, that fallback
+template is provided as a theme option and configurable from ``Sphinx``'s
+``conf.py``.
+
+
+2022-12-03
+==========
+
+Time for some Continuous Integration!
+
+I rely on GitHub Actions for all my repositories, so most of that code is
+copied from other projects.
+
+Instead of manually calling the linters in a job, I use
+`pre-commit's action <https://github.com/pre-commit/action>`_ to run the whole
+``pre-commit`` configuration.
+
+.. note::
+   *Anthony Sottile*, the developer of ``pre-commit`` and this action considers
+   this action **deprecated** and recommends using **pre-commit.ci** instead.
+
+   Fair advice, but I really like to have all my checks (meaning: the whole of
+   my CI setup) on a single platform, *GitHub Actions* in this case.
+
+The ``pre-commit`` action is really great, as it has caching built-in, making
+``pre-commit`` runs really fast.
+
+After *linting* the source code, CI will actually build the ``reST`` sources
+using ``Sphinx``.
