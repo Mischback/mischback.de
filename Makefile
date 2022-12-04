@@ -15,6 +15,15 @@
 # Ref: https://stackoverflow.com/a/73450593
 REPO_ROOT := $(patsubst %/, %, $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
+# The source files for the actual content
+SRC_CONTENT := $(shell find content -type f)
+
+# Stamps
+#
+# Track certain things with artificial *stamps*.
+STAMP_DIR := $(REPO_ROOT)/.make-stamps
+STAMP_SPHINX := $(STAMP_DIR)/sphinx-build
+
 # Internal Python environments
 TOX_VENV_DIR := $(REPO_ROOT)/.tox-venv
 TOX_VENV_CREATED := $(TOX_VENV_DIR)/pyvenv.cfg
@@ -38,14 +47,15 @@ MAKEFLAGS += --no-builtin-rules
 # ### RECIPES
 
 # Build and serve the actual generated website
-dev/srv : build/sphinx
+dev/srv : $(STAMP_SPHINX)
 	$(TOX_CMD) -q -e build-serve
 .PHONY : dev/srv
 
-# Run ``sphinx`` to create the actual release files
-build/sphinx : requirements/build-sphinx.txt
+# Run ``Sphinx`` to build HTML output from reST sources
+$(STAMP_SPHINX) : $(SRC_CONTENT) conf.py requirements/build-sphinx.txt
+	$(create_dir)
 	$(TOX_CMD) -e build-sphinx
-.PHONY : build/sphinx
+	touch $@
 
 # Run ``black``
 util/lint/black :
@@ -122,6 +132,7 @@ util/pre-commit : $(PRE_COMMIT_READY)
 requirements/%.txt : requirements/%.in pyproject.toml $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e pip-tools -- $<
 
+
 # Internal utility stuff
 
 # Create the virtual environment for running tox
@@ -136,3 +147,6 @@ $(TOX_VENV_INSTALLED) : $(TOX_VENV_CREATED)
 # Install the pre-commit hooks
 $(PRE_COMMIT_READY) : | $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -e pre-commit -- pre-commit install
+
+# Create a directory as required by other recipes
+create_dir = @mkdir -p $(@D)

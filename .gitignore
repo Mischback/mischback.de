@@ -1,6 +1,9 @@
 # The actual release
 .build/
 
+# Track actions with artificial stamps
+.make-stamps/
+
 # Python virtual environments
 .tox-venv/
 
