@@ -67,6 +67,12 @@ $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME)
 	$(MAKE) util/sphinx/build
 	touch $@
 
+# Remove build artifacts
+clean :
+	rm -rf $(BUILD_DIR)
+	rm -rf $(STAMP_SPHINX)
+.PHONY : clean
+
 
 # ##### Utility Stuff
 #
@@ -150,7 +156,7 @@ util/pre-commit : $(PRE_COMMIT_READY)
 # linter.
 sphinx_builder ?= "dirhtml"
 sphinx_config-dir ?= "./"
-util/sphinx/build : conf.py requirements/sphinx.txt
+util/sphinx/build : conf.py requirements/sphinx.txt pyproject.toml $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e sphinx -- sphinx-build -b $(sphinx_builder) -c $(sphinx_config-dir) $(CONTENT_DIR) $(BUILD_DIR)
 .PHONY : util/sphinx/build
 
