@@ -64,7 +64,7 @@ dev/srv : $(STAMP_SPHINX)
 # including the actual content source files and the theme files.
 $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME)
 	$(create_dir)
-	$(MAKE) util/sphinx/build
+	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
 	touch $@
 
 # Remove build artifacts
@@ -156,8 +156,9 @@ util/pre-commit : $(PRE_COMMIT_READY)
 # linter.
 sphinx_builder ?= "dirhtml"
 sphinx_config-dir ?= "./"
+sphinx-build_options ?= ""
 util/sphinx/build : conf.py requirements/sphinx.txt pyproject.toml $(TOX_VENV_INSTALLED)
-	$(TOX_CMD) -q -e sphinx -- sphinx-build -b $(sphinx_builder) -c $(sphinx_config-dir) $(CONTENT_DIR) $(BUILD_DIR)
+	$(TOX_CMD) -q -e sphinx -- sphinx-build $(sphinx-build_options) -b $(sphinx_builder) -c $(sphinx_config-dir) $(CONTENT_DIR) $(BUILD_DIR)
 .PHONY : util/sphinx/build
 
 # (Re-) Generate the requirements files using pip-tools (``pip-compile``)

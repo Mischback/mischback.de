@@ -97,6 +97,8 @@ root_doc = "sitemap"
 # However, since this is just a website, disable the default domain. Hopefully
 # this will also work out, while addressing different programming languages
 # in different postings.
+#
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-primary_domain
 primary_domain = None
 
 # Set the default highlight language.
@@ -107,6 +109,8 @@ primary_domain = None
 # The website will (most likely) address different programming languages, so
 # the default language is set to pure text, requiring to be explicit while
 # including source code.
+#
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-highlight_language
 highlight_language = "text"
 
 # Define the minimum required version of ``sphinx``.
@@ -114,7 +118,20 @@ highlight_language = "text"
 # This is most likely not relevant, as the project uses *requirements files*
 # to define the required versions while setting up the ``tox`` environment
 # to run ``sphinx``.
+#
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-needs_sphinx
 needs_sphinx = "4.5"
+
+# Warn about all references where the target can not be found.
+#
+# This is equivalent to running ``sphinx-build -n``, but it should be the
+# default for the project.
+#
+# Please note that by default, ``sphinx-build`` is run with ``-W``, meaning
+# that all warnings will be treated as errors and thus, failing the build.
+#
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-nitpicky
+nitpicky = True
 
 
 # ### Plugin configuration
