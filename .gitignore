@@ -7,6 +7,9 @@
 # Python virtual environments
 .tox-venv/
 
+# NodeJS modules
+node_modules/
+
 # Python byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
