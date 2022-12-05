@@ -31,6 +31,8 @@ STAMP_DIR := $(REPO_ROOT)/.make-stamps
 STAMP_SPHINX := $(STAMP_DIR)/sphinx-build
 STAMP_NODEJS := $(STAMP_DIR)/nodejs-installed
 STAMP_NODEJS_READY := $(STAMP_DIR)/nodejs-ready
+STAMP_POST := $(STAMP_DIR)/post-processing
+STAMP_POST_PRETTIER := $(STAMP_DIR)/post-prettier
 
 # Internal Python environments
 TOX_VENV_DIR := $(REPO_ROOT)/.tox-venv
@@ -55,7 +57,7 @@ MAKEFLAGS += --no-builtin-rules
 # ### RECIPES
 
 # Build and serve the actual generated website
-dev/srv : $(STAMP_SPHINX)
+dev/srv : $(STAMP_POST)
 	$(TOX_CMD) -q -e dev-serve
 .PHONY : dev/srv
 
@@ -69,10 +71,28 @@ $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME)
 	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
 	touch $@
 
+$(STAMP_POST) : $(STAMP_POST_PRETTIER)
+	$(create_dir)
+	touch $@
+
+# Run ``prettier`` against the build artifacts
+#
+# ``prettier`` is included / utilized in this repository in two different ways:
+# a) as a ``pre-commit`` hook, running against all suitable source files (see
+#    ``.prettierignore`` for exceptions)
+# b) as a post-processing step for the build artifacts
+# TODO: Evaluate the need to run against (generated) CSS/JS
+$(STAMP_POST_PRETTIER) : $(STAMP_SPHINX) $(STAMP_NODEJS_READY)
+	$(create_dir)
+	$(MAKE) util/nodeenv nodeenv_cmd="npx" nodeenv_options="prettier --ignore-unknown --write $(BUILD_DIR)"
+	touch $@
+
 # Remove build artifacts
 clean :
 	rm -rf $(BUILD_DIR)
 	rm -rf $(STAMP_SPHINX)
+	rm -rf $(STAMP_POST)
+	rm -rf $(STAMP_POST_PRETTIER)
 .PHONY : clean
 
 
@@ -161,7 +181,7 @@ util/lint/sphinx-lint :
 nodeenv_cmd ?= "nodeenv"
 nodeenv_options ?= "--list"
 util/nodeenv : requirements/nodeenv.txt pyproject.toml $(TOX_VENV_INSTALLED)
-	$(TOX_CMD) -e nodejs -- $(nodeenv_cmd) $(nodeenv_options)
+	$(TOX_CMD) -q -e nodejs -- $(nodeenv_cmd) $(nodeenv_options)
 .PHONY : util/nodeenv
 
 # Install NodeJS into the ``nodeenv`` virtual environment
@@ -181,19 +201,6 @@ $(STAMP_NODEJS_READY) : package-lock.json $(STAMP_NODEJS)
 	$(create_dir)
 	$(MAKE) util/nodeenv nodeenv_cmd="npm" nodeenv_options="clean-install"
 	touch $@
-
-# Run ``prettier`` against the build artifacts
-#
-# ``prettier`` is included / utilized in this repository in two different ways:
-# a) as a ``pre-commit`` hook, running against all suitable source files (see
-#    ``.prettierignore`` for exceptions)
-# b) as a post-processing step for the build artifacts
-# TODO: Make this work to (re-) format the built HTML files!
-# TODO: Evaluate the need to run against (generated) CSS/JS
-# TODO: Adjust ``.prettierignore`` and augment it with comments
-build/post/prettier : $(STAMP_NODEJS_READY)
-	$(MAKE) util/nodeenv nodeenv_cmd="npx" nodeenv_options="prettier --check $(BUILD_DIR)"
-.PHONY : build/post/prettier
 
 # Run ``pre-commit``
 #
