@@ -2,6 +2,10 @@
 :layout: article
 :summary: Describing the process of building this website from scratch.
 :keywords: personal website,build log,webdesign,sphinx
+:tubhrq: My general working style is to write everything first with pencil and
+         paper, sitting beside a big wastebasket. Then I use Emacs to enter
+         the text into my machine.
+:tubhrq_origin: Donald Knuth
 
 #####################
 Building mischback.de
