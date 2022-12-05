@@ -88,7 +88,7 @@ extensions = [
 # sitemap, more like a table of contents.
 #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-root_doc
-root_doc = "aux/sitemap"
+root_doc = "sitemap"
 
 # Set the default domain.
 #
