@@ -35,11 +35,11 @@ jobs:
       - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements/sphinx.txt
+          pip install -r requirements/tox.txt
       - name: Run Sphinx's linkcheck
-        run: sphinx-build -b linkcheck -c ./ "content" ".build"
+        run: make util/lint/sphinx-linkcheck
       - name: Build HTML output
-        run: sphinx-build -b dirhtml -c ./ "content" ".build"
+        run: make build
 
   dependabot:
     needs: [linting, building]

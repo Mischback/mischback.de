@@ -61,6 +61,10 @@ dev/srv : $(STAMP_POST_PRETTIER)
 	$(TOX_CMD) -q -e dev-serve
 .PHONY : dev/srv
 
+# Create the actual build
+build : $(STAMP_POST)
+.PHONY : build
+
 # Run ``Sphinx`` to build HTML output from reST sources
 #
 # This is the primary build recipe, as it will generate the HTML output by
