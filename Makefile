@@ -29,6 +29,8 @@ SRC_THEME := $(shell find $(THEME_DIR) -type f)
 # Track certain things with artificial *stamps*.
 STAMP_DIR := $(REPO_ROOT)/.make-stamps
 STAMP_SPHINX := $(STAMP_DIR)/sphinx-build
+STAMP_NODEJS := $(STAMP_DIR)/nodejs-installed
+STAMP_NODEJS_READY := $(STAMP_DIR)/nodejs-ready
 
 # Internal Python environments
 TOX_VENV_DIR := $(REPO_ROOT)/.tox-venv
@@ -133,6 +135,61 @@ util/lint/sphinx-linkcheck :
 util/lint/sphinx-lint :
 	$(MAKE) util/pre-commit pre-commit_id="sphinx-lint" pre-commit_files="--all-files"
 .PHONY : util/lint/sphinx-lint
+
+# Run *NodeJS-based* tools
+#
+# Beside the *Python-centric* tools in this repository, some *NodeJS-based*
+# tools are in use.
+#
+# In order to manage the required NodeJS environment, ``nodeenv`` is run from
+# within a ``tox``environment.
+#
+# This recipe is then used to execute commands from the dedicated environment,
+# including ``npm`` and ``npx`` commands.
+#
+# There are associated recipes that will take care of setting up the NodeJS
+# environment, i.e. by installing the required packages from ``package.json``.
+#
+# Most likely, this recipe will not be called directly. Instead, it does
+# provide the common interface to NodeJS.
+#
+# Common tasks:
+# =============
+#
+# Add another NodeJS package to ``package.json``:
+#   ``make util/nodeenv nodeenv_cmd="npm" nodeenv_options="install [--save-dev] [[PACKAGE_NAME]]``
+nodeenv_cmd ?= "nodeenv"
+nodeenv_options ?= "--list"
+util/nodeenv : requirements/nodeenv.txt pyproject.toml $(TOX_VENV_INSTALLED)
+	$(TOX_CMD) -e nodejs -- $(nodeenv_cmd) $(nodeenv_options)
+.PHONY : util/nodeenv
+
+# Install NodeJS into the ``nodeenv`` virtual environment
+#
+# This uses the LTS release of NodeJS and installs ``npm`` aswell.
+$(STAMP_NODEJS) :
+	$(create_dir)
+	$(MAKE) util/nodeenv nodeenv_options="--node=lts --with-npm -p"
+	touch $@
+
+# Install packages as specified in ``package.json`` into the NodeJS environment
+$(STAMP_NODEJS_READY) : package.json $(STAMP_NODEJS)
+	$(create_dir)
+	$(MAKE) util/nodeenv nodeenv_cmd="npm" nodeenv_options="install"
+	touch $@
+
+# Run ``prettier`` against the build artifacts
+#
+# ``prettier`` is included / utilized in this repository in two different ways:
+# a) as a ``pre-commit`` hook, running against all suitable source files (see
+#    ``.prettierignore`` for exceptions)
+# b) as a post-processing step for the build artifacts
+# TODO: Make this work to (re-) format the built HTML files!
+# TODO: Evaluate the need to run against (generated) CSS/JS
+# TODO: Adjust ``.prettierignore`` and augment it with comments
+build/post/prettier : $(STAMP_NODEJS_READY)
+	$(MAKE) util/nodeenv nodeenv_cmd="npx" nodeenv_options="prettier --check $(BUILD_DIR)"
+.PHONY : build/post/prettier
 
 # Run ``pre-commit``
 #
