@@ -15,8 +15,14 @@
 # Ref: https://stackoverflow.com/a/73450593
 REPO_ROOT := $(patsubst %/, %, $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
+# Content source file directory
+BUILD_DIR := $(REPO_ROOT)/.build
+CONTENT_DIR := $(REPO_ROOT)/content
+THEME_DIR := $(REPO_ROOT)/theme/mischback
+
 # The source files for the actual content
-SRC_CONTENT := $(shell find content -type f)
+SRC_CONTENT := $(shell find $(CONTENT_DIR) -type f)
+SRC_THEME := $(shell find $(THEME_DIR) -type f)
 
 # Stamps
 #
@@ -48,14 +54,24 @@ MAKEFLAGS += --no-builtin-rules
 
 # Build and serve the actual generated website
 dev/srv : $(STAMP_SPHINX)
-	$(TOX_CMD) -q -e build-serve
+	$(TOX_CMD) -q -e dev-serve
 .PHONY : dev/srv
 
 # Run ``Sphinx`` to build HTML output from reST sources
-$(STAMP_SPHINX) : $(SRC_CONTENT) conf.py requirements/build-sphinx.txt
+#
+# This is the primary build recipe, as it will generate the HTML output by
+# running ``Sphinx``. It is (obviously) dependent on a plethora of things,
+# including the actual content source files and the theme files.
+$(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME)
 	$(create_dir)
-	$(TOX_CMD) -e build-sphinx
+	$(MAKE) util/sphinx/build
 	touch $@
+
+
+# ##### Utility Stuff
+#
+# The following recipes are mainly used as shortcuts to run several tools.
+# They are not directly related to the actual build process.
 
 # Run ``black``
 util/lint/black :
@@ -104,7 +120,7 @@ util/lint/prettier :
 
 # Run ``Sphinx``'s linkcheck builder
 util/lint/sphinx-linkcheck :
-	$(TOX_CMD) -e build-sphinx -- sphinx-build -b linkcheck -c ./ "content" ".build"
+	$(MAKE) util/sphinx/build sphinx_builder="linkcheck"
 .PHONY : util/lint/sphinx-linkcheck
 
 # Run ``sphinx-lint``
@@ -123,6 +139,21 @@ util/pre-commit : $(PRE_COMMIT_READY)
 	$(TOX_CMD) -q -e pre-commit -- pre-commit run $(pre-commit_files) $(pre-commit_id)
 .PHONY : util/pre-commit
 
+# Run ``sphinx-build``
+#
+# This is the recipe that runs ``Sphinx``'s builders. It does provide mandatory
+# settings / configuration values but does accept additional flags aswell.
+# The actual *builder* to run is configured by ``sphinx_builder``.
+#
+# As of now, ``dirhtml`` builder is the default, as this builder is used to
+# generate the HTML output. The ``linkcheck`` builder is used as an additional
+# linter.
+sphinx_builder ?= "dirhtml"
+sphinx_config-dir ?= "./"
+util/sphinx/build : conf.py requirements/sphinx.txt
+	$(TOX_CMD) -q -e sphinx -- sphinx-build -b $(sphinx_builder) -c $(sphinx_config-dir) $(CONTENT_DIR) $(BUILD_DIR)
+.PHONY : util/sphinx/build
+
 # (Re-) Generate the requirements files using pip-tools (``pip-compile``)
 #
 # ``pip-compile`` is run through a ``tox`` environment. The actual command is
@@ -133,7 +164,7 @@ requirements/%.txt : requirements/%.in pyproject.toml $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e pip-tools -- $<
 
 
-# Internal utility stuff
+# ##### Internal utility stuff
 
 # Create the virtual environment for running tox
 $(TOX_VENV_CREATED) :

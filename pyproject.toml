@@ -75,24 +75,24 @@ legacy_tox_ini = """
 [tox]
 minversion = 3.26.0
 
-[testenv:build-sphinx]
+[testenv:sphinx]
 basepython = python3
 deps =
-  -r {toxinidir}/requirements/build-sphinx.txt
-envdir = {toxworkdir}/build-sphinx
+  -r {toxinidir}/requirements/sphinx.txt
+envdir = {toxworkdir}/sphinx
 setenv =
   PYTHONDONTWRITEBYTECODE=1
 skip_install = true
 commands =
-  {posargs:sphinx-build -b dirhtml -c ./ "content" ".build"}
+  {posargs:sphinx-build --version}
 
-[testenv:build-serve]
-basepython = {[testenv:build-sphinx]basepython}
+[testenv:dev-serve]
+basepython = {[testenv:sphinx]basepython}
 changedir = {toxinidir}/.build
-deps = {[testenv:build-sphinx]deps}
-envdir = {[testenv:build-sphinx]envdir}
-setenv = {[testenv:build-sphinx]setenv}
-skip_install = {[testenv:build-sphinx]skip_install}
+deps = {[testenv:sphinx]deps}
+envdir = {[testenv:sphinx]envdir}
+setenv = {[testenv:sphinx]setenv}
+skip_install = {[testenv:sphinx]skip_install}
 commands =
   python -m http.server {posargs:8082}
 
