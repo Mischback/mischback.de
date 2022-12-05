@@ -57,7 +57,7 @@ MAKEFLAGS += --no-builtin-rules
 # ### RECIPES
 
 # Build and serve the actual generated website
-dev/srv : $(STAMP_POST)
+dev/srv : $(STAMP_POST_PRETTIER)
 	$(TOX_CMD) -q -e dev-serve
 .PHONY : dev/srv
 
