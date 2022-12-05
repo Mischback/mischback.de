@@ -38,7 +38,10 @@ jobs:
         with:
           path: |
             .tox
+            node_modules
             ${{ env.pythonLocation }}
+            .make-stamps/nodejs-installed
+            .make-stamps/nodejs-ready
           key: tox-${{ env.pythonLocation }}-${{ hashFiles('requirements/tox.txt', 'requirements/sphinx.txt', 'requirements/nodeenv.txt', 'package-lock.json', 'pyproject.toml') }}
       - name: Install build dependencies
         run: |
