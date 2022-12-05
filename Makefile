@@ -172,10 +172,14 @@ $(STAMP_NODEJS) :
 	$(MAKE) util/nodeenv nodeenv_options="--node=lts --with-npm -p"
 	touch $@
 
-# Install packages as specified in ``package.json`` into the NodeJS environment
-$(STAMP_NODEJS_READY) : package.json $(STAMP_NODEJS)
+# Install packages as specified in ``package-lock.json`` into the NodeJS environment
+#
+# The installation is done using ``npm``'s ``clean-install`` (or ``ci``), which
+# exclusively relies on the ``package-lock.json`` to generate a cleanly
+# reproducible environment.
+$(STAMP_NODEJS_READY) : package-lock.json $(STAMP_NODEJS)
 	$(create_dir)
-	$(MAKE) util/nodeenv nodeenv_cmd="npm" nodeenv_options="install"
+	$(MAKE) util/nodeenv nodeenv_cmd="npm" nodeenv_options="clean-install"
 	touch $@
 
 # Run ``prettier`` against the build artifacts
