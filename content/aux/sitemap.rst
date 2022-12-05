@@ -12,6 +12,7 @@ Sitemap (Humans)
    :titlesonly:
    :glob:
 
-   Home <index>
-   development/index
+   Home <../index>
+   ../development/index
+   ../*
    *
