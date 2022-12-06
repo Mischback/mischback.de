@@ -105,6 +105,11 @@ clean :
 # The following recipes are mainly used as shortcuts to run several tools.
 # They are not directly related to the actual build process.
 
+# Run a prepared ``tree`` command
+tree :
+	tree --dirsfirst -I "node_modules|requirements|LICENSE|package-lock.json|README.md"
+.PHONY : tree
+
 # Run ``black``
 util/lint/black :
 	$(MAKE) util/pre-commit pre-commit_id="black" pre-commit_files="--all-files"
