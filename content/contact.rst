@@ -6,4 +6,4 @@
 Contact
 #######
 
-FIXME: https://github.com/Mischback/static-web/issues/17
+FIXME: #17
