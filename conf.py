@@ -15,10 +15,14 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 # Python imports
 import datetime
 import subprocess
+import sys
 from os.path import abspath, dirname, join
 
 # Determine the absolute path of the repository's root
 REPO_ROOT = dirname(abspath(__file__))
+
+# Add the project-specific extensions directory to Python's path
+sys.path.append(join(REPO_ROOT, "extensions"))
 
 
 def get_current_git_commit_hash():
@@ -66,6 +70,7 @@ extensions = [
     #
     # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html
     "sphinx.ext.extlinks",
+    "mischback.sphinx_jinja2_debug",
     # TODO: "sphinx.ext.graphviz"
     #       If there is a use-case for these diagrams.
     # TODO: "sphinx.ext.ifconfig"
@@ -165,29 +170,3 @@ html_theme = "mischback"
 #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_copy_source
 html_copy_source = False
-
-
-# ### Internal plugin stuff
-#
-# ``Sphinx``'s configuration file actually works like an extension.
-
-
-def activate_jinja2_debug_ext(app):
-    """Activate Jinja2 debug extension.
-
-    This function is intended to be connected to ``Sphinx``'s
-    ``builder-inited`` event (see
-    https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx-core-events)
-    and will then navigate from the app to the ``jinja.Environment`` and call
-    its ``add_extension()`` method.
-    """
-    if hasattr(app.builder, "templates"):
-        app.builder.templates.environment.add_extension("jinja2.ext.debug")
-
-
-def setup(app):
-    """Use this ``conf.py`` as its project's own extension."""
-    # Connect a custom handler to the ``builder-inited`` event.
-    #
-    # https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx-core-events
-    app.connect("builder-inited", activate_jinja2_debug_ext)
