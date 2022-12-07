@@ -1,7 +1,12 @@
 """Provide a tagging mechanism for Sphinx."""
 
+# Python imports
+from collections import defaultdict
+
 # Sphinx imports
 from sphinx.util.docutils import SphinxDirective
+
+ENV_TAG_KEY = "content_tags"
 
 
 def evaluate_rendering_context(  # noqa: D103
@@ -29,8 +34,18 @@ class ContentTagDirective(SphinxDirective):  # noqa: D101
 
     def run(self):  # noqa: D102
         # TODO: Add docstring!
-        tag_list = self.arguments[0]
+        # ``arguments[0]`` is a ``str``, so just split by ";" (the seperator)
+        # and trim whitespaces...
+        tag_list = [tag.strip() for tag in self.arguments[0].split(";")]
+        # ... and remove empty strings from the result.
+        tag_list = [tag for tag in tag_list if tag]
         print("[DEBUG] tag_list: {!r}".format(tag_list))
+
+        if not hasattr(self.env, ENV_TAG_KEY):
+            setattr(self.env, ENV_TAG_KEY, defaultdict(set))
+
+        for tag in tag_list:
+            getattr(self.env, ENV_TAG_KEY)[tag].add(self.env.docname)
 
         # as of now, don't add anything to the doctree
         return []
