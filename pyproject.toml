@@ -49,14 +49,17 @@ tabindex_no_positive = true
 profile            = "black"
 combine_as_imports = true
 default_section    = "THIRDPARTY"
+known_sphinx       = "sphinx"
 sections           = [
   "FUTURE",
   "STDLIB",
+  "SPHINX",
   "THIRDPARTY",
   "FIRSTPARTY",
   "LOCALFOLDER"
 ]
 import_heading_stdlib      = "Python imports"
+import_heading_sphinx      = "Sphinx imports"
 import_heading_thirdparty  = "external imports"
 import_heading_firstparty  = "app imports"
 import_heading_localfolder = "local imports"
