@@ -47,6 +47,8 @@ class ContentTagDirective(SphinxDirective):  # noqa: D101
         for tag in tag_list:
             getattr(self.env, ENV_TAG_KEY)[tag].add(self.env.docname)
 
+        print("[DEBUG] tags: {!r}".format(getattr(self.env, ENV_TAG_KEY)))
+
         # as of now, don't add anything to the doctree
         return []
 
@@ -67,6 +69,6 @@ def setup(app):
     return {
         "version": "0.0.1",
         "env-version": "1",
-        "parallel_read_safe": True,
-        "parallel_write_safe": True,
+        "parallel_read_safe": False,
+        "parallel_write_safe": False,
     }

@@ -7,6 +7,8 @@
          the text into my machine.
 :tubhrq_origin: Donald Knuth
 
+.. tags:: foo; bar;
+
 #####################
 Building mischback.de
 #####################
