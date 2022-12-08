@@ -40,7 +40,22 @@ def add_tags_to_render_context(app, pagename, templatename, context, doctree):
 def add_tag_pages(app):  # noqa: D103
     print("[DEBUG] add_tag_pages()")
 
-    return [("tags/index", {"foo": "bar"}, "tag_overview.html")]
+    tags_raw = getattr(app.env, ENV_TAG_KEY, {})
+    tags = tags_raw.keys()
+    print("[DEBUG] tags: {!r}".format(tags))
+
+    tag_pages = [("tags/index", {"ct_tags": tags}, "tag_overview.html")]
+
+    for tag in tags:
+        tag_pages.append(
+            (
+                "tags/{}/index".format(tag),
+                {"ct_tag_docs": tags_raw[tag]},
+                "tag_overview.html",
+            )
+        )
+
+    return tag_pages
 
 
 def purge_document_from_tags(app, env, docname):

@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
 {% block main_container %}
-tag_overview.html
+  {% for tag in ct_tags %}
+    {{ tag }},
+  {% else %}
+  foobar
+  {% endfor %}
 {% endblock main_container %}
