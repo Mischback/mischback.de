@@ -15,6 +15,32 @@ def evaluate_rendering_context(  # noqa: D103
     # TODO: Add docstring, if this event handler is really required!
     print("[DEBUG] pagename: {!r}".format(pagename))
     # print("[DEBUG] context: {!r}".format(context))
+    
+    
+def purge_document_from_tags(app, env, docname):
+    """Remove document from the cached tags dictionary.
+    
+    Tag information is stored in Sphinx's build environment, which is cached 
+    between runs. Before (re-) reading the source file, all existing references
+    must be removed from the cached tag information in order to allow changes /
+    updates of the tags of a document.
+    
+    This function is meant to be attached to Sphinx's ``env-purge-doc`` event
+    and will enable the extension to work with parallel builds.
+    """
+    if not hasattr(env, ENV_TAG_KEY):
+        return
+    
+    tmp = getattr(env, ENV_TAG_KEY)
+    for tag in tmp.keys():
+        try:
+            tmp[tag].remove(docname)
+        except KeyError:
+            # KeyError is raised if ``docname`` is not in the set referenced
+            # by ``tmp[tag]``.
+            pass
+        
+    print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY)))
 
 
 class ContentTagDirective(SphinxDirective):
@@ -85,6 +111,7 @@ def setup(app):
     app.add_directive("tags", ContentTagDirective)
 
     # app.connect("html-page-context", evaluate_rendering_context)
+    app.connect("env-purge-doc", purge_document_from_tags)
 
     return {
         "version": "0.0.1",
