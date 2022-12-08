@@ -48,8 +48,8 @@ def purge_document_from_tags(app, env, docname):
         tmp.pop(docname, None)
 
     print("[DEBUG] purge_document_from_tags()")
-    print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY)))
-    print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY)))
+    print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY, None)))
+    print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY, None)))
 
 
 def merge_tags(app, env, docname, other):
@@ -81,8 +81,8 @@ def merge_tags(app, env, docname, other):
             tmp[doc].update(tmp_o[doc])
 
     print("[DEBUG] merge_tags()")
-    print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY)))
-    print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY)))
+    print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY, None)))
+    print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY, None)))
 
 
 class ContentTagDirective(SphinxDirective):
