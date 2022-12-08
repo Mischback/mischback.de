@@ -16,6 +16,7 @@ def evaluate_rendering_context(  # noqa: D103
     print("[DEBUG] evaluate_rendering_context()")
     print("[DEBUG] pagename: {!r}".format(pagename))
     print("[DEBUG] context: {!r}".format(context))
+    print("[DEBUG] html_context: {!r}".format(app.config.html_context))
 
 
 def purge_document_from_tags(app, env, docname):
