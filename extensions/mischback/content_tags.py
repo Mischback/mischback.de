@@ -6,19 +6,34 @@ from collections import defaultdict
 # Sphinx imports
 from sphinx.util.docutils import SphinxDirective
 
-ENV_TAG_KEY = "content_tags"
+ENV_TAG_KEY = "ct_tags"
+"""Key to track the tags in Sphinx's build environment.
 
-ENV_DOC_KEY = "content_tags_docs"
+Provides a dictionary with *tags* as keys and sets of *document names* as
+values.
+"""
+
+ENV_DOC_KEY = "ct_docs"
+"""Key to track the tags of documents in Sphinx's build environment.
+
+Provides a dictionary with *document names* as keys and sets of *tags* as
+values.
+"""
 
 
 def evaluate_rendering_context(  # noqa: D103
     app, pagename, templatename, context, doctree
 ):
-    # TODO: Add docstring, if this event handler is really required!
+    # FIXME: Rename this function accordingly!
+
+    if hasattr(app.env, ENV_DOC_KEY):
+        tmp = getattr(app.env, ENV_DOC_KEY)
+        setattr(context, "ct_document_tags", tmp[pagename])
+
     print("[DEBUG] evaluate_rendering_context()")
     print("[DEBUG] pagename: {!r}".format(pagename))
     print("[DEBUG] context: {!r}".format(context))
-    print("[DEBUG] html_context: {!r}".format(app.config.html_context))
+    # print("[DEBUG] html_context: {!r}".format(app.config.html_context))
 
 
 def purge_document_from_tags(app, env, docname):
