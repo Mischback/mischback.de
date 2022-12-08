@@ -125,8 +125,8 @@ class ContentTagDirective(SphinxDirective):
         # ``arguments[0]`` is a ``str``, so just split by ";" (the seperator)
         # and trim whitespaces...
         tag_list = [tag.strip() for tag in self.arguments[0].split(";")]
-        # ... and remove empty strings from the result.
-        tag_list = [tag for tag in tag_list if tag]
+        # ... and convert non-empty strings to lower case.
+        tag_list = [tag.lower() for tag in tag_list if tag]
         # print("[DEBUG] tag_list: {!r}".format(tag_list))
 
         # Add the documents to all associated tags
@@ -142,6 +142,7 @@ class ContentTagDirective(SphinxDirective):
         if not hasattr(self.env, ENV_DOC_KEY):
             setattr(self.env, ENV_DOC_KEY, defaultdict(set))
 
+        # FIXME: Does this automatically remove duplicate items?
         getattr(self.env, ENV_DOC_KEY)[self.env.docname] = tag_list
 
         # as of now, don't add anything to the doctree
