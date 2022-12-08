@@ -41,6 +41,28 @@ def purge_document_from_tags(app, env, docname):
             pass
         
     print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY)))
+    
+    
+def merge_tags(app, env, docname, other):
+    """Merge tags dictionaries from parallel builds.
+    
+    While running Sphinx's build in parallel threads, each thread maintains its
+    own build environment, which must be merged back into the main thread's
+    build environment.
+    
+    This function is meant to be attached to Sphinx's ``env-merge-info`` event
+    and will enable the extension to work with parallel builds.
+    """
+    if not hasattr(env, ENV_TAG_KEY):
+        setattr(env, ENV_TAG_KEY, defaultdict(set))
+        
+    if hasattr(other, ENV_TAG_KEY):
+        tmp = getattr(env, ENV_TAG_KEY)
+        tmp_o = getattr(other, ENV_TAG_KEY)
+        for tag in tmp_o.keys():
+            tmp[tag].update(tmp_o[tag])
+            
+    print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY)))
 
 
 class ContentTagDirective(SphinxDirective):
@@ -112,6 +134,7 @@ def setup(app):
 
     # app.connect("html-page-context", evaluate_rendering_context)
     app.connect("env-purge-doc", purge_document_from_tags)
+    app.connect("env-merge-info", merge_tags)
 
     return {
         "version": "0.0.1",
