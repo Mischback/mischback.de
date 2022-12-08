@@ -21,18 +21,19 @@ values.
 """
 
 
-def evaluate_rendering_context(  # noqa: D103
-    app, pagename, templatename, context, doctree
-):
-    # FIXME: Rename this function accordingly!
+def add_tags_to_render_context(app, pagename, templatename, context, doctree):
+    """Add the document's associated tags to the rendering context.
 
+    TODO: This is not really used at the moment, but the idea is to be able
+          to render the tags in the layout, outside of the actual body provided
+          by the doctree.
+    """
     if hasattr(app.env, ENV_DOC_KEY):
         tmp = getattr(app.env, ENV_DOC_KEY)
         context["ct_document_tags"] = tmp[pagename]
 
-    print("[DEBUG] evaluate_rendering_context()")
-    print("[DEBUG] pagename: {!r}".format(pagename))
-    print("[DEBUG] context: {!r}".format(context))
+    print("[DEBUG] evaluate_rendering_context() - {}".format(pagename))
+    # print("[DEBUG] context: {!r}".format(context))
     # print("[DEBUG] html_context: {!r}".format(app.config.html_context))
 
 
@@ -62,9 +63,9 @@ def purge_document_from_tags(app, env, docname):
         # see https://stackoverflow.com/a/11277439
         tmp.pop(docname, None)
 
-    print("[DEBUG] purge_document_from_tags()")
-    print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY, None)))
-    print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY, None)))
+    print("[DEBUG] purge_document_from_tags() - {}".format(docname))
+    # print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY, None)))
+    # print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY, None)))
 
 
 def merge_tags(app, env, docname, other):
@@ -95,9 +96,9 @@ def merge_tags(app, env, docname, other):
         for doc in tmp_o.keys():
             tmp[doc].update(tmp_o[doc])
 
-    print("[DEBUG] merge_tags()")
-    print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY, None)))
-    print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY, None)))
+    print("[DEBUG] merge_tags() - {}".format(docname))
+    # print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY, None)))
+    # print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY, None)))
 
 
 class ContentTagDirective(SphinxDirective):
@@ -176,13 +177,13 @@ def setup(app):
     """
     app.add_directive("tags", ContentTagDirective)
 
-    app.connect("html-page-context", evaluate_rendering_context)
     app.connect("env-purge-doc", purge_document_from_tags)
     app.connect("env-merge-info", merge_tags)
+    app.connect("html-page-context", add_tags_to_render_context)
 
     return {
         "version": "0.0.1",
         "env-version": "1",
-        "parallel_read_safe": False,
-        "parallel_write_safe": False,
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
     }
