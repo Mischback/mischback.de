@@ -17,8 +17,17 @@ def evaluate_rendering_context(  # noqa: D103
     # print("[DEBUG] context: {!r}".format(context))
 
 
-class ContentTagDirective(SphinxDirective):  # noqa: D101
-    # TODO: Add docstring!
+class ContentTagDirective(SphinxDirective):
+    """Provide a directive to add *tags* to a document.
+    
+    The directive accepts a single argument, which is a list of *tags*,
+    seperated by ``;``. At least one tag **must** be provided.
+    
+    Example Usage:
+    ```
+    .. tags:: foo; bar; baz
+    ```
+    """
 
     # At least one argument is required (doesn't make any sense without!)
     required_arguments = 1
@@ -32,8 +41,19 @@ class ContentTagDirective(SphinxDirective):  # noqa: D101
     #       project.
     final_argument_whitespace = True
 
-    def run(self):  # noqa: D102
-        # TODO: Add docstring!
+    def run(self):
+        """Process the directive.
+        
+        The directive treats its argument as a single string, though it is most
+        likely a list of tags semantically.
+        
+        First step of processing is converting the string into a list of
+        strings, representing the tags.
+        
+        The tags are stored in Sphinx's build environment and the currently
+        processed document (``self.env.docname``) is added to the list of
+        documents associated with those tags.
+        """
         # ``arguments[0]`` is a ``str``, so just split by ";" (the seperator)
         # and trim whitespaces...
         tag_list = [tag.strip() for tag in self.arguments[0].split(";")]
