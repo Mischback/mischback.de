@@ -33,8 +33,14 @@ def add_tags_to_render_context(app, pagename, templatename, context, doctree):
         context["ct_document_tags"] = tmp[pagename]
 
     print("[DEBUG] evaluate_rendering_context() - {}".format(pagename))
-    # print("[DEBUG] context: {!r}".format(context))
+    print("[DEBUG] context: {!r}".format(context))
     # print("[DEBUG] html_context: {!r}".format(app.config.html_context))
+
+
+def add_tag_pages(app):  # noqa: D103
+    print("[DEBUG] add_tag_pages()")
+
+    return [("tags/index", {"foo": "bar"}, "tag_overview.html")]
 
 
 def purge_document_from_tags(app, env, docname):
@@ -179,6 +185,7 @@ def setup(app):
 
     app.connect("env-purge-doc", purge_document_from_tags)
     app.connect("env-merge-info", merge_tags)
+    app.connect("html-collect-pages", add_tag_pages)
     app.connect("html-page-context", add_tags_to_render_context)
 
     return {
