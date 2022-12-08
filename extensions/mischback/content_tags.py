@@ -142,6 +142,7 @@ class ContentTagDirective(SphinxDirective):
         tag_list = [tag.strip() for tag in self.arguments[0].split(";")]
         # ... and convert non-empty strings to lower case.
         tag_list = [tag.lower() for tag in tag_list if tag]
+        tag_list = set(tag_list)
         # print("[DEBUG] tag_list: {!r}".format(tag_list))
 
         # Add the documents to all associated tags
