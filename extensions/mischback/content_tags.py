@@ -28,7 +28,7 @@ def evaluate_rendering_context(  # noqa: D103
 
     if hasattr(app.env, ENV_DOC_KEY):
         tmp = getattr(app.env, ENV_DOC_KEY)
-        setattr(context, "ct_document_tags", tmp[pagename])
+        context["ct_document_tags"] = tmp[pagename]
 
     print("[DEBUG] evaluate_rendering_context()")
     print("[DEBUG] pagename: {!r}".format(pagename))
