@@ -8,6 +8,8 @@ from sphinx.util.docutils import SphinxDirective
 
 ENV_TAG_KEY = "content_tags"
 
+ENV_DOC_KEY = "content_tags_docs"
+
 
 def evaluate_rendering_context(  # noqa: D103
     app, pagename, templatename, context, doctree
@@ -22,7 +24,7 @@ def evaluate_rendering_context(  # noqa: D103
 def purge_document_from_tags(app, env, docname):
     """Remove document from the cached tags dictionary.
 
-    Tag information is stored in Sphinx's build environment, which is cached 
+    Tag information is stored in Sphinx's build environment, which is cached
     between runs. Before (re-) reading the source file, all existing references
     must be removed from the cached tag information in order to allow changes /
     updates of the tags of a document.
@@ -30,20 +32,24 @@ def purge_document_from_tags(app, env, docname):
     This function is meant to be attached to Sphinx's ``env-purge-doc`` event
     and will enable the extension to work with parallel builds.
     """
-    if not hasattr(env, ENV_TAG_KEY):
-        return
+    if hasattr(env, ENV_TAG_KEY):
+        tmp = getattr(env, ENV_TAG_KEY)
+        for tag in tmp.keys():
+            try:
+                tmp[tag].remove(docname)
+            except KeyError:
+                # KeyError is raised if ``docname`` is not in the set referenced
+                # by ``tmp[tag]``.
+                pass
 
-    tmp = getattr(env, ENV_TAG_KEY)
-    for tag in tmp.keys():
-        try:
-            tmp[tag].remove(docname)
-        except KeyError:
-            # KeyError is raised if ``docname`` is not in the set referenced
-            # by ``tmp[tag]``.
-            pass
+    if hasattr(env, ENV_DOC_KEY):
+        tmp = getattr(env, ENV_DOC_KEY)
+        # see https://stackoverflow.com/a/11277439
+        tmp.pop(docname, None)
 
     print("[DEBUG] purge_document_from_tags()")
     print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY)))
+    print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY)))
 
 
 def merge_tags(app, env, docname, other):
@@ -65,8 +71,18 @@ def merge_tags(app, env, docname, other):
         for tag in tmp_o.keys():
             tmp[tag].update(tmp_o[tag])
 
+    if not hasattr(env, ENV_DOC_KEY):
+        setattr(env, ENV_DOC_KEY, defaultdict(set))
+
+    if hasattr(other, ENV_DOC_KEY):
+        tmp = getattr(env, ENV_DOC_KEY)
+        tmp_o = getattr(other, ENV_DOC_KEY)
+        for doc in tmp_o.keys():
+            tmp[doc].update(tmp_o[doc])
+
     print("[DEBUG] merge_tags()")
     print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY)))
+    print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY)))
 
 
 class ContentTagDirective(SphinxDirective):
@@ -113,13 +129,20 @@ class ContentTagDirective(SphinxDirective):
         tag_list = [tag for tag in tag_list if tag]
         # print("[DEBUG] tag_list: {!r}".format(tag_list))
 
+        # Add the documents to all associated tags
         if not hasattr(self.env, ENV_TAG_KEY):
             setattr(self.env, ENV_TAG_KEY, defaultdict(set))
 
         for tag in tag_list:
             getattr(self.env, ENV_TAG_KEY)[tag].add(self.env.docname)
 
-        print("[DEBUG] tags: {!r}".format(getattr(self.env, ENV_TAG_KEY)))
+        # print("[DEBUG] tags: {!r}".format(getattr(self.env, ENV_TAG_KEY)))
+
+        # Add associated tags to the document
+        if not hasattr(self.env, ENV_DOC_KEY):
+            setattr(self.env, ENV_DOC_KEY, defaultdict(set))
+
+        getattr(self.env, ENV_DOC_KEY)[self.env.docname] = tag_list
 
         # as of now, don't add anything to the doctree
         return []
