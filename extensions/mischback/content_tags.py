@@ -13,10 +13,11 @@ def evaluate_rendering_context(  # noqa: D103
     app, pagename, templatename, context, doctree
 ):
     # TODO: Add docstring, if this event handler is really required!
+    print("[DEBUG] evaluate_rendering_context()")
     print("[DEBUG] pagename: {!r}".format(pagename))
-    # print("[DEBUG] context: {!r}".format(context))
-    
-    
+    print("[DEBUG] context: {!r}".format(context))
+
+
 def purge_document_from_tags(app, env, docname):
     """Remove document from the cached tags dictionary.
     
@@ -30,7 +31,7 @@ def purge_document_from_tags(app, env, docname):
     """
     if not hasattr(env, ENV_TAG_KEY):
         return
-    
+
     tmp = getattr(env, ENV_TAG_KEY)
     for tag in tmp.keys():
         try:
@@ -39,10 +40,11 @@ def purge_document_from_tags(app, env, docname):
             # KeyError is raised if ``docname`` is not in the set referenced
             # by ``tmp[tag]``.
             pass
-        
+
+    print("[DEBUG] purge_document_from_tags()")
     print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY)))
-    
-    
+
+
 def merge_tags(app, env, docname, other):
     """Merge tags dictionaries from parallel builds.
     
@@ -55,22 +57,23 @@ def merge_tags(app, env, docname, other):
     """
     if not hasattr(env, ENV_TAG_KEY):
         setattr(env, ENV_TAG_KEY, defaultdict(set))
-        
+
     if hasattr(other, ENV_TAG_KEY):
         tmp = getattr(env, ENV_TAG_KEY)
         tmp_o = getattr(other, ENV_TAG_KEY)
         for tag in tmp_o.keys():
             tmp[tag].update(tmp_o[tag])
-            
+
+    print("[DEBUG] merge_tags()")
     print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY)))
 
 
 class ContentTagDirective(SphinxDirective):
     """Provide a directive to add *tags* to a document.
-    
+
     The directive accepts a single argument, which is a list of *tags*,
     seperated by ``;``. At least one tag **must** be provided.
-    
+
     Example Usage:
     ```
     .. tags:: foo; bar; baz
@@ -91,13 +94,13 @@ class ContentTagDirective(SphinxDirective):
 
     def run(self):
         """Process the directive.
-        
+
         The directive treats its argument as a single string, though it is most
         likely a list of tags semantically.
-        
+
         First step of processing is converting the string into a list of
         strings, representing the tags.
-        
+
         The tags are stored in Sphinx's build environment and the currently
         processed document (``self.env.docname``) is added to the list of
         documents associated with those tags.
@@ -107,7 +110,7 @@ class ContentTagDirective(SphinxDirective):
         tag_list = [tag.strip() for tag in self.arguments[0].split(";")]
         # ... and remove empty strings from the result.
         tag_list = [tag for tag in tag_list if tag]
-        print("[DEBUG] tag_list: {!r}".format(tag_list))
+        # print("[DEBUG] tag_list: {!r}".format(tag_list))
 
         if not hasattr(self.env, ENV_TAG_KEY):
             setattr(self.env, ENV_TAG_KEY, defaultdict(set))
