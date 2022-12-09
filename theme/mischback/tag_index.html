@@ -1,9 +1,13 @@
 {% extends "layout.html" %}
 
 {% block main_container %}
-  {% for tag in ct_tags %}
-  <a href="{{ pathto("tags/{}".format(tag)) }}">{{ tag }}</a>,
-  {% else %}
-  foobar
-  {% endfor %}
+
+  {% if ct_tags %}
+  <ul>
+    {% for tag in ct_tags -%}
+    <li><a href="{{ pathto("tags/{}".format(tag)) }}">{{ tag }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
 {% endblock main_container %}
