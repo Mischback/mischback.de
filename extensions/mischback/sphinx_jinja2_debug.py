@@ -27,3 +27,9 @@ def setup(app):
     for reference.
     """
     app.connect("builder-inited", activate_jinja2_debug_ext)
+
+    return {
+        "version": "0.0.1",
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
