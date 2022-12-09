@@ -93,17 +93,25 @@ class CTTag:
         instead the methods ``add_doc`` and ``get_docs`` should be used.
     """
 
-    def __init__(self, name, url_format_string="tags/{}/index"):
+    def __init__(self, name):
         self.name = name.strip().lower()
-        # TODO: The URLs are currently hardcoded. If this is to be released as
-        #       a generalized extension, this should be configurable with an
-        #       extension-specific setting.
-        #       The templates already rely on this class's ``pagename``
-        #       attribute.
-        self.pagename = url_format_string.format(self.name)
+        # During object initialization, the ``pagename`` is not determined!
+        # Instead, the first call to ``add_doc()`` will set the ``pagename``
+        # for the object.
+        #
+        # Reasoning: Objects of this class are not directly created /
+        # initialized in this extension, instead they are created using a
+        # custom ``defaultdict`` implementation (see ``TagDefaultDict`` below)
+        # while the very first document is added to the desired tag.
+        #
+        # The ``pagename`` should be dependent on a Sphinx configuration value,
+        # thus the template to create the ``pagename`` can not be hardcoded in
+        # ``TagDefaultDict`` but must be provided when Sphinx's config has
+        # been fully evaluated.
+        self.pagename = None
         self._docs = set()
 
-    def add_doc(self, docname, doctitle):
+    def add_doc(self, docname, doctitle, pagename_template="tags/{}"):
         """Add a document to the tag.
 
         Documents are represented by instances of ``CTDoc``.
@@ -112,7 +120,15 @@ class CTTag:
         ----------
         docname : str
         doctitle : str
+
+        Side Effects
+        ------------
+        The very first call to ``add_doc`` will set the object's ``pagename``
+        attribute. Reasons are mostly implementation details, see comments in
+        the class's ``__init__()``.
         """
+        if self.pagename is None:
+            self.pagename = pagename_template.format(self.name)
         self._docs.add(CTDoc(docname, doctitle))
 
     def rm_doc(self, docname):
@@ -216,7 +232,7 @@ def add_tag_pages(app):  # noqa: D103
     # TODO: It might work to pass ``tags_raw`` into the context. This *might*
     #       enable a better tag index, probably allowing to include the count
     #       of articles of a tag beside the tag.
-    tag_pages = [("tags/index", {"ct_tags": tags}, "tag_index.html")]
+    tag_pages = [(app.config.ct_tag_overview_url, {"ct_tags": tags}, "tag_index.html")]
 
     for tag in tags:
         tag_pages.append(
@@ -330,7 +346,9 @@ class ContentTagDirective(SphinxDirective):
         for tag in tag_list:
             # FIXME: The document's title is not really available here...
             getattr(self.env, ENV_TAG_KEY)[tag].add_doc(
-                self.env.docname, self.env.docname
+                self.env.docname,
+                self.env.docname,
+                self.env.config.ct_tag_page_url_template,
             )
 
         # print("[DEBUG] tags: {!r}".format(getattr(self.env, ENV_TAG_KEY)))
@@ -348,6 +366,9 @@ def setup(app):
 
     TODO: Finish this!
     """
+    app.add_config_value("ct_tag_overview_url", "tags", "env")
+    app.add_config_value("ct_tag_page_url_template", "tags/{}", "env")
+
     app.add_directive("tags", ContentTagDirective)
 
     app.connect("env-purge-doc", purge_document_from_tags)
