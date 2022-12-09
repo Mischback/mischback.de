@@ -70,7 +70,7 @@ class CTDoc:
         """Provide an instance's ``representation``."""
         # see https://stackoverflow.com/a/12448200
         return "<CTDoc(docname={}, doctitle={})>".format(
-            self.docname.__repr__(), self.doctitle.__repr__()
+            self.docname.__repr__(), self.title.__repr__()
         )
 
     def __key(self):
@@ -114,6 +114,18 @@ class CTTag:
         """
         self._docs.add(CTDoc(docname, doctitle))
 
+    def rm_doc(self, docname):
+        """Remove a document from this tag.
+
+        This method is used during purging the environment, before re-reading
+        a source file.
+
+        Parameters
+        ----------
+        docname : str
+        """
+        self._docs = {doc for doc in self._docs if not doc.docname == docname}
+
     def __repr__(self):
         """Provide an instance's ``representation``."""
         # see https://stackoverflow.com/a/12448200
@@ -152,17 +164,17 @@ def add_tags_to_render_context(app, pagename, templatename, context, doctree):
         tmp = getattr(app.env, ENV_DOC_KEY)
         context["ct_document_tags"] = tmp[pagename]
 
-    print("[DEBUG] evaluate_rendering_context() - {}".format(pagename))
-    print("[DEBUG] context: {!r}".format(context))
+    # print("[DEBUG] evaluate_rendering_context() - {}".format(pagename))
+    # print("[DEBUG] context: {!r}".format(context))
     # print("[DEBUG] html_context: {!r}".format(app.config.html_context))
 
 
 def add_tag_pages(app):  # noqa: D103
-    print("[DEBUG] add_tag_pages()")
+    # print("[DEBUG] add_tag_pages()")
 
     tags_raw = getattr(app.env, ENV_TAG_KEY, {})
     tags = tags_raw.keys()
-    print("[DEBUG] tags: {!r}".format(tags))
+    # print("[DEBUG] tags: {!r}".format(tags))
 
     tag_pages = [("tags/index", {"ct_tags": tags}, "tag_index.html")]
 
@@ -183,8 +195,8 @@ def purge_document_from_tags(app, env, docname):
 
     Tag information is stored in Sphinx's build environment, which is cached
     between runs. Before (re-) reading the source file, all existing references
-    must be removed from the cached tag information in order to allow changes /
-    updates of the tags of a document.
+    to a document must be removed from the cached tag information in order to
+    allow changes / updates of the tags of a document.
 
     This function is meant to be attached to Sphinx's ``env-purge-doc`` event
     and will enable the extension to work with parallel builds.
@@ -193,7 +205,7 @@ def purge_document_from_tags(app, env, docname):
         tmp = getattr(env, ENV_TAG_KEY)
         for tag in tmp.keys():
             try:
-                tmp[tag].remove(docname)
+                tmp[tag].rm_doc(docname)
             except KeyError:
                 # KeyError is raised if ``docname`` is not in the set referenced
                 # by ``tmp[tag]``.
@@ -204,7 +216,7 @@ def purge_document_from_tags(app, env, docname):
         # see https://stackoverflow.com/a/11277439
         tmp.pop(docname, None)
 
-    print("[DEBUG] purge_document_from_tags() - {}".format(docname))
+    # print("[DEBUG] purge_document_from_tags() - {}".format(docname))
     # print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY, None)))
     # print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY, None)))
 
@@ -237,7 +249,7 @@ def merge_tags(app, env, docname, other):
         for doc in tmp_o.keys():
             tmp[doc].update(tmp_o[doc])
 
-    print("[DEBUG] merge_tags() - {}".format(docname))
+    # print("[DEBUG] merge_tags() - {}".format(docname))
     # print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY, None)))
     # print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY, None)))
 
@@ -323,7 +335,7 @@ def setup(app):
 
     app.connect("env-purge-doc", purge_document_from_tags)
     app.connect("env-merge-info", merge_tags)
-    app.connect("html-collect-pages", add_tag_pages)
+    # app.connect("html-collect-pages", add_tag_pages)
     app.connect("html-page-context", add_tags_to_render_context)
 
     return {
