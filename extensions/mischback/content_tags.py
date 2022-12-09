@@ -142,6 +142,15 @@ class CTTag:
             raise Exception("Name mismatch")
         self._docs.update(other._docs)
 
+    def contains(self, docname):
+        """Determine if a document is associated with a tag.
+
+        Parameters
+        ----------
+        docname : str
+        """
+        return len({doc for doc in self._docs if doc.docname == docname}) != 0
+
     def __repr__(self):
         """Provide an instance's ``representation``."""
         # see https://stackoverflow.com/a/12448200
@@ -186,13 +195,15 @@ def add_tags_to_render_context(app, pagename, templatename, context, doctree):
           to render the tags in the layout, outside of the actual body provided
           by the doctree.
     """
-    if hasattr(app.env, ENV_DOC_KEY):
-        tmp = getattr(app.env, ENV_DOC_KEY)
-        context["ct_document_tags"] = tmp[pagename]
+    tags_raw = getattr(app.env, ENV_TAG_KEY, {})
+    tag_docs = {tags_raw[tag] for tag in tags_raw if tags_raw[tag].contains(pagename)}
+
+    # only add tags to the rendering context if there actually are tags
+    if len(tag_docs) > 0:
+        context["ct_document_tags"] = tag_docs
 
     # print("[DEBUG] evaluate_rendering_context() - {}".format(pagename))
     # print("[DEBUG] context: {!r}".format(context))
-    # print("[DEBUG] html_context: {!r}".format(app.config.html_context))
 
 
 def add_tag_pages(app):  # noqa: D103
