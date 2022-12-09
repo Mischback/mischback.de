@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block main_container %}
+
+  {% if ct_tags %}
+  <ul>
+    {% for tag in ct_tags -%}
+    <li><a href="{{ pathto(ct_tags[tag].pagename) }}">{{ tag }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+{% endblock main_container %}

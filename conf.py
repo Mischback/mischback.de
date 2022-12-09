@@ -70,6 +70,7 @@ extensions = [
     #
     # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html
     "sphinx.ext.extlinks",
+    "mischback.content_tags",
     "mischback.sphinx_jinja2_debug",
     # TODO: "sphinx.ext.graphviz"
     #       If there is a use-case for these diagrams.
