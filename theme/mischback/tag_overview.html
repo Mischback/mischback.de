@@ -2,7 +2,7 @@
 
 {% block main_container %}
   {% for tag in ct_tags %}
-    {{ tag }},
+  <a href="{{ pathto("tags/{}".format(tag)) }}">{{ tag }}</a>,
   {% else %}
   foobar
   {% endfor %}
