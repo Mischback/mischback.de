@@ -1,4 +1,25 @@
-"""Provide a tagging mechanism for Sphinx."""
+"""Provide a tagging mechanism for Sphinx.
+
+This extension adds a ``tags`` directive to Sphinx standard domain. The
+directive will not produce any output (it does not add anything to docutils'
+tree), but it will keep track of *content tags* assigned to documents.
+
+The extension creates a dedicated page for every tag, linking to the
+associated documents aswell as a tag overview page, providing links to all
+tag pages.
+
+The required templates (``tag.html`` and ``tag_index.html``) must be provided
+by the theme (see `#19 <https://github.com/Mischback/static-web/issues/19>`_).
+
+The extension hooks into Sphinx's build system using the provided events. It
+does not rely on Sphinx's ``:index:``, which feels hacky, but creating the
+required indices dynamically failed badly. Instead, the extension manages all
+tag-related data internally.
+
+While Sphinx is running the ``html`` or ``dirhtml`` builder, all documents with
+tags will have them available in the context passed to Jinja2. It is up to the
+theme to provide the required markup.
+"""
 
 # Python imports
 from collections import defaultdict
@@ -388,7 +409,7 @@ class ContentTagDirective(SphinxDirective):
         for tag in tag_list:
             getattr(self.env, ENV_TAG_KEY)[tag].add_doc(
                 self.env.docname,
-                self.env.docname,  # FIXME: The document's title is not really available here...
+                "",
                 self.env.config.ct_tag_page_url_template,
             )
 
