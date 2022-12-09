@@ -86,13 +86,21 @@ class CTTag:
     ----------
     name : str
         The actual *value* of the tag. It is stored in *lowercase* only.
+    pagename : str
+        This is the pagename for this tag.
     _docs : set
         A set of ``CTDoc`` instances. This should not be accessed directly,
         instead the methods ``add_doc`` and ``get_docs`` should be used.
     """
 
-    def __init__(self, name):
+    def __init__(self, name, url_format_string="tags/{}/index"):
         self.name = name.strip().lower()
+        # TODO: The URLs are currently hardcoded. If this is to be released as
+        #       a generalized extension, this should be configurable with an
+        #       extension-specific setting.
+        #       The templates already rely on this class's ``pagename``
+        #       attribute.
+        self.pagename = url_format_string.format(self.name)
         self._docs = set()
 
     def add_doc(self, docname, doctitle):
@@ -202,8 +210,7 @@ def add_tags_to_render_context(app, pagename, templatename, context, doctree):
 def add_tag_pages(app):  # noqa: D103
     # print("[DEBUG] add_tag_pages()")
 
-    tags_raw = getattr(app.env, ENV_TAG_KEY, {})
-    tags = tags_raw.keys()
+    tags = getattr(app.env, ENV_TAG_KEY, {})
     # print("[DEBUG] tags: {!r}".format(tags))
 
     # TODO: It might work to pass ``tags_raw`` into the context. This *might*
@@ -214,8 +221,8 @@ def add_tag_pages(app):  # noqa: D103
     for tag in tags:
         tag_pages.append(
             (
-                "tags/{}/index".format(tag),
-                {"ct_tag_docs": tags_raw[tag]},
+                tags[tag].pagename,
+                {"ct_tag_docs": tags[tag]},
                 "tag.html",
             )
         )

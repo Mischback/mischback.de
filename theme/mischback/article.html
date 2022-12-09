@@ -11,7 +11,7 @@
     <header>Tags</header>
     <ul>
       {% for tag in ct_document_tags -%}
-      <li><a href="{{ pathto("tags/{}".format(tag.name)) }}">{{ tag.name }}</a></li>
+      <li><a href="{{ pathto(tag.pagename) }}">{{ tag.name }}</a></li>
       {% endfor %}
     </ul>
   </section>

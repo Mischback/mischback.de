@@ -5,7 +5,7 @@
   {% if ct_tags %}
   <ul>
     {% for tag in ct_tags -%}
-    <li><a href="{{ pathto("tags/{}".format(tag)) }}">{{ tag }}</a></li>
+    <li><a href="{{ pathto(ct_tags[tag].pagename) }}">{{ tag }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
