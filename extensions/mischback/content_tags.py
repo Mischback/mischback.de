@@ -2,6 +2,7 @@
 
 # Python imports
 from collections import defaultdict
+from functools import total_ordering
 
 # Sphinx imports
 from sphinx.util.docutils import SphinxDirective
@@ -19,6 +20,125 @@ ENV_DOC_KEY = "ct_docs"
 Provides a dictionary with *document names* as keys and sets of *tags* as
 values.
 """
+
+
+@total_ordering
+class CTDoc:
+    """Represent a (tagged) document.
+
+    Parameters
+    ----------
+    docname : str
+    doctitle : str
+
+    Attributes
+    ----------
+    docname : str
+        The document's location, relative to the source directory. May be used
+        to generate links to the document, either from reST sources (using
+        ``:doc:`[docname]```) or from Jinja2 templates (using
+        ``{{ pathto(docname) }}``).
+    title : str
+        The document's title, that is the first headline in the document.
+    """
+
+    def __init__(self, docname, doctitle):
+        self.docname = docname
+        self.title = doctitle
+
+    def __eq__(self, other):
+        """Check equality with ``other`` object."""
+        # see https://stackoverflow.com/a/2909119
+        # see https://stackoverflow.com/a/8796908
+        if isinstance(other, CTDoc):
+            return self.__key() == other.__key()
+        return NotImplemented
+
+    def __hash__(self):
+        """Provide a unique representation of the instance."""
+        # see https://stackoverflow.com/a/2909119
+        return hash(self.__key())
+
+    def __lt__(self, other):
+        """Check equality with ``other`` object."""
+        # see https://stackoverflow.com/a/8796908
+        if isinstance(other, CTDoc):
+            return self.__key() < other.__key()
+        return NotImplemented
+
+    def __repr__(self):
+        """Provide an instance's ``representation``."""
+        # see https://stackoverflow.com/a/12448200
+        return "<CTDoc(docname={}, doctitle={})>".format(
+            self.docname.__repr__(), self.doctitle.__repr__()
+        )
+
+    def __key(self):
+        """Provide internal representation of the instance."""
+        # see https://stackoverflow.com/a/2909119
+        return (self.docname, self.title)
+
+
+class CTTag:
+    """The logical representation of a tag.
+
+    Provides a list of documents (``CTDoc`` instances), that are tagged with
+    the instances ``name``.
+
+    Parameters
+    ----------
+    name : str
+
+    Attributes
+    ----------
+    name : str
+        The actual *value* of the tag. It is stored in *lowercase* only.
+    _docs : set
+        A set of ``CTDoc`` instances. This should not be accessed directly,
+        instead the methods ``add_doc`` and ``get_docs`` should be used.
+    """
+
+    def __init__(self, name):
+        self.name = name.strip().lower()
+        self._docs = set()
+
+    def add_doc(self, docname, doctitle):
+        """Add a document to the tag.
+
+        Documents are represented by instances of ``CTDoc``.
+
+        Parameters
+        ----------
+        docname : str
+        doctitle : str
+        """
+        self._docs.add(CTDoc(docname, doctitle))
+
+    def __repr__(self):
+        """Provide an instance's ``representation``."""
+        # see https://stackoverflow.com/a/12448200
+        return "<CTTag(name={})>".format(self.name)
+
+
+class TagDefaultDict(defaultdict):
+    """Custom override for Python's ``defaultdict``.
+
+    This enables the defaultdict to use a (custom) class as its default while
+    passing the *desired* ``key`` to the constructor of that class.
+
+    While this implementation is pretty generic, it is meant to be used with
+    ``CTTag`` as its default.
+    """
+
+    def __missing__(self, key):
+        """Create a new ``key`` with the provided default ``value``.
+
+        This passes the *desired* key to the constructor of the default class
+        for ``value``.
+        """
+        # see https://stackoverflow.com/a/32932568
+        self[key] = new = self.default_factory(key)
+        return new
 
 
 def add_tags_to_render_context(app, pagename, templatename, context, doctree):
@@ -169,10 +289,13 @@ class ContentTagDirective(SphinxDirective):
 
         # Add the documents to all associated tags
         if not hasattr(self.env, ENV_TAG_KEY):
-            setattr(self.env, ENV_TAG_KEY, defaultdict(set))
+            setattr(self.env, ENV_TAG_KEY, TagDefaultDict(CTTag))
 
         for tag in tag_list:
-            getattr(self.env, ENV_TAG_KEY)[tag].add(self.env.docname)
+            # FIXME: The document's title is not really available here...
+            getattr(self.env, ENV_TAG_KEY)[tag].add_doc(
+                self.env.docname, self.env.docname
+            )
 
         # print("[DEBUG] tags: {!r}".format(getattr(self.env, ENV_TAG_KEY)))
 
