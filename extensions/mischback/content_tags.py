@@ -143,6 +143,22 @@ class CTTag:
         """
         self._docs = {doc for doc in self._docs if not doc.docname == docname}
 
+    def set_doc_titles(self, titles):
+        """Set the titles of all tagged documents.
+
+        This method is called during the ``env-update`` event handler and will
+        update the titles of all documents.
+
+        See ``update_doc_titles()`` for details of this operation.
+
+        Parameters
+        ----------
+        titles : dict
+        """
+        for doc in self._docs:
+            # print("[DEBUG] -> {}".format(titles[doc.docname].astext()))
+            doc.title = titles[doc.docname].astext()
+
     def merge(self, other):
         """Merge two instances of this class.
 
@@ -253,6 +269,26 @@ def add_tag_pages(app):
         )
 
     return tag_pages
+
+
+def update_doc_titles(app, env):
+    """Update the documents' titles.
+
+    When the tags dictionary is built, the documents' titles may not be
+    available yet. This function is executed, when Sphinx has finished all
+    parsing tasks and will update the ``title`` attributes of all ``CTDoc``
+    instances.
+
+    This is a highly inefficient operation, as it will iterate over all tags
+    and all tagged documents.
+
+    This function is meant to be attached to Sphinx's ``env-updated`` event.
+    """
+    titles = env.titles
+    tags = getattr(app.env, ENV_TAG_KEY, {})
+
+    for tag in tags:
+        tags[tag].set_doc_titles(titles)
 
 
 def purge_document_from_tags(app, env, docname):
@@ -380,6 +416,7 @@ def setup(app):
     app.add_directive("tags", ContentTagDirective)
 
     app.connect("env-purge-doc", purge_document_from_tags)
+    app.connect("env-updated", update_doc_titles)
     app.connect("env-merge-info", merge_tags)
     app.connect("html-collect-pages", add_tag_pages)
     app.connect("html-page-context", add_tags_to_render_context)
