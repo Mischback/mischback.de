@@ -147,6 +147,16 @@ class CTTag:
         # see https://stackoverflow.com/a/12448200
         return "<CTTag(name={})>".format(self.name)
 
+    def __getitem__(self, index):
+        """Make the objects iterable.
+
+        Notes
+        -----
+        - https://stackoverflow.com/a/7542261
+        - https://stackoverflow.com/a/15479974
+        """
+        return list(self._docs)[index]
+
 
 class TagDefaultDict(defaultdict):
     """Custom override for Python's ``defaultdict``.
@@ -351,7 +361,7 @@ def setup(app):
 
     app.connect("env-purge-doc", purge_document_from_tags)
     app.connect("env-merge-info", merge_tags)
-    # app.connect("html-collect-pages", add_tag_pages)
+    app.connect("html-collect-pages", add_tag_pages)
     app.connect("html-page-context", add_tags_to_render_context)
 
     return {

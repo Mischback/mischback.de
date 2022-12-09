@@ -5,7 +5,7 @@
   {% if ct_tag_docs %}
   <ul>
     {% for doc in ct_tag_docs -%}
-    <li><a href="{{ pathto(doc) }}">{{ doc }}</a></li>
+    <li><a href="{{ pathto(doc.docname) }}">{{ doc.title }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
