@@ -126,6 +126,22 @@ class CTTag:
         """
         self._docs = {doc for doc in self._docs if not doc.docname == docname}
 
+    def merge(self, other):
+        """Merge two instances of this class.
+
+        After some sanity checks, it uses the ``set``'s ``update()`` method
+        to merge the documents.
+
+        Parameters
+        ----------
+        other : ``CTTag``
+        """
+        if not isinstance(other, CTTag):
+            return NotImplemented
+        if not self.name == other.name:
+            raise Exception("Name mismatch")
+        self._docs.update(other._docs)
+
     def __repr__(self):
         """Provide an instance's ``representation``."""
         # see https://stackoverflow.com/a/12448200
@@ -232,13 +248,13 @@ def merge_tags(app, env, docname, other):
     and will enable the extension to work with parallel builds.
     """
     if not hasattr(env, ENV_TAG_KEY):
-        setattr(env, ENV_TAG_KEY, defaultdict(set))
+        setattr(env, ENV_TAG_KEY, TagDefaultDict(CTTag))
 
     if hasattr(other, ENV_TAG_KEY):
         tmp = getattr(env, ENV_TAG_KEY)
         tmp_o = getattr(other, ENV_TAG_KEY)
         for tag in tmp_o.keys():
-            tmp[tag].update(tmp_o[tag])
+            tmp[tag].merge(tmp_o[tag])
 
     if not hasattr(env, ENV_DOC_KEY):
         setattr(env, ENV_DOC_KEY, defaultdict(set))
