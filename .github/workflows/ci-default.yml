@@ -51,6 +51,10 @@ jobs:
         run: make util/lint/sphinx-linkcheck
       - name: Build HTML output
         run: make build
+      - name: Validate HTML output
+        uses: anishathalye/proof-html@v2
+        with:
+          directory: .build
 
   dependabot:
     needs: [linting, building]
