@@ -208,9 +208,11 @@ class TagDefaultDict(defaultdict):
 def add_tags_to_render_context(app, pagename, templatename, context, doctree):
     """Add the document's associated tags to the rendering context.
 
-    TODO: This is not really used at the moment, but the idea is to be able
-          to render the tags in the layout, outside of the actual body provided
-          by the doctree.
+    The document's tags will be accessible as ``ct_document_tags`` in Jinja2
+    templates. This is a ``set`` of ``CTTag`` instances.
+
+    This function will not add ``ct_document_tags`` if there are no tags
+    associated with the document.
     """
     tags_raw = getattr(app.env, ENV_TAG_KEY, {})
     tag_docs = {tags_raw[tag] for tag in tags_raw if tags_raw[tag].contains(pagename)}
@@ -223,15 +225,22 @@ def add_tags_to_render_context(app, pagename, templatename, context, doctree):
     # print("[DEBUG] context: {!r}".format(context))
 
 
-def add_tag_pages(app):  # noqa: D103
+def add_tag_pages(app):
+    """Add the required tag-related pages to Sphinx's build.
+
+    This will automatically create a *tag overview* page with an URL that may
+    be configured using ``ct_tag_overview_url`` in Sphinx's configuration and
+    a *page for every tag* that is used in the source files, whose URLs may be
+    configured using ``ct_tag_page_url_template`` in Sphinx's configuration.
+
+    This function is meant to be attached to Sphinx's ``html-collect-pages``
+    event.
+    """
     # print("[DEBUG] add_tag_pages()")
 
     tags = getattr(app.env, ENV_TAG_KEY, {})
     # print("[DEBUG] tags: {!r}".format(tags))
 
-    # TODO: It might work to pass ``tags_raw`` into the context. This *might*
-    #       enable a better tag index, probably allowing to include the count
-    #       of articles of a tag beside the tag.
     tag_pages = [(app.config.ct_tag_overview_url, {"ct_tags": tags}, "tag_index.html")]
 
     for tag in tags:
@@ -313,9 +322,6 @@ class ContentTagDirective(SphinxDirective):
     #
     # The idea is to treat a list of tags like a single argument and parse them
     # in the ``run()`` method.
-    #
-    # TODO: This needs heavy testing, if this extension goes beyond my personal
-    #       project.
     final_argument_whitespace = True
 
     def run(self):
@@ -344,10 +350,9 @@ class ContentTagDirective(SphinxDirective):
             setattr(self.env, ENV_TAG_KEY, TagDefaultDict(CTTag))
 
         for tag in tag_list:
-            # FIXME: The document's title is not really available here...
             getattr(self.env, ENV_TAG_KEY)[tag].add_doc(
                 self.env.docname,
-                self.env.docname,
+                self.env.docname,  # FIXME: The document's title is not really available here...
                 self.env.config.ct_tag_page_url_template,
             )
 
@@ -360,11 +365,14 @@ class ContentTagDirective(SphinxDirective):
 def setup(app):
     """Register the extension with Sphinx.
 
-    This function is required by ``Sphinx``'s extension interface, see
+    This function is required by Sphinx's extension interface, see
     https://www.sphinx-doc.org/en/master/development/tutorials/helloworld.html#writing-the-extension
     for reference.
 
-    TODO: Finish this!
+    It makes the extension's configuration values available for Sphinx, adds
+    the extension's ``tags`` directive and hooks into Sphinx's build system
+    using dedicated *events* (the events are documented in the respective
+    event handler's / callback's docstring).
     """
     app.add_config_value("ct_tag_overview_url", "tags", "env")
     app.add_config_value("ct_tag_page_url_template", "tags/{}", "env")
