@@ -44,14 +44,14 @@ def add_tag_pages(app):  # noqa: D103
     tags = tags_raw.keys()
     print("[DEBUG] tags: {!r}".format(tags))
 
-    tag_pages = [("tags/index", {"ct_tags": tags}, "tag_overview.html")]
+    tag_pages = [("tags/index", {"ct_tags": tags}, "tag_index.html")]
 
     for tag in tags:
         tag_pages.append(
             (
                 "tags/{}/index".format(tag),
                 {"ct_tag_docs": tags_raw[tag]},
-                "tag_overview.html",
+                "tag.html",
             )
         )
 
