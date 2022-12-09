@@ -202,6 +202,9 @@ def add_tag_pages(app):  # noqa: D103
     tags = tags_raw.keys()
     # print("[DEBUG] tags: {!r}".format(tags))
 
+    # TODO: It might work to pass ``tags_raw`` into the context. This *might*
+    #       enable a better tag index, probably allowing to include the count
+    #       of articles of a tag beside the tag.
     tag_pages = [("tags/index", {"ct_tags": tags}, "tag_index.html")]
 
     for tag in tags:
