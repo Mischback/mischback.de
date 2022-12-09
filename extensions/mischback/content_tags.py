@@ -14,13 +14,6 @@ Provides a dictionary with *tags* as keys and sets of *document names* as
 values.
 """
 
-ENV_DOC_KEY = "ct_docs"
-"""Key to track the tags of documents in Sphinx's build environment.
-
-Provides a dictionary with *document names* as keys and sets of *tags* as
-values.
-"""
-
 
 @total_ordering
 class CTDoc:
@@ -251,14 +244,8 @@ def purge_document_from_tags(app, env, docname):
                 # by ``tmp[tag]``.
                 pass
 
-    if hasattr(env, ENV_DOC_KEY):
-        tmp = getattr(env, ENV_DOC_KEY)
-        # see https://stackoverflow.com/a/11277439
-        tmp.pop(docname, None)
-
     # print("[DEBUG] purge_document_from_tags() - {}".format(docname))
     # print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY, None)))
-    # print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY, None)))
 
 
 def merge_tags(app, env, docname, other):
@@ -280,18 +267,8 @@ def merge_tags(app, env, docname, other):
         for tag in tmp_o.keys():
             tmp[tag].merge(tmp_o[tag])
 
-    if not hasattr(env, ENV_DOC_KEY):
-        setattr(env, ENV_DOC_KEY, defaultdict(set))
-
-    if hasattr(other, ENV_DOC_KEY):
-        tmp = getattr(env, ENV_DOC_KEY)
-        tmp_o = getattr(other, ENV_DOC_KEY)
-        for doc in tmp_o.keys():
-            tmp[doc].update(tmp_o[doc])
-
     # print("[DEBUG] merge_tags() - {}".format(docname))
     # print("[DEBUG] tags: {!r}".format(getattr(env, ENV_TAG_KEY, None)))
-    # print("[DEBUG] docs: {!r}".format(getattr(env, ENV_DOC_KEY, None)))
 
 
 class ContentTagDirective(SphinxDirective):
@@ -350,13 +327,6 @@ class ContentTagDirective(SphinxDirective):
             )
 
         # print("[DEBUG] tags: {!r}".format(getattr(self.env, ENV_TAG_KEY)))
-
-        # Add associated tags to the document
-        if not hasattr(self.env, ENV_DOC_KEY):
-            setattr(self.env, ENV_DOC_KEY, defaultdict(set))
-
-        # FIXME: Does this automatically remove duplicate items?
-        getattr(self.env, ENV_DOC_KEY)[self.env.docname] = tag_list
 
         # as of now, don't add anything to the doctree
         return []
