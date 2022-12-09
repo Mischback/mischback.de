@@ -1,5 +1,14 @@
+# The actual release
+.build/
+
+# Track actions with artificial stamps
+.make-stamps/
+
 # Python virtual environments
 .tox-venv/
+
+# NodeJS modules
+node_modules/
 
 # Python byte-compiled / optimized / DLL files
 __pycache__/

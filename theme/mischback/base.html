@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block html_head %}
+      {% block html_meta %}
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      {% include "seo.html" %}
+      {% endblock html_meta %}
+    <title>{% block page_title %}mischback.de{% endblock page_title %}</title>
+    {% endblock html_head %}
+  </head>
+  <body>
+    {% block html_body %}
+    <div id="mischback-main">
+      <strong>base.html</strong>: block "html_body"
+    </div>
+    {% endblock html_body %}
+  </body>
+</html>

@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block main_container %}
+<article>
+  {{ body }}
+</article>
+
+<aside>
+  {% if ct_document_tags %}
+  <section>
+    <header>Tags</header>
+    <ul>
+      {% for tag in ct_document_tags -%}
+      <li><a href="{{ pathto(tag.pagename) }}">{{ tag.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% if meta.tubhrq %}
+  <section>
+    <header>tubhrq</header>
+    <blockquote>
+      <p class="quote">{{ meta.tubhrq }}</p>
+      <span class="origin">
+        <strong>
+          {% if meta.tubhrq_origin %}
+          {{ meta.tubhrq_origin }}
+          {% else %}
+          unknown
+          {% endif %}
+        </strong>
+      </span>
+    </blockquote>
+  </section>
+  {% endif %}
+</aside>
+{% endblock main_container %}

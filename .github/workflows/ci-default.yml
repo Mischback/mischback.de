@@ -1,4 +1,3 @@
-
 name: CI Default Branch
 
 on:
@@ -10,7 +9,51 @@ on:
       - development
 
 jobs:
+  linting:
+    name: Run linters
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.0
+
+  building:
+    name: Build with Sphinx
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Cache tox's environments [EXPERIMENTAL]
+        id: cache-tox
+        uses: actions/cache@v3
+        with:
+          path: |
+            .tox
+            node_modules
+            ${{ env.pythonLocation }}
+            .make-stamps/nodejs-installed
+            .make-stamps/nodejs-ready
+          key: tox-${{ env.pythonLocation }}-${{ hashFiles('requirements/tox.txt', 'requirements/sphinx.txt', 'requirements/nodeenv.txt', 'package-lock.json', 'pyproject.toml') }}
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements/tox.txt
+      - name: Run Sphinx's linkcheck
+        run: make util/lint/sphinx-linkcheck
+      - name: Build HTML output
+        run: make build
+
   dependabot:
+    needs: [linting, building]
     uses: mischback/development-meta/.github/workflows/dependabot-auto-approve.yml@development
     with:
       pr_url: ${{ github.event.pull_request.html_url }}

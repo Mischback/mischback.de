@@ -1,8 +1,104 @@
-# ### tox configuration
+# ### CURLYLINT configuration
+#
+# ``curlylint`` is run through ``pre-commit`` and may be run manually using
+# ``make util/lint/curlylint``.
+#
+# It does require *opt-in* to the actual rules.
+[tool.curlylint.rules]
+# FIXME: ``true`` means: all roles must be valid. However, providing a list of
+#        roles allows limitation to the actual roles in use.
+aria_role = true
+# FIXME: ``true`` means: the ``lang`` attribute must be present. However,
+#        providing a list of accepted values allows finer control.
+html_has_lang = true
+# Require all ``<img>`` tags to have the ``alt`` attribute (even empty).
+image_alt = true
+# use 2 spaces for indentation.
+# NOTE: This must be synchronized with ``.editorconfig``.
+# TODO: Seems broken atm, see https://github.com/thibaudcolas/curlylint/issues/6
+#indent = 2
+# allow users to zoom
+meta_viewport = true
+# don't use the ``autofocus`` attribute on any element
+no_autofocus = true
+# TODO: Needs investigation!
+# Don't use positive values for ``tabindex`` attributes
+tabindex_no_positive = true
+
+
+# ### DJLINT configuration
+#
+# ``djlint`` is run through ``pre-commit`` and may be run manually using
+# ``make util/lint/djlint``.
+
+# https://www.djlint.com/docs/configuration/#per_file_ignores
+[tool.djlint.per-file-ignores]
+# ignore recommendation to add meta description / keywords. These are provided
+# using ``theme/mischback/seo.html``.
+"theme/mischback/base.html" = "H030,H031"
+
+
+# ### ISORT configuration
+#
+# ``isort`` us run through ``pre-commit`` and may be run manually using
+# ``make util/lint/isort``.
+#
+# Very basic configuration, as this project is not really focussed on providing
+# Python source code.
+[tool.isort]
+profile            = "black"
+combine_as_imports = true
+default_section    = "THIRDPARTY"
+known_sphinx       = "sphinx"
+sections           = [
+  "FUTURE",
+  "STDLIB",
+  "SPHINX",
+  "THIRDPARTY",
+  "FIRSTPARTY",
+  "LOCALFOLDER"
+]
+import_heading_stdlib      = "Python imports"
+import_heading_sphinx      = "Sphinx imports"
+import_heading_thirdparty  = "external imports"
+import_heading_firstparty  = "app imports"
+import_heading_localfolder = "local imports"
+
+
+# ### TOX configuration
+#
+# ``tox`` is run to manage different virtual environments for different tasks.
+# It is **not** used for its main purpose of running tests with different
+# environments.
+#
+# Please note that ``tox`` >= 4.0 will support ``pyproject.toml`` natively, so
+# this configuration will have to be adjusted, probably heavily.
 [tool.tox]
 legacy_tox_ini = """
 [tox]
 minversion = 3.26.0
+
+[testenv:sphinx]
+basepython = python3
+deps =
+  -r {toxinidir}/requirements/sphinx.txt
+envdir = {toxworkdir}/sphinx
+setenv =
+  PYTHONDONTWRITEBYTECODE=1
+skip_install = true
+commands =
+  {posargs:sphinx-build --version}
+
+[testenv:dev-serve]
+basepython = {[testenv:sphinx]basepython}
+changedir = {toxinidir}/.build
+deps = {[testenv:sphinx]deps}
+envdir = {[testenv:sphinx]envdir}
+setenv = {[testenv:sphinx]setenv}
+skip_install = {[testenv:sphinx]skip_install}
+commands =
+  python -m http.server {posargs:8082}
+
 [testenv:pre-commit]
 basepython = python3
 deps =
@@ -25,4 +121,15 @@ setenv =
 skip_install = true
 commands =
   pip-compile --resolver=backtracking {posargs}
+
+[testenv:nodejs]
+basepython = python3
+deps =
+  -r {toxinidir}/requirements/nodeenv.txt
+envdir = {toxworkdir}/nodejs
+setenv =
+  PYTHONDOTNWRITEBYTECODE=1
+skip_install = true
+commands =
+  {posargs:nodeenv --list}
 """

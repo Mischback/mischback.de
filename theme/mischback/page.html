@@ -1,0 +1,30 @@
+{#
+  Make the template to render content configurable from the source file.
+
+  ``Sphinx`` will use the template ``page.html`` (this file!) to render all
+  user-provided content.
+
+  When using ``Sphinx`` to drive a website, the author should have some more
+  control about the template that will be used.
+
+  This could have been achieved with excessive logic within ``page.html``, but
+  instead the author can simply set a (custom) meta variable ``layout`` *in
+  the content's source file* as described here:
+  https://www.sphinx-doc.org/en/master/development/theming.html#use-custom-page-metadata-in-html-templates
+  and that layout is then used with an ``include`` provided by ``Jinja2``.
+
+  If no ``layout`` is specified, a default layout will be used, which is
+  defined in the theme's options, see ``theme.conf``.
+
+  Please note: ``layout`` has to be provided **without** suffix. The required
+  ``".html"`` is added here!
+
+  This technique mimics how ``Jekyll`` allows control about the layout, or
+  more precisely the template, using the source file's *frontmatter*, see
+  https://jekyllrb.com/docs/layouts/#usage .
+#}
+{% if meta.layout %}
+  {% include "{}.html".format(meta.layout) %}
+{% else %}
+  {% include theme_default_layout %}
+{% endif %}
