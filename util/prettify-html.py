@@ -8,6 +8,9 @@ import argparse
 import glob
 import os
 
+# external imports
+import bs4
+
 
 def parse_args():
     """Parse the command line arguments.
@@ -33,13 +36,15 @@ def main():
     # get the arguments
     args = parse_args()
 
-    build_dir = os.path.abspath(args.build_dir)
+    my_formatter = bs4.formatter.HTMLFormatter(indent=2)
+
     # see https://stackoverflow.com/a/40755802
+    build_dir = os.path.abspath(args.build_dir)
     for file in glob.iglob("{}/**/*.html".format(build_dir), recursive=True):
         with open(file, "r") as raw:
             tmp = raw.read()
 
-        print(tmp)
+        print(bs4.BeautifulSoup(tmp, "html5lib").prettify(formatter=my_formatter))
 
 
 if __name__ == "__main__":
