@@ -121,15 +121,4 @@ setenv =
 skip_install = true
 commands =
   pip-compile --resolver=backtracking {posargs}
-
-[testenv:nodejs]
-basepython = python3
-deps =
-  -r {toxinidir}/requirements/nodeenv.txt
-envdir = {toxworkdir}/nodejs
-setenv =
-  PYTHONDOTNWRITEBYTECODE=1
-skip_install = true
-commands =
-  {posargs:nodeenv --list}
 """
