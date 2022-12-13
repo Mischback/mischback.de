@@ -5,6 +5,8 @@
 
 # Python imports
 import argparse
+import glob
+import os
 
 
 def parse_args():
@@ -28,8 +30,16 @@ def main():
 
     This is the script's main function, performing the actual operations.
     """
-    inputs = parse_args()
-    print(inputs.build_dir)
+    # get the arguments
+    args = parse_args()
+
+    build_dir = os.path.abspath(args.build_dir)
+    # see https://stackoverflow.com/a/40755802
+    for file in glob.iglob("{}/**/*.html".format(build_dir), recursive=True):
+        with open(file, "r") as raw:
+            tmp = raw.read()
+
+        print(tmp)
 
 
 if __name__ == "__main__":
