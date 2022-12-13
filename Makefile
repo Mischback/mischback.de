@@ -30,6 +30,7 @@ SRC_THEME := $(shell find $(THEME_DIR) -type f)
 STAMP_DIR := $(REPO_ROOT)/.make-stamps
 STAMP_SPHINX := $(STAMP_DIR)/sphinx-build
 STAMP_POST := $(STAMP_DIR)/post-processing
+STAMP_POST_PRETTIFY := $(STAMP_DIR)/post-prettify
 
 # Internal Python environments
 TOX_VENV_DIR := $(REPO_ROOT)/.tox-venv
@@ -54,7 +55,7 @@ MAKEFLAGS += --no-builtin-rules
 # ### RECIPES
 
 # Build and serve the actual generated website
-dev/srv : $(STAMP_SPHINX)
+dev/srv : $(STAMP_POST_PRETTIFY)
 	$(TOX_CMD) -q -e dev-serve
 .PHONY : dev/srv
 
@@ -72,8 +73,13 @@ $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME)
 	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
 	touch $@
 
-$(STAMP_POST) : $(STAMP_SPHINX)
+$(STAMP_POST) : $(STAMP_POST_PRETTIFY)
 	$(create_dir)
+	touch $@
+
+$(STAMP_POST_PRETTIFY) : $(STAMP_SPHINX)
+	$(create_dir)
+	$(MAKE) util/post-processing post-processing_cmd="{toxinidir}/util/prettify-html.py $(BUILD_DIR)"
 	touch $@
 
 # Remove build artifacts
@@ -81,6 +87,7 @@ clean :
 	rm -rf $(BUILD_DIR)
 	rm -rf $(STAMP_SPHINX)
 	rm -rf $(STAMP_POST)
+	rm -rf $(STAMP_POST_PRETTIFY)
 .PHONY : clean
 
 
@@ -176,6 +183,12 @@ sphinx-build_options ?= ""
 util/sphinx/build : conf.py requirements/sphinx.txt pyproject.toml $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e sphinx -- sphinx-build $(sphinx-build_options) -b $(sphinx_builder) -c $(sphinx_config-dir) $(CONTENT_DIR) $(BUILD_DIR)
 .PHONY : util/sphinx/build
+
+# Run commands in the ``post-processing`` environment.
+post-processing_cmd ?= ""
+util/post-processing : requirements/post-processing.txt pyproject.toml $(TOX_VENV_INSTALLED)
+	$(TOX_CMD) -q -e post-processing -- $(post-processing_cmd)
+.PHONY : util/post-processing
 
 # (Re-) Generate the requirements files using pip-tools (``pip-compile``)
 #
