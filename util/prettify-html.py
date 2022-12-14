@@ -9,7 +9,7 @@ import glob
 import os
 
 # external imports
-import bs4
+import tidy
 
 
 def parse_args():
@@ -36,15 +36,23 @@ def main():
     # get the arguments
     args = parse_args()
 
-    my_formatter = bs4.formatter.HTMLFormatter(indent=2)
-
     # see https://stackoverflow.com/a/40755802
     build_dir = os.path.abspath(args.build_dir)
     for file in glob.iglob("{}/**/*.html".format(build_dir), recursive=True):
         with open(file, "r") as raw:
             tmp = raw.read()
 
-        print(bs4.BeautifulSoup(tmp, "html5lib").prettify(formatter=my_formatter))
+        print(
+            tidy.parseString(
+                tmp,
+                doctype="html5",
+                indent="auto",
+                indent_spaces=2,
+                indent_attributes="no",
+                sort_attributes="alpha",
+                wrap=0,
+            )
+        )
 
 
 if __name__ == "__main__":
