@@ -81,7 +81,7 @@ jobs:
       - name: Run html5validator
         run: html5validator --root build/
       - name: Run htmlhint
-        run: npm --prefix util/ci/validation exec -- htmlhint "./build/**/*.html"
+        run: npm --prefix util/ci/validation exec -- htmlhint "./build/**/*.html" --config "./util/ci/htmlhint.conf"
       - name: Run html-validate
         run: npm --prefix util/ci/validation exec -- html-validate "./build/**/*.html" --config "./util/ci/html-validate.json"
       - name: Run html-proofer
