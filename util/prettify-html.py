@@ -40,11 +40,8 @@ def main():
     build_dir = os.path.abspath(args.build_dir)
     for file in glob.iglob("{}/**/*.html".format(build_dir), recursive=True):
         with open(file, "r") as raw:
-            tmp = raw.read()
-
-        print(
-            tidy.parseString(
-                tmp,
+            tmp = tidy.parseString(
+                raw.read(),
                 doctype="html5",
                 indent="auto",
                 indent_spaces=2,
@@ -52,7 +49,9 @@ def main():
                 sort_attributes="alpha",
                 wrap=0,
             )
-        )
+
+        with open(file, "w") as out:
+            out.write(tmp.gettext())
 
 
 if __name__ == "__main__":
