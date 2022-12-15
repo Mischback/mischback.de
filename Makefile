@@ -29,10 +29,8 @@ SRC_THEME := $(shell find $(THEME_DIR) -type f)
 # Track certain things with artificial *stamps*.
 STAMP_DIR := $(REPO_ROOT)/.make-stamps
 STAMP_SPHINX := $(STAMP_DIR)/sphinx-build
-STAMP_NODEJS := $(STAMP_DIR)/nodejs-installed
-STAMP_NODEJS_READY := $(STAMP_DIR)/nodejs-ready
 STAMP_POST := $(STAMP_DIR)/post-processing
-STAMP_POST_PRETTIER := $(STAMP_DIR)/post-prettier
+STAMP_POST_PRETTIFY := $(STAMP_DIR)/post-prettify
 
 # Internal Python environments
 TOX_VENV_DIR := $(REPO_ROOT)/.tox-venv
@@ -57,7 +55,7 @@ MAKEFLAGS += --no-builtin-rules
 # ### RECIPES
 
 # Build and serve the actual generated website
-dev/srv : $(STAMP_POST_PRETTIER)
+dev/srv : $(STAMP_POST_PRETTIFY)
 	$(TOX_CMD) -q -e dev-serve
 .PHONY : dev/srv
 
@@ -75,20 +73,13 @@ $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME)
 	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
 	touch $@
 
-$(STAMP_POST) : $(STAMP_POST_PRETTIER)
+$(STAMP_POST) : $(STAMP_POST_PRETTIFY)
 	$(create_dir)
 	touch $@
 
-# Run ``prettier`` against the build artifacts
-#
-# ``prettier`` is included / utilized in this repository in two different ways:
-# a) as a ``pre-commit`` hook, running against all suitable source files (see
-#    ``.prettierignore`` for exceptions)
-# b) as a post-processing step for the build artifacts
-# TODO: Evaluate the need to run against (generated) CSS/JS
-$(STAMP_POST_PRETTIER) : $(STAMP_SPHINX) $(STAMP_NODEJS_READY)
+$(STAMP_POST_PRETTIFY) : $(STAMP_SPHINX)
 	$(create_dir)
-	$(MAKE) util/nodeenv nodeenv_cmd="npx" nodeenv_options="prettier --ignore-unknown --write $(BUILD_DIR)"
+	$(MAKE) util/post-processing post-processing_cmd="{toxinidir}/util/prettify-html.py $(BUILD_DIR)"
 	touch $@
 
 # Remove build artifacts
@@ -96,7 +87,7 @@ clean :
 	rm -rf $(BUILD_DIR)
 	rm -rf $(STAMP_SPHINX)
 	rm -rf $(STAMP_POST)
-	rm -rf $(STAMP_POST_PRETTIER)
+	rm -rf $(STAMP_POST_PRETTIFY)
 .PHONY : clean
 
 
@@ -165,51 +156,6 @@ util/lint/sphinx-lint :
 	$(MAKE) util/pre-commit pre-commit_id="sphinx-lint" pre-commit_files="--all-files"
 .PHONY : util/lint/sphinx-lint
 
-# Run *NodeJS-based* tools
-#
-# Beside the *Python-centric* tools in this repository, some *NodeJS-based*
-# tools are in use.
-#
-# In order to manage the required NodeJS environment, ``nodeenv`` is run from
-# within a ``tox``environment.
-#
-# This recipe is then used to execute commands from the dedicated environment,
-# including ``npm`` and ``npx`` commands.
-#
-# There are associated recipes that will take care of setting up the NodeJS
-# environment, i.e. by installing the required packages from ``package.json``.
-#
-# Most likely, this recipe will not be called directly. Instead, it does
-# provide the common interface to NodeJS.
-#
-# Common tasks:
-# =============
-#
-# Add another NodeJS package to ``package.json``:
-#   ``make util/nodeenv nodeenv_cmd="npm" nodeenv_options="install [--save-dev] [[PACKAGE_NAME]]``
-nodeenv_cmd ?= "nodeenv"
-nodeenv_options ?= "--list"
-util/nodeenv : requirements/nodeenv.txt pyproject.toml $(TOX_VENV_INSTALLED)
-	$(TOX_CMD) -q -e nodejs -- $(nodeenv_cmd) $(nodeenv_options)
-.PHONY : util/nodeenv
-
-# Install NodeJS into the ``nodeenv`` virtual environment
-#
-# This uses the LTS release of NodeJS and installs ``npm`` aswell.
-$(STAMP_NODEJS) :
-	$(create_dir)
-	$(MAKE) util/nodeenv nodeenv_options="--node=lts --with-npm -p"
-	touch $@
-
-# Install packages as specified in ``package-lock.json`` into the NodeJS environment
-#
-# The installation is done using ``npm``'s ``clean-install`` (or ``ci``), which
-# exclusively relies on the ``package-lock.json`` to generate a cleanly
-# reproducible environment.
-$(STAMP_NODEJS_READY) : package-lock.json $(STAMP_NODEJS)
-	$(create_dir)
-	$(MAKE) util/nodeenv nodeenv_cmd="npm" nodeenv_options="clean-install"
-	touch $@
 
 # Run ``pre-commit``
 #
@@ -237,6 +183,12 @@ sphinx-build_options ?= ""
 util/sphinx/build : conf.py requirements/sphinx.txt pyproject.toml $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e sphinx -- sphinx-build $(sphinx-build_options) -b $(sphinx_builder) -c $(sphinx_config-dir) $(CONTENT_DIR) $(BUILD_DIR)
 .PHONY : util/sphinx/build
+
+# Run commands in the ``post-processing`` environment.
+post-processing_cmd ?= ""
+util/post-processing : requirements/post-processing.txt pyproject.toml $(TOX_VENV_INSTALLED)
+	$(TOX_CMD) -q -e post-processing -- $(post-processing_cmd)
+.PHONY : util/post-processing
 
 # (Re-) Generate the requirements files using pip-tools (``pip-compile``)
 #

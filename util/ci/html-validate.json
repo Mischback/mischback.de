@@ -1,0 +1,12 @@
+{
+  "root": true,
+  "extends": ["html-validate:recommended", "html-validate:document"],
+  "rules": {
+    "prefer-native-element": [
+      "error",
+      {
+        "exclude": ["heading"]
+      }
+    ]
+  }
+}

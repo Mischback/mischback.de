@@ -122,14 +122,14 @@ skip_install = true
 commands =
   pip-compile --resolver=backtracking {posargs}
 
-[testenv:nodejs]
+[testenv:post-processing]
 basepython = python3
 deps =
-  -r {toxinidir}/requirements/nodeenv.txt
-envdir = {toxworkdir}/nodejs
+  -r {toxinidir}/requirements/post-processing.txt
+envdir = {toxworkdir}/post-processing
 setenv =
-  PYTHONDOTNWRITEBYTECODE=1
+  PYTHONDONTWRITEBYTECODE=1
 skip_install = true
 commands =
-  {posargs:nodeenv --list}
+  {posargs:{toxinidir}/util/prettify-html.py}
 """

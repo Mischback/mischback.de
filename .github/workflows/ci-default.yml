@@ -38,19 +38,61 @@ jobs:
         with:
           path: |
             .tox
-            node_modules
+            .tox-venv
             ${{ env.pythonLocation }}
-            .make-stamps/nodejs-installed
-            .make-stamps/nodejs-ready
-          key: tox-${{ env.pythonLocation }}-${{ hashFiles('requirements/tox.txt', 'requirements/sphinx.txt', 'requirements/nodeenv.txt', 'package-lock.json', 'pyproject.toml') }}
-      - name: Install build dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements/tox.txt
+          key: tox-${{ env.pythonLocation }}-${{ hashFiles('requirements/tox.txt', 'requirements/sphinx.txt', 'pyproject.toml') }}
       - name: Run Sphinx's linkcheck
         run: make util/lint/sphinx-linkcheck
       - name: Build HTML output
         run: make build
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build_output
+          path: .build/
+          if-no-files-found: error
+          retention-days: 1
+
+  validation:
+    needs: building
+    name: Validate build artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build_output
+          path: build/
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install html5validator
+          npm --prefix util/ci/validation install htmlhint html-validate
+      - name: Run html5validator
+        run: html5validator --root build/
+      - name: Run htmlhint
+        run: npm --prefix util/ci/validation exec -- htmlhint "./build/**/*.html" --config "./util/ci/htmlhint.conf"
+      - name: Run html-validate
+        run: npm --prefix util/ci/validation exec -- html-validate "./build/**/*.html" --config "./util/ci/html-validate.json"
+      - name: Run html-proofer
+        uses: athackst/htmlproofer-action@main
+        with:
+          directory: ./build
+          # FIXME: Activate this as soon as there is a favicon!
+          check_favicon: false
+          internal_domains: ""
+          url_ignore: ""
+          url_swap: ""
 
   dependabot:
     needs: [linting, building]
