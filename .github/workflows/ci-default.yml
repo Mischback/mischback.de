@@ -88,6 +88,8 @@ jobs:
         uses: athackst/htmlproofer-action@main
         with:
           directory: ./build
+          # FIXME: Activate this as soon as there is a favicon!
+          check_favicon: false
           internal_domains: ""
           url_ignore: ""
           url_swap: ""
