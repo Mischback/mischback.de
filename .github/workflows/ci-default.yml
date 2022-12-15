@@ -83,7 +83,7 @@ jobs:
       - name: Run htmlhint
         run: npm --prefix util/ci/validation exec -- htmlhint "./build/**/*.html"
       - name: Run html-validate
-        run: npm --prefix util/ci/validation exec -- html-validate "./build/**/*.html"
+        run: npm --prefix util/ci/validation exec -- html-validate "./build/**/*.html" --config "./util/ci/html-validate.json"
       - name: Run html-proofer
         uses: athackst/htmlproofer-action@main
         with:
