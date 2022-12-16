@@ -178,6 +178,11 @@ util/lint/sphinx-lint :
 	$(MAKE) util/pre-commit pre-commit_id="sphinx-lint" pre-commit_files="--all-files"
 .PHONY : util/lint/sphinx-lint
 
+# Run ``stylelint``
+util/lint/stylelint :
+	$(MAKE) util/pre-commit pre-commit_id="stylelint" pre-commit_files="--all-files"
+.PHONY : util/lint/stylelint
+
 
 # Run ``pre-commit``
 #
