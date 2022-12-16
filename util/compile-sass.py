@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 
-"""Compile SASS sources to the actual stylesheet."""
+"""Compile SASS sources to the actual stylesheet.
+
+This script uses ``libsass``'s Python bindings to compile SASS sources to
+actual deployable stylesheets.
+
+The script expects two mandatory arguments, the ``source`` file and the desired
+``target`` file.
+
+Optionally, this script might be run with ``--debug`` (``-d``) to activate
+*debug messages*.
+"""
 
 
 # Python imports
@@ -76,6 +86,10 @@ def main():
         logger.setLevel(logging.DEBUG)
         logger.debug("DEBUG messages enabled")
 
+    # Ensure that paths are absolute.
+    #
+    # Note: When using this script from the project's Makefile, all paths are
+    # already absolute.
     source = os.path.abspath(args.source)
     logger.debug("source: %r", source)
 
@@ -83,6 +97,8 @@ def main():
     logger.debug("target: %r", target)
 
     try:
+        # TODO: Is sourcemap support required?!
+        #       Ref: https://sass.github.io/libsass-python/sass.html#sass.compile
         tmp = sass.compile(filename=source, output_style="expanded")
     except IOError as e:
         logger.critical("Could not read source file '%s'!", source)
