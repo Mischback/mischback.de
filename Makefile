@@ -83,6 +83,8 @@ $(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 	touch $@
 
 # Compile SASS sources to an actual stylesheet
+#
+# FIXME: Remove debug flag
 $(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE)
 	$(create_dir)
 	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py -d $< $@"

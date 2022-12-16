@@ -8,6 +8,7 @@ import argparse
 import logging
 import logging.config
 import os
+import sys
 
 # external imports
 import sass
@@ -21,7 +22,7 @@ LOGGING_DEFAULT_CONFIG = {
     "disable_existing_loggers": True,
     "formatters": {
         "console_output": {
-            "format": "[%(levelname)s] %(name)s: %(message)s",
+            "format": "[%(levelname)s] %(message)s",
         },
     },
     "handlers": {
@@ -81,10 +82,23 @@ def main():
     target = os.path.abspath(args.target)
     logger.debug("target: %r", target)
 
-    tmp = sass.compile(filename=source, output_style="expanded")
+    try:
+        tmp = sass.compile(filename=source, output_style="expanded")
+    except IOError as e:
+        logger.critical("Could not read source file '%s'!", source)
+        logger.info(e, exc_info=False)  # noqa: G200
+        sys.exit(1)
+    except sass.CompileError as e:
+        logger.critical("Could not compile '%s'!", source)
+        logger.info(e, exc_info=False)  # noqa: G200
+        sys.exit(1)
 
     with open(target, "w") as output:
         output.write(tmp)
+
+    logger.debug("Compilation of '%s' successful!", source)
+    logger.info("Wrote output file '%s'", target)
+    sys.exit(0)
 
 
 if __name__ == "__main__":
