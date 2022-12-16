@@ -212,3 +212,65 @@ The ``pre-commit`` action is really great, as it has caching built-in, making
 
 After *linting* the source code, CI will actually build the ``reST`` sources
 using ``Sphinx``.
+
+
+2022-12-09
+==========
+
+One thing I really wanted to have, is another method of categorizing content.
+Usually, blogs have the concept of *tags*, which is something that Sphinx
+doesn't provide out of the box.
+
+A simple search yields
+`a corresponding Stack Overflow question <https://stackoverflow.com/questions/18146107/how-to-add-blog-style-tags-in-restructuredtext-with-sphinx>`_
+with two different hints:
+
+#. Use
+   `Sphinx's index directive <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-index>`_
+   and let Sphinx handle indices internally.
+#. A custom directive that creates links to pages, that are automatically
+   created with a *pre-processing script*.
+
+I tried to use the first approach, but after reviewing
+`Sphinx's tutorial that includes the use of indices <https://www.sphinx-doc.org/en/master/development/tutorials/recipe.html>`_
+I figured that it would require to dynamically create indices for the tags.
+**Meh.**
+
+The second approach is sympathically hacky, but a more thorough implementation
+would be required. **Meh.**
+
+At this point I had a look at `ABlog <https://github.com/sunpy/ablog>`_, which
+is a Sphinx extension that basically turns Sphinx into a blog. With tags.
+
+But an actual blog was not what I wanted. I don't see the point in date-based
+postings (for my intended content). I want the *blog-style tags* **without**
+the *blog*. **Meh.**
+
+Time to hitch up my knickers... I kluged a Sphinx extension that does provide
+*tagging*, including internally tracked indices, a custom directive and
+dedicated overview pages.
+
+
+2022-12-15
+==========
+
+A common issue with all web frameworks is: using templates to generate the
+actual HTML source code results in *ugly looking code*. After running Sphinx,
+the build artifacts are post-processed using a custom wrapper around
+`tidy-html5 <https://github.com/htacg/tidy-html5>`_ to clean and prettify the
+source code.
+
+The generated build artifacts are validated during CI, using several tools:
+
+- `HTMLHint <https://github.com/htmlhint/HTMLHint>`_ catches several stylistic
+  issues. It is not strictly validating the correctness of the (generated) HTML
+  but can rather be considered a linter for HTML.
+- `HTML-validate <https://html-validate.org/>`_ is an actual validator for
+  HTML5 and it is really strict about it.
+- `HTML5 validator <https://github.com/svenkreiss/html5validator>`_ is like a
+  *frontend* for
+  `The Nu Html Checker <https://github.com/validator/validator>`_, which is
+  also used by W3C's validation service. It can check CSS and SVG, too.
+- `HTMLProofer <https://github.com/gjtorikian/html-proofer>`_ is another
+  validator, specifically geared towards testing generated HTML output. It
+  includes checks for internal and external references.
