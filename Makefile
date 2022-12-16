@@ -19,16 +19,19 @@ REPO_ROOT := $(patsubst %/, %, $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 BUILD_DIR := $(REPO_ROOT)/.build
 CONTENT_DIR := $(REPO_ROOT)/content
 THEME_DIR := $(REPO_ROOT)/theme/mischback
+STYLE_DIR := $(REPO_ROOT)/theme/mischback/_src/style
 
 # The source files for the actual content
 SRC_CONTENT := $(shell find $(CONTENT_DIR) -type f)
-SRC_THEME := $(shell find $(THEME_DIR) -type f)
+SRC_THEME := $(shell find $(THEME_DIR) -type f -not \( -name "_src" -prune \))
+SRC_STYLE := $(shell find $(STYLE_DIR) -type f)
 
 # Stamps
 #
 # Track certain things with artificial *stamps*.
 STAMP_DIR := $(REPO_ROOT)/.make-stamps
 STAMP_SPHINX := $(STAMP_DIR)/sphinx-build
+STAMP_PRE_SASS := $(STAMP_DIR)/pre-sass
 STAMP_POST := $(STAMP_DIR)/post-processing
 STAMP_POST_PRETTIFY := $(STAMP_DIR)/post-prettify
 
@@ -68,15 +71,27 @@ build : $(STAMP_POST)
 # This is the primary build recipe, as it will generate the HTML output by
 # running ``Sphinx``. It is (obviously) dependent on a plethora of things,
 # including the actual content source files and the theme files.
-$(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME)
+$(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME) $(STAMP_PRE_SASS)
 	$(create_dir)
 	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
+	touch $@
+
+# Compile SASS sources to an actual stylesheet
+#
+# TODO: Might not be required, can directly reference the file to be generated
+$(STAMP_PRE_SASS) : $(SRC_STYLE)
+	$(create_dir)
+	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py"
 	touch $@
 
 $(STAMP_POST) : $(STAMP_POST_PRETTIFY)
 	$(create_dir)
 	touch $@
 
+# Prettify the (HTML) build artifacts
+#
+# See ``util/prettify-html`` for implementation details. As of now this is a
+# wrapper around ``tidylib``.
 $(STAMP_POST_PRETTIFY) : $(STAMP_SPHINX)
 	$(create_dir)
 	$(MAKE) util/post-processing post-processing_cmd="{toxinidir}/util/prettify-html.py $(BUILD_DIR)"
@@ -85,6 +100,7 @@ $(STAMP_POST_PRETTIFY) : $(STAMP_SPHINX)
 # Remove build artifacts
 clean :
 	rm -rf $(BUILD_DIR)
+	rm -rf $(STAMP_PRE_SASS)
 	rm -rf $(STAMP_SPHINX)
 	rm -rf $(STAMP_POST)
 	rm -rf $(STAMP_POST_PRETTIFY)
@@ -183,6 +199,12 @@ sphinx-build_options ?= ""
 util/sphinx/build : conf.py requirements/sphinx.txt pyproject.toml $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e sphinx -- sphinx-build $(sphinx-build_options) -b $(sphinx_builder) -c $(sphinx_config-dir) $(CONTENT_DIR) $(BUILD_DIR)
 .PHONY : util/sphinx/build
+
+# Run commands in the ``pre-processing`` environment.
+pre-processing_cmd ?= ""
+util/pre-processing : requirements/pre-processing.txt pyproject.toml $(TOX_VENV_INSTALLED)
+	$(TOX_CMD) -q -e pre-processing -- $(pre-processing_cmd)
+.PHONY : util/pre-processing
 
 # Run commands in the ``post-processing`` environment.
 post-processing_cmd ?= ""

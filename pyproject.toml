@@ -71,7 +71,7 @@ import_heading_localfolder = "local imports"
 # It is **not** used for its main purpose of running tests with different
 # environments.
 #
-# Please note that ``tox`` >= 4.0 will support ``pyproject.toml`` natively, so
+# Please note that ``tox`` >= 4.1 will support ``pyproject.toml`` natively, so
 # this configuration will have to be adjusted, probably heavily.
 [tool.tox]
 legacy_tox_ini = """
@@ -121,6 +121,17 @@ setenv =
 skip_install = true
 commands =
   pip-compile --resolver=backtracking {posargs}
+
+[testenv:pre-processing]
+basepython = python3
+deps =
+  -r {toxinidir}/requirements/pre-processing.txt
+envdir = {toxworkdir}/pre-processing
+setenv =
+  PYTHONDONTWRITEBYTECODE=1
+skip_install = true
+commands =
+  {posargs:{toxinidir}/util/compile-sass.py}
 
 [testenv:post-processing]
 basepython = python3
