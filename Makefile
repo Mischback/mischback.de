@@ -23,6 +23,7 @@ STYLE_DIR := $(REPO_ROOT)/theme/mischback/_src/style
 
 # The source files for the actual content
 SRC_CONTENT := $(shell find $(CONTENT_DIR) -type f)
+# Ref: https://stackoverflow.com/a/69830768
 SRC_THEME := $(shell find $(THEME_DIR) -type f -not \( -name "_src" -prune \))
 SRC_STYLE := $(shell find $(STYLE_DIR) -type f)
 
@@ -76,13 +77,15 @@ $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME) $(STAMP_PRE_SASS)
 	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
 	touch $@
 
-# Compile SASS sources to an actual stylesheet
-#
-# TODO: Might not be required, can directly reference the file to be generated
-$(STAMP_PRE_SASS) : $(SRC_STYLE)
+# Meta target to track all required stylesheets
+$(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 	$(create_dir)
-	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py"
 	touch $@
+
+# Compile SASS sources to an actual stylesheet
+$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE)
+	$(create_dir)
+	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py $< $@"
 
 $(STAMP_POST) : $(STAMP_POST_PRETTIFY)
 	$(create_dir)
