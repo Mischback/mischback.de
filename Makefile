@@ -85,7 +85,7 @@ $(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 # Compile SASS sources to an actual stylesheet
 $(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE)
 	$(create_dir)
-	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py $< $@"
+	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py -d $< $@"
 
 $(STAMP_POST) : $(STAMP_POST_PRETTIFY)
 	$(create_dir)
@@ -107,6 +107,7 @@ clean :
 	rm -rf $(STAMP_SPHINX)
 	rm -rf $(STAMP_POST)
 	rm -rf $(STAMP_POST_PRETTIFY)
+	rm -rf $(THEME_DIR)/static/style.css
 .PHONY : clean
 
 

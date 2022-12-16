@@ -5,10 +5,41 @@
 
 # Python imports
 import argparse
+import logging
+import logging.config
 import os
 
 # external imports
 import sass
+
+# get a module-level logger
+logger = logging.getLogger()
+
+# provide a default config for Python's logging
+LOGGING_DEFAULT_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "console_output": {
+            "format": "[%(levelname)s] %(name)s: %(message)s",
+        },
+    },
+    "handlers": {
+        "default": {
+            "level": "DEBUG",
+            "formatter": "console_output",
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["default"],
+            "level": "INFO",
+            "propagate": True,
+        },
+    },
+}
 
 
 def parse_args():
@@ -17,25 +48,38 @@ def parse_args():
     The function sets up the ``ArgumentParser`` and returns the parsed
     arguments for further processing.
     """
+    logger.debug("Setting up ArgumentParser")
+
     parser = argparse.ArgumentParser(description="Compile SASS sources")
 
     # mandatory arguments
     parser.add_argument("source", action="store", help="The source file to be compiled")
     parser.add_argument("target", action="store", help="The desired output filename")
 
+    # optional arguments
+    parser.add_argument(
+        "-d", "--debug", action="store_true", help="Enable debug messages"
+    )
+
     return parser.parse_args()
 
 
 def main():
     """Perform the actual compilation."""
+    logger.debug("Running main()")
+
     # get the arguments
     args = parse_args()
 
+    if args.debug:
+        logger.setLevel(logging.DEBUG)
+        logger.debug("DEBUG messages enabled")
+
     source = os.path.abspath(args.source)
-    print("[DEBUG] source: {}".format(source))
+    logger.debug("source: %r", source)
 
     target = os.path.abspath(args.target)
-    print("[DEBUG] target: {}".format(target))
+    logger.debug("target: %r", target)
 
     tmp = sass.compile(filename=source, output_style="expanded")
 
@@ -44,4 +88,5 @@ def main():
 
 
 if __name__ == "__main__":
+    logging.config.dictConfig(LOGGING_DEFAULT_CONFIG)
     main()
