@@ -7,6 +7,9 @@
 import argparse
 import os
 
+# external imports
+import sass
+
 
 def parse_args():
     """Parse the command line arguments.
@@ -33,6 +36,11 @@ def main():
 
     target = os.path.abspath(args.target)
     print("[DEBUG] target: {}".format(target))
+
+    tmp = sass.compile(filename=source, output_style="expanded")
+
+    with open(target, "w") as output:
+        output.write(tmp)
 
 
 if __name__ == "__main__":

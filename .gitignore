@@ -1,6 +1,11 @@
 # The actual release
 .build/
 
+# The theme's stylesheet is generated from SASS sources, so it should not be
+# included in VCS (SASS compilation is provided through the Makefile and
+# dependent on various other things).
+theme/mischback/static/style.css
+
 # Track actions with artificial stamps
 .make-stamps/
 
