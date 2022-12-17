@@ -9,3 +9,8 @@
 
 /* The ``vendor`` directory contains 3rd party code. */
 @import "vendor/__vendor"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
+
+/* The ``abstracts`` directory contains non-output snippets, mixins and utility
+ * functions.
+ */
+@import "abstracts/__abstracts"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */

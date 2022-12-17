@@ -73,6 +73,7 @@ repos:
     hooks:
       - id: curlylint
         files: ^theme/mischback/
+        types_or: ["html"]
   # lint SASS
   - repo: https://github.com/thibaudcolas/pre-commit-stylelint
     rev: v14.16.0
