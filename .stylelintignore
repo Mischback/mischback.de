@@ -1,8 +1,3 @@
-# ### Rules intended for ``pre-commit``'s ``prettier``
-
-# do not touch the Jinja2 templates
-theme/mischback/*.html
-
 # do not touch 3rd party library code
 theme/mischback/_src/style/vendor/**
 !theme/mischback/_src/style/vendor/__vendor.scss
