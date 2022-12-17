@@ -53,12 +53,14 @@ repos:
     hooks:
       - id: flake8
         additional_dependencies:
-          [
-            flake8-bugbear,
-            flake8-comprehensions,
-            flake8-docstrings,
-            flake8-logging-format,
-          ]
+          # https://github.com/PyCQA/flake8-bugbear
+          - flake8-bugbear
+          # https://github.com/adamchainz/flake8-comprehensions
+          - flake8-comprehensions
+          # https://github.com/PyCQA/flake8-docstrings
+          - flake8-docstrings
+          # https://github.com/globality-corp/flake8-logging-format
+          - flake8-logging-format
   # lint templates
   - repo: https://github.com/Riverside-Healthcare/djLint
     rev: v1.19.7
@@ -71,6 +73,29 @@ repos:
     hooks:
       - id: curlylint
         files: ^theme/mischback/
+  # lint SASS
+  - repo: https://github.com/thibaudcolas/pre-commit-stylelint
+    rev: v14.16.0
+    hooks:
+      - id: stylelint
+        args: [--fix]
+        files: ^theme/mischback/_src/style/
+        # The additional dependencies have pinned versions aswell. These will
+        # not be updated automatically.
+        additional_dependencies:
+          # stylelint itself needs to be here when using additional_dependencies.
+          - stylelint@14.16.0
+          # The following dependency is missing, but it works to specify it
+          # explicitly.
+          - postcss-scss
+          # https://github.com/stylelint/stylelint-config-standard
+          - stylelint-config-standard-scss@6.1.0
+          # https://github.com/bjankord/stylelint-config-sass-guidelines
+          - stylelint-config-sass-guidelines@9.0.1
+          # https://github.com/cahamilton/stylelint-config-property-sort-order-smacss
+          - stylelint-config-property-sort-order-smacss@9.0.0
+          # https://github.com/prettier/stylelint-config-prettier
+          - stylelint-config-prettier@9.0.4
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:

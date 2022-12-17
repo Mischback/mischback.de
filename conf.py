@@ -147,7 +147,7 @@ autosectionlabel_prefix_document = True
 
 # The shortcuts for ``sphinx.ext.extlinks``.
 extlinks = {
-    "commit": ("https://github.com/Mischback/static-web/commit/%s", "%s"),
+    "commit": ("https://github.com/Mischback/mischback.de/commit/%s", "%s"),
     "wikipedia": ("https://en.wikipedia.org/wiki/%s", "Wikipedia: %s"),
 }
 

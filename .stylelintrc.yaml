@@ -1,0 +1,8 @@
+extends:
+  - stylelint-config-standard-scss
+  - stylelint-config-sass-guidelines
+  - stylelint-config-property-sort-order-smacss
+  - stylelint-config-prettier
+
+rules:
+  indentation: 2
