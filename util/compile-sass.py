@@ -69,6 +69,9 @@ def parse_args():
 
     # optional arguments
     parser.add_argument(
+        "-c", "--compressed", action="store_true", help="Generate compressed CSS output"
+    )
+    parser.add_argument(
         "-d", "--debug", action="store_true", help="Enable debug messages"
     )
 
@@ -86,6 +89,20 @@ def main():
         logger.setLevel(logging.DEBUG)
         logger.debug("DEBUG messages enabled")
 
+    # Determine the output style
+    #
+    # libsass accepts "compact", "compressed", "expanded" and "nested".
+    # Ref: https://sass.github.io/libsass-python/sass.html#sass.OUTPUT_STYLES
+    #
+    # By default, the script uses "expanded", but may be switched to
+    # "compressed" using the ``-c`` flag.
+    out_style = "expanded"
+    src_comments = True
+    if args.compressed:
+        logger.debug("Compression activated!")
+        out_style = "compressed"
+        src_comments = False
+
     # Ensure that paths are absolute.
     #
     # Note: When using this script from the project's Makefile, all paths are
@@ -99,7 +116,9 @@ def main():
     try:
         # TODO: Is sourcemap support required?!
         #       Ref: https://sass.github.io/libsass-python/sass.html#sass.compile
-        tmp = sass.compile(filename=source, output_style="expanded")
+        tmp = sass.compile(
+            filename=source, output_style=out_style, source_comments=src_comments
+        )
     except IOError as e:
         logger.critical("Could not read source file '%s'!", source)
         logger.info(e, exc_info=False)  # noqa: G200
