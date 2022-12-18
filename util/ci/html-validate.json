@@ -7,6 +7,12 @@
       {
         "exclude": ["heading"]
       }
+    ],
+    "require-sri": [
+      "warn",
+      {
+        "target": "crossorigin"
+      }
     ]
   }
 }
