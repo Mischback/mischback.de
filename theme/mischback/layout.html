@@ -1,40 +1,42 @@
 {% extends "base.html" %}
 
 {% block html_body %}
-<header>
-  <nav>
-    {% include "nav_primary_list.html" %}
-  </nav>
-</header>
+<div id="layout-container">
+  <header>
+    <nav>
+      {% include "nav_primary_list.html" %}
+    </nav>
+  </header>
 
-<main>
-  {% block main_container required %}
-  {% endblock main_container %}
-</main>
+  <main>
+    {% block main_container required %}
+    {% endblock main_container %}
+  </main>
 
-<footer>
-  <nav>
-    {% include "nav_primary_list.html" %}
-  </nav>
-  <nav>
-    <ul>
-      <li><a href="{{ pathto("contact") }}">Contact</a> / <a href="{{ pathto("kontakt") }}">Kontakt</a></li>
-      <li><a href="{{ pathto("privacy") }}">Privacy</a> / <a href="{{ pathto("datenschutz") }}">Datenschutz</a></li>
-      <li><a href="{{ pathto("sitemap") }}">Sitemap</a></li>
-    </ul>
-  </nav>
-  <aside>
-    <p>This website is powered by coffee, imagination, geekiness and more coffee. If you're interested in the more juicy technical details, have a look at <a href="#">the technical implementation</a>.</p>
-  </aside>
-  {# djlint:off
+  <footer>
+    <nav>
+      {% include "nav_primary_list.html" %}
+    </nav>
+    <nav>
+      <ul>
+        <li><a href="{{ pathto("contact") }}">Contact</a> / <a href="{{ pathto("kontakt") }}">Kontakt</a></li>
+        <li><a href="{{ pathto("privacy") }}">Privacy</a> / <a href="{{ pathto("datenschutz") }}">Datenschutz</a></li>
+        <li><a href="{{ pathto("sitemap") }}">Sitemap</a></li>
+      </ul>
+    </nav>
+    <aside>
+      <p>This website is powered by coffee, imagination, geekiness and more coffee. If you're interested in the more juicy technical details, have a look at <a href="#">the technical implementation</a>.</p>
+    </aside>
+    {# djlint:off
 
-     djLint's rule H023 prohibits most HTML entities. There is no real reason
-     given in the docs, probably readability. Some entities are allowed, e.g.
-     all those to use HTML's special characters (like angel brackets).
+       djLint's rule H023 prohibits most HTML entities. There is no real reason
+       given in the docs, probably readability. Some entities are allowed, e.g.
+       all those to use HTML's special characters (like angel brackets).
 
-     For reference: ``&copy;`` is the copyright symbol (a ``c`` in a circle).
-  #}
-  <div>&copy; 2022 by Mischback</div>
-  {# djlint:on #}
-</footer>
+       For reference: ``&copy;`` is the copyright symbol (a ``c`` in a circle).
+    #}
+    <div>&copy; 2022 by Mischback</div>
+    {# djlint:on #}
+  </footer>
+</div><!-- end #layout-container -->
 {% endblock html_body %}

@@ -6,3 +6,4 @@ extends:
 
 rules:
   indentation: 2
+  selector-max-id: 2

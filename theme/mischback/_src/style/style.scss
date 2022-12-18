@@ -17,3 +17,6 @@
 
 /* The ``base`` directory provides global styles. */
 @import "base/__base"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
+
+/* The ``layout`` directory provides overall site layout. */
+@import "layout/__layout"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */

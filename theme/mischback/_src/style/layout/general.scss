@@ -1,0 +1,13 @@
+body {
+  display: grid;
+  box-sizing: border-box; /* TODO: Is this already included in "reset"? */
+  grid-template-columns: 1fr calc(min(80rem, 100%)) 1fr; /* 80rem ~ 1024px at  16px base font */
+
+  #layout-container {
+    grid-column: 2 / -2; /* center this container in <body>'s grid */
+    margin-bottom: 10px; /* make space for the shadow; specified in "px" */
+
+    /* TODO: Use SCSS variable from abstracts/colors.scss */
+    background-color: #eee;
+  }
+}
