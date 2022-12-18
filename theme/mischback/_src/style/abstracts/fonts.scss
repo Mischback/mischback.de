@@ -1,13 +1,24 @@
+/* Theme-specific fonts are set up here.
+ *
+ * The theme does rely on DejaVuSans as its main font. The font should be
+ * widely available, but is provided as web font here.
+ *
+ * The *regular* version is used for text bodys, the *bold* version for
+ * headings.
+ */
+
 @font-face {
+  font-display: block;
   font-family: "dejavu_sans";
   font-style: normal;
   font-weight: normal;
-  src: url("fonts/DejaVuSans_regular.woff");
+  src: url("fonts/DejaVuSans_regular.woff") format("woff");
 }
 
 @font-face {
+  font-display: block;
   font-family: "dejavu_sans_bold";
   font-style: normal;
   font-weight: normal;
-  src: url("fonts/DejaVuSans_bold.woff");
+  src: url("fonts/DejaVuSans_bold.woff") format("woff");
 }
