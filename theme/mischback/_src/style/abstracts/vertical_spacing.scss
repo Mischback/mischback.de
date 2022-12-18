@@ -1,0 +1,10 @@
+/* Vertical spacing has a direct effect on readability and might provide a
+ * visual representation of the semantic structure of the content.
+ *
+ * Ref: https://typographyhandbook.com/#vertical-spacing
+ */
+$text-content-line-height: 1.7;
+$text-content-font-size: 1rem;
+
+/* prettier-ignore */
+$text-content-vertical-rhythm: $text-content-line-height * $text-content-font-size * 0.5;
