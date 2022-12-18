@@ -14,3 +14,6 @@
  * functions.
  */
 @import "abstracts/__abstracts"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
+
+/* The ``base`` directory provides global styles. */
+@import "base/__base"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */

@@ -1,0 +1,14 @@
+/* Provide basic typography-related settings to widely used common elements.
+ *
+ * These rules only control the font styling (including ``em``-based sizes)
+ * and overall ``margin`` / ``padding`` settings.
+ *
+ * Colors should be applied while styling the containing elements in the
+ * context of the layout. A default text ``color`` is provided for the ``body``
+ * element.
+ */
+
+body {
+  color: #000;
+  font-family: "dejavu_sans", Verdana, "Droid Sans", sans-serif;
+}
