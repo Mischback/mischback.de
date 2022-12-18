@@ -274,3 +274,16 @@ The generated build artifacts are validated during CI, using several tools:
 - `HTMLProofer <https://github.com/gjtorikian/html-proofer>`_ is another
   validator, specifically geared towards testing generated HTML output. It
   includes checks for internal and external references.
+
+
+2022-12-17
+==========
+
+The custom theme needs a custom stylesheet. SASS / SCSS source files are
+compiled to actual CSS using
+`libsass-python <https://sass.github.io/libsass-python/index.html>`_ with a
+minimal wrapper script.
+
+To keep the source as clean as possible,
+`styleint <https://github.com/thibaudcolas/pre-commit-stylelint>`_ is used as
+a ``pre-commit`` hook (with various plugins) to lint the source files.
