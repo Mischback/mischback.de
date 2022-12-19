@@ -37,8 +37,8 @@ blockquote {
     top: -0.2em;
     left: 0.05em;
 
-    /* FIXME: Pick this up during color scheme development! */
-    color: #b7b7b7;
+    /* TODO: Colorscheme building! */
+    color: $color-secondary-fg;
     font-family: serif;
     font-size: 5em;
     font-weight: bold;
@@ -59,8 +59,8 @@ blockquote {
     margin-left: 1em;
     padding: 0.25em 0 0.25em 1em;
 
-    /* FIXME: Pick this up during color scheme development! */
-    border-left: 1px solid #b7b7b7;
+    /* TODO: Colorscheme building! */
+    border-left: 2px solid $color-secondary-fg;
     font-size: 0.8em;
   }
 }

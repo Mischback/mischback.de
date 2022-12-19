@@ -1,0 +1,14 @@
+/* General settings.
+ *
+ * This file does provide global settings that may be picked up in different
+ * more specific blocks.
+ */
+
+/* Colors */
+$color-primary-fg: rgb(8, 8, 8);
+$color-primary-bg: rgb(240, 240, 240);
+$color-primary-inverted-fg: $color-primary-bg;
+$color-primary-inverted-bg: $color-primary-fg;
+$color-secondary-fg: rgb(184, 184, 184);
+$color-dev-border: rgb(128, 0, 0);
+$color-dev-highlight: rgb(255, 0, 128);

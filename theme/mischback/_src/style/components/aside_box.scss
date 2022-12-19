@@ -6,12 +6,12 @@ aside section {
   margin-bottom: 3em;
 
   /* FIXME: This will be fixed with a coherent style later! */
-  border: 1px solid #000;
+  border: 1px solid $color-dev-border;
   font-size: 0.9em;
 
   header {
     /* FIXME: This will be fixed with a coherent style later! */
-    border-bottom: 1px solid #c00;
+    border-bottom: 1px solid $color-dev-border;
     font-family: "dejavu_sans_bold", Verdana, "Droid Sans", sans-serif;
     font-size: 1.1em;
     font-weight: normal;

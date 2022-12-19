@@ -21,7 +21,7 @@ body {
     /* make space for the shadow; specified in "px" */
     margin-bottom: 10px;
 
-    /* TODO: Use SCSS variable from abstracts/colors.scss */
-    background-color: #eee;
+    /* TODO: Colorscheme building! */
+    background-color: $color-primary-bg;
   }
 }
