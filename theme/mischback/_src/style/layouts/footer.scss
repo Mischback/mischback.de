@@ -1,0 +1,29 @@
+/* stylelint-disable max-nesting-depth, selector-max-id, selector-max-compound-selectors */
+body div:first-of-type footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(min(25em, 100%)), 1fr));
+  margin-top: 10px;
+  font-size: 0.9rem;
+
+  #administrative-footer,
+  #nav-footer {
+    padding: 0.5em 0.25em 0 0.5em;
+  }
+
+  #copyright-footer {
+    grid-column: -1 / 1;
+    padding: 0.25em;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: right;
+  }
+
+  #technical-footer {
+    padding: 0.5em 0.5em 1em;
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+}
+/* stylelint-enable max-nesting-depth, selector-max-id, selector-max-compound-selectors */

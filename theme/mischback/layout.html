@@ -15,17 +15,17 @@
   {% endblock main_container %}
 
   <footer>
-    <nav>
+    <nav id="nav-footer">
       {% include "nav_primary_list.html" %}
     </nav>
-    <nav>
+    <nav id="administrative-footer">
       <ul>
         <li><a href="{{ pathto("contact") }}">Contact</a> / <a href="{{ pathto("kontakt") }}">Kontakt</a></li>
         <li><a href="{{ pathto("privacy") }}">Privacy</a> / <a href="{{ pathto("datenschutz") }}">Datenschutz</a></li>
         <li><a href="{{ pathto("sitemap") }}">Sitemap</a></li>
       </ul>
     </nav>
-    <aside>
+    <aside id="technical-footer">
       <p>This website is powered by coffee, imagination, geekiness and more coffee. If you're interested in the more juicy technical details, have a look at <a href="#">the technical implementation</a>.</p>
     </aside>
     {# djlint:off
@@ -36,7 +36,7 @@
 
        For reference: ``&copy;`` is the copyright symbol (a ``c`` in a circle).
     #}
-    <div>&copy; 2022 by Mischback</div>
+    <div id="copyright-footer">&copy; 2022 by Mischback</div>
     {# djlint:on #}
   </footer>
 </div><!-- end #layout-container -->
