@@ -81,8 +81,9 @@ jobs:
       - name: Run html5validator
         run: |
           html5validator --root build/ --also-check-css --show-warnings \
-            --ignore "Consider using the \"h1\" element as a top-level heading only" \
-            --ignore "Consider using \"h2\"-\"h6\" elements to add identifying headings to all"
+            --ignore \
+              "Consider using the \"h1\" element as a top-level heading only" \
+              "Consider using \"h2\"-\"h6\" elements to add identifying headings to all"
       - name: Run htmlhint
         run: npm --prefix util/ci/validation exec -- htmlhint "./build/**/*.html" --config "./util/ci/htmlhint.conf"
       - name: Run html-validate
