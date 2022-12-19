@@ -79,7 +79,7 @@ jobs:
           pip install html5validator
           npm --prefix util/ci/validation install htmlhint html-validate
       - name: Run html5validator
-        run: html5validator --root build/ --also-check-css
+        run: html5validator --root build/ --also-check-css --show-warnings --ignore "Consider using the \"h1\" element as a top-level heading only"
       - name: Run htmlhint
         run: npm --prefix util/ci/validation exec -- htmlhint "./build/**/*.html" --config "./util/ci/htmlhint.conf"
       - name: Run html-validate
