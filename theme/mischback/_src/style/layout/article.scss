@@ -1,0 +1,46 @@
+/* This is the styling of the text-based content, provided as article.
+ *
+ * The corresponding template is ``theme/mischback/article.html``.
+ */
+
+.main-article {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  align-items: flex-start;
+  justify-content: space-evenly;
+
+  article {
+    /* TODO: Verify the values of ``flex-basis`` and ``max-width``! */
+    flex-basis: 44em;
+    max-width: 44em;
+    margin-bottom: 1rem;
+    padding-bottom: $text-content-vertical-rhythm * 2;
+    font-size: $text-content-font-size;
+
+    /* Sphinx's generation process provides a clearly semantic markup, which is
+     * strictly hierarchic. The ``<article>`` will contain multiple nested
+     * ``<section>`` containers (derived from the hierarchy of headlines in the
+     * ``rST`` sources).
+     *
+     * This rule sets the outer dimension of the actual text body, using
+     * ``max-width``.
+     *
+     * FIXME: Aim for ~80 characters per line; this is highly dependent on the
+     *        font-face!
+     */
+    /* stylelint-disable max-nesting-depth */
+    > section {
+      max-width: 41em;
+      margin-right: 2em;
+      margin-left: 2em;
+      padding: 0;
+      font-size: 1em;
+    }
+    /* stylelint-enable max-nesting-depth */
+  }
+
+  aside {
+    flex-basis: 20rem;
+  }
+}

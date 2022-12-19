@@ -8,10 +8,11 @@
     </nav>
   </header>
 
-  <main>
-    {% block main_container required %}
-    {% endblock main_container %}
-  </main>
+  {% block main_container required %}
+    {# The *extending template file* **must provide** the ``<main>`` container
+       around this block's content.
+    #}
+  {% endblock main_container %}
 
   <footer>
     <nav>

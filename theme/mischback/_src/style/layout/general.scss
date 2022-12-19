@@ -1,11 +1,25 @@
+/* The general and overall layout.
+ *
+ * This creates the general look and feel by placing the actual content in the
+ * center of the screen.
+ *
+ * Technically this uses a CSS ``grid`` on the ``<body>`` element and placing
+ * a single ``<div>`` container in that grid.
+ *
+ * The corresponding HTML code is in ``theme/mischback/layout.html`` (though
+ * there is not much to see there).
+ */
 body {
   display: grid;
-  box-sizing: border-box; /* TODO: Is this already included in "reset"? */
+  box-sizing: border-box;
   grid-template-columns: 1fr calc(min(80rem, 100%)) 1fr; /* 80rem ~ 1024px at  16px base font */
 
   div:first-of-type {
-    grid-column: 2 / -2; /* center this container in <body>'s grid */
-    margin-bottom: 10px; /* make space for the shadow; specified in "px" */
+    /* center this container in <body>'s grid */
+    grid-column: 2 / -2;
+
+    /* make space for the shadow; specified in "px" */
+    margin-bottom: 10px;
 
     /* TODO: Use SCSS variable from abstracts/colors.scss */
     background-color: #eee;
