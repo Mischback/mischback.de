@@ -48,7 +48,8 @@ blockquote {
     font-family: serif;
 
     /* TODO: Adjust after finding the final serif font! */
-    font-size: 1.2em;
+    font-size: 1.1em;
+    line-height: 1.15; /* as specified in normalize.css */
   }
 
   .attribution {
@@ -60,6 +61,6 @@ blockquote {
 
     /* FIXME: Pick this up during color scheme development! */
     border-left: 1px solid #b7b7b7;
-    font-size: 0.6em;
+    font-size: 0.8em;
   }
 }

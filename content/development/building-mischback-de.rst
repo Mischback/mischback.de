@@ -5,7 +5,7 @@
 :tubhrq: My general working style is to write everything first with pencil and
          paper, sitting beside a big wastebasket. Then I use Emacs to enter
          the text into my machine.
-:tubhrq_origin: Donald Knuth
+:tubhrq_origin: Donald E. Knuth
 
 .. tags:: foo; bar;
 

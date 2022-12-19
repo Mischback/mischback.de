@@ -40,8 +40,10 @@ Zitate
 Zitate geben dem Text einen Hauch von pseudo-wissenschaftlicher Überlegenheit,
 dienen aber natürlich vorwiegend als Referenz.
 
-  In the beginning it was but a thought...
+  My general working style is to write everything first with pencil and paper,
+  sitting beside a big wastebasket. Then I use Emacs to enter the text into my
+  machine.
 
-  -- Moses Pelham
+  -- Donald E. Knuth
 
 Danach kann es im Textfluss weitergehen.
