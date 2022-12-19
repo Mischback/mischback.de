@@ -285,5 +285,5 @@ compiled to actual CSS using
 minimal wrapper script.
 
 To keep the source as clean as possible,
-`styleint <https://github.com/thibaudcolas/pre-commit-stylelint>`_ is used as
+`stylelint <https://github.com/thibaudcolas/pre-commit-stylelint>`_ is used as
 a ``pre-commit`` hook (with various plugins) to lint the source files.
