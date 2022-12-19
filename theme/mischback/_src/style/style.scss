@@ -18,5 +18,8 @@
 /* The ``base`` directory provides global styles. */
 @import "base/__base"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
 
+/* The ``components`` directory provides reusable elements. */
+@import "components/__components"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
+
 /* The ``layout`` directory provides overall site layout. */
 @import "layouts/__layouts"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
