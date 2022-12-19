@@ -87,7 +87,7 @@ $(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 # FIXME: Remove debug flag
 $(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE)
 	$(create_dir)
-	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py -d $< $@"
+	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py -c $< $@"
 
 $(STAMP_POST) : $(STAMP_POST_PRETTIFY)
 	$(create_dir)
