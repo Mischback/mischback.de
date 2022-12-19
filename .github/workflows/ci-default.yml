@@ -79,7 +79,7 @@ jobs:
           pip install html5validator
           npm --prefix util/ci/validation install htmlhint html-validate
       - name: Run html5validator
-        run: html5validator --root build/ --show-warnings --also-check-css
+        run: html5validator --root build/ --also-check-css --verbose
       - name: Run htmlhint
         run: npm --prefix util/ci/validation exec -- htmlhint "./build/**/*.html" --config "./util/ci/htmlhint.conf"
       - name: Run html-validate
