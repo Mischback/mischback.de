@@ -21,42 +21,37 @@ h5,
 h6 {
   margin-top: $text-content-vertical-rhythm * 3;
   margin-bottom: $text-content-vertical-rhythm;
-  font-family: "dejavu_sans", Verdana, "Droid Sans", sans-serif;
+  font-family: "dejavu_sans_bold", Verdana, "Droid Sans", sans-serif;
+  font-weight: normal;
 }
 
 h1 {
   margin-bottom: $text-content-vertical-rhythm * 1.5;
   font-size: 2.25em;
-  font-weight: bold;
 }
 
 h2 {
   font-size: 1.7em;
-  font-weight: bold;
 }
 
 h3 {
   margin-top: $text-content-vertical-rhythm * 2;
   font-size: 1.2em;
-  font-weight: bold;
 }
 
 h4 {
   margin-bottom: $text-content-vertical-rhythm;
   font-size: 1.2em;
-  font-weight: normal;
 }
 
 h5 {
   margin-bottom: $text-content-vertical-rhythm;
   font-size: 1em;
-  font-weight: bold;
 }
 
 h6 {
   margin-bottom: $text-content-vertical-rhythm;
   font-size: 1em;
-  font-weight: normal;
 }
 
 p {
