@@ -1,0 +1,16 @@
+aside .article-tags {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-indent: 0;
+
+    /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
+    li {
+      display: inline-block;
+
+      /* TODO: Style this like a badge! */
+    }
+    /* stylelint-enable max-nesting-depth, selector-max-compound-selectors */
+  }
+}
