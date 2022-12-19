@@ -1,0 +1,65 @@
+/* Blockquotes may be included in the actual text bodies **and** in the
+ * articles' ``<aside>`` elements.
+ *
+ * In text bodies, Sphinx generates the following markup for blockquotes:
+ *
+ * <blockquote>
+ *   <div>
+ *     <p>The actual quote...</p>
+ *     <p class="attribution">The quoted person</p>
+ *   </div>
+ * </blockquote>
+ *
+ * This markup is also provided for the *tubhrq* in the ``<aside>`` to enable
+ * easy styling with a common codebase (see ``theme/mischback/article.html``).
+ */
+blockquote {
+  display: block;
+  position: relative;
+
+  /* TODO: Re-use vertical rhythm for this! */
+  margin-bottom: 1em;
+  padding-top: 0.75em;
+  padding-right: 0.5em;
+  padding-bottom: 0.1em;
+
+  /* stylelint-disable declaration-block-no-redundant-longhand-properties */
+
+  /* TODO: Adjust after finding the final serif font! */
+  padding-left: 3em !important;
+  /* stylelint-enable declaration-block-no-redundant-longhand-properties */
+
+  &::before {
+    content: "\201C";
+    position: absolute;
+
+    /* TODO: Adjust after finding the final serif font! */
+    top: -0.2em;
+    left: 0.05em;
+
+    /* FIXME: Pick this up during color scheme development! */
+    color: #b7b7b7;
+    font-family: serif;
+    font-size: 5em;
+    font-weight: bold;
+  }
+
+  p {
+    font-family: serif;
+
+    /* TODO: Adjust after finding the final serif font! */
+    font-size: 1.2em;
+  }
+
+  .attribution {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    padding: 0.25em 0 0.25em 1em;
+
+    /* FIXME: Pick this up during color scheme development! */
+    border-left: 1px solid #b7b7b7;
+    font-size: 0.6em;
+  }
+}

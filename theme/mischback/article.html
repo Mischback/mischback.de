@@ -21,16 +21,16 @@
     <section>
       <header>tubhrq</header>
       <blockquote>
-        <p class="quote">{{ meta.tubhrq }}</p>
-        <span class="origin">
-          <strong>
+        <div>
+          <p>{{ meta.tubhrq }}</p>
+          <p class="attribution">
             {% if meta.tubhrq_origin %}
             {{ meta.tubhrq_origin }}
             {% else %}
             unknown
             {% endif %}
-          </strong>
-        </span>
+          </p>
+        </div>
       </blockquote>
     </section>
     {% endif %}
