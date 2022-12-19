@@ -1,0 +1,31 @@
+/* Very basic styling of lists.
+ *
+ * Sphinx creates markup, that places the list item's content in a paragraph.
+ *
+ * Sub-lists are inside of the parent list item.
+ */
+ul,
+ol {
+  margin-left: 1em;
+  list-style-position: inside;
+
+  /* Ref: https://silvawebdesigns.com/css-indenting-second-line-li-list-items/ */
+  text-indent: -1em;
+
+  li {
+    margin-bottom: 0.5em;
+
+    /* stylelint-disable max-nesting-depth */
+    p {
+      display: inline;
+    }
+    /* stylelint-enable max-nesting-depth */
+  }
+
+  ul,
+  ol {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    margin-left: 2em;
+  }
+}
