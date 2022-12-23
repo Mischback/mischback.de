@@ -85,9 +85,13 @@ $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME) $(STAMP_PRE_SASS)
 # significantly.
 #
 # TODO: Actually implement the subsetting!
-$(STAMP_PRE_FONTS) : $(FONT_SRC_DIR)/Mona-Sans.woff2
+$(STAMP_PRE_FONTS) : $(FONT_SRC_DIR)/Mona-Sans.woff2 $(FONT_SRC_DIR)/CrimsonPro-Regular.woff2
 	$(create_dir)
+	# TODO: Should require just subsetting!
+	#       License issues! See https://github.com/github/mona-sans/issues/19
 	cp $(FONT_SRC_DIR)/Mona-Sans.woff2 $(THEME_DIR)/static/fonts/MonaSans.woff2
+	# TODO: Apply subsetting! Might have license issues aswell!
+	cp $(FONT_SRC_DIR)/CrimsonPro-Regular.woff2 $(THEME_DIR)/static/fonts/CrimsonProRegular.woff2
 	touch $@
 
 # Meta target to track all required stylesheets

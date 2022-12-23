@@ -14,3 +14,16 @@
   src: url("fonts/MonaSans.woff2") format("woff2 supports variations"),
     url("fonts/MonaSans.woff2") format("woff2-variations");
 }
+
+/* A *serif* font is used as a contrast to the main text content.
+ *
+ * "Crimson Pro" is made by Jacques Le Bailly based on "Crimson" by
+ * Sebastian Koch.
+ *
+ * Ref: https://github.com/Fonthausen/CrimsonPro
+ */
+@font-face {
+  font-family: "Crimson Pro";
+  font-weight: normal;
+  src: url("fonts/CrimsonProRegular.woff2") format("woff2");
+}
