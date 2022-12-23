@@ -20,7 +20,6 @@ body {
   /* TODO: Colorscheme building! */
   color: $color-primary-fg;
   font-family: "Mona Sans", Verdana, "Droid Sans", sans-serif;
-  font-stretch: 100%;
 }
 
 h1,
@@ -66,5 +65,6 @@ h6 {
 p {
   margin-bottom: $text-content-vertical-rhythm;
   font-size: $text-content-font-size;
+  font-stretch: 98%;
   line-height: $text-content-line-height;
 }
