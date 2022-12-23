@@ -1,24 +1,16 @@
-/* Theme-specific fonts are set up here.
+/* Theme-specific fonts are set up here. */
+
+/* The design's main font.
  *
- * The theme does rely on DejaVuSans as its main font. The font should be
- * widely available, but is provided as web font here.
+ * "Mona Sans" is a brand new font made by GitHub. It is a variable font with
+ * adjustable weight and width, including italic variations.
  *
- * The *regular* version is used for text bodys, the *bold* version for
- * headings.
+ * It will be used for text bodies, headlines and the main navigation.
  */
-
 @font-face {
-  font-display: block;
-  font-family: "dejavu_sans";
-  font-style: normal;
-  font-weight: normal;
-  src: url("fonts/DejaVuSans_regular.woff") format("woff");
-}
-
-@font-face {
-  font-display: block;
-  font-family: "dejavu_sans_bold";
-  font-style: normal;
-  font-weight: normal;
-  src: url("fonts/DejaVuSans_bold.woff") format("woff");
+  font-family: "Mona Sans";
+  font-stretch: 75% 125%;
+  font-weight: 200 900;
+  src: url("fonts/MonaSans.woff2") format("woff2 supports variations"),
+    url("fonts/MonaSans.woff2") format("woff2-variations");
 }

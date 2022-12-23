@@ -8,10 +8,18 @@
  * element.
  */
 
+html {
+  /* Set the reference ``font-size``.
+   *
+   * This is actually dependent on the main font face.
+   */
+  font-size: 18px;
+}
+
 body {
   /* TODO: Colorscheme building! */
   color: $color-primary-fg;
-  font-family: "dejavu_sans", Verdana, "Droid Sans", sans-serif;
+  font-family: "Mona Sans", Verdana, "Droid Sans", sans-serif;
 }
 
 h1,
@@ -22,8 +30,7 @@ h5,
 h6 {
   margin-top: $text-content-vertical-rhythm * 3;
   margin-bottom: $text-content-vertical-rhythm;
-  font-family: "dejavu_sans_bold", Verdana, "Droid Sans", sans-serif;
-  font-weight: normal;
+  font-family: "Mona Sans", Verdana, "Droid Sans", sans-serif;
 }
 
 h1 {

@@ -3,7 +3,17 @@
  *
  * Ref: https://typographyhandbook.com/#vertical-spacing
  */
-$text-content-line-height: 1.7;
+
+/* The *line-height* is highly dependent on the actual font face.
+ *
+ * Let's keep track of the actual required / desired line heights here:
+ *   - Mona Lisa: 1.5
+ */
+$text-content-line-height: 1.5;
+
+/* The font size of the actual content should be controlled by the
+ * ``font-size`` of the root ``<html>`` element.
+ */
 $text-content-font-size: 1rem;
 
 /* prettier-ignore */

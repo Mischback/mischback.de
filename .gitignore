@@ -6,6 +6,11 @@
 # dependent on various other things).
 theme/mischback/static/style.css
 
+# The theme's font files are meant to be pre-processed, so the actual files
+# should be ignored
+theme/mischback/static/fonts/**
+!theme/mischback/static/fonts/.gitkeep
+
 # Track actions with artificial stamps
 .make-stamps/
 

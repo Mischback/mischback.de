@@ -19,6 +19,7 @@ REPO_ROOT := $(patsubst %/, %, $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 BUILD_DIR := $(REPO_ROOT)/.build
 CONTENT_DIR := $(REPO_ROOT)/content
 THEME_DIR := $(REPO_ROOT)/theme/mischback
+FONT_SRC_DIR := $(THEME_DIR)/_src/fonts
 STYLE_DIR := $(REPO_ROOT)/theme/mischback/_src/style
 
 # The source files for the actual content
@@ -32,6 +33,7 @@ SRC_STYLE := $(shell find $(STYLE_DIR) -type f)
 # Track certain things with artificial *stamps*.
 STAMP_DIR := $(REPO_ROOT)/.make-stamps
 STAMP_SPHINX := $(STAMP_DIR)/sphinx-build
+STAMP_PRE_FONTS := $(STAMP_DIR)/fonts-ready
 STAMP_PRE_SASS := $(STAMP_DIR)/pre-sass
 STAMP_POST := $(STAMP_DIR)/post-processing
 STAMP_POST_PRETTIFY := $(STAMP_DIR)/post-prettify
@@ -77,6 +79,17 @@ $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME) $(STAMP_PRE_SASS)
 	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
 	touch $@
 
+# Prepare the fonts
+#
+# In order to optimize the fonts, the provided glyphs may be reduced
+# significantly.
+#
+# TODO: Actually implement the subsetting!
+$(STAMP_PRE_FONTS) : $(FONT_SRC_DIR)/Mona-Sans.woff2
+	$(create_dir)
+	cp $(FONT_SRC_DIR)/Mona-Sans.woff2 $(THEME_DIR)/static/fonts/MonaSans.woff2
+	touch $@
+
 # Meta target to track all required stylesheets
 $(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 	$(create_dir)
@@ -85,7 +98,7 @@ $(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 # Compile SASS sources to an actual stylesheet
 #
 # FIXME: Remove debug flag
-$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE)
+$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS)
 	$(create_dir)
 	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py -d $< $@"
 
