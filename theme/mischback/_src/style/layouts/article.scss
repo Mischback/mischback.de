@@ -47,3 +47,12 @@
     flex-basis: 20rem;
   }
 }
+
+/* Fix inline code samples.
+ *
+ * TODO: Beside the font (Hack), this does not stand out in any way, which is
+ *       a little too integrated.
+ */
+article p code {
+  font-size: 0.9em;
+}
