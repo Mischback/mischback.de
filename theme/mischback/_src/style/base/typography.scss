@@ -67,6 +67,7 @@ p {
   font-size: $text-content-font-size;
   font-stretch: 98%;
   line-height: $text-content-line-height;
+  hyphens: auto;
 }
 
 code {
