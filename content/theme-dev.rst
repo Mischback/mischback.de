@@ -47,3 +47,17 @@ dienen aber natürlich vorwiegend als Referenz.
   -- Donald E. Knuth
 
 Danach kann es im Textfluss weitergehen.
+
+
+Admonitions
+===========
+
+**Admonitions** heißt tatsächlich *Ermahnungen*. Das ist ja witzig!
+
+.. note::
+   Dies ist eine sehr kurze Notiz!
+
+Jetzt kommt halt wieder normaler Text.
+
+.. important::
+   Dies ist jetzt mal wirklich wichtig!
