@@ -1,5 +1,13 @@
+/* Admonitions are integral part of Sphinx / docutils.
+ *
+ * TODO: Sphinx does add the "type" of the admonition as headline
+ *       (``admonition-title``). This may need adjustment.
+ * TODO: As of now, no visual styling, this is highly dependent on the actual
+ *       overall layout.
+ */
 .admonition {
   margin-right: 3em;
+  margin-bottom: $text-content-vertical-rhythm;
   margin-left: 3em;
   padding: 0.5em 0.5em 0 2em;
   border: 1px solid #c00;
@@ -7,4 +15,8 @@
   .admonition-title {
     font-weight: bold;
   }
+}
+
+.note {
+  background-color: $color-admonition-note-bg;
 }
