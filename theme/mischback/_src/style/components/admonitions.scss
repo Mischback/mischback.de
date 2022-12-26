@@ -6,6 +6,7 @@
  *       overall layout.
  */
 .admonition {
+  position: relative;
   margin-right: 3em;
   margin-bottom: $text-content-vertical-rhythm;
   margin-left: 3em;
@@ -19,8 +20,37 @@
 
 .note {
   background-color: $color-admonition-note-bg;
+
+  /* TODO: This is not final! Might be replaced by an icon or a SVG-based
+   *       graphic.
+   */
+  ::before {
+    content: "note";
+    position: absolute;
+    top: 0.55em;
+    left: -0.5em;
+    transform: rotate(-90deg);
+    color: #960;
+    font-family: "Crimson Pro", serif;
+    font-size: 1.5em;
+  }
 }
 
 .important {
   background-color: $color-admonition-important-bg;
+
+  /* For *important* boxes, add a **!**.
+   *
+   * TODO: This is not final! Might be replaced by an icon or a SVG-based
+   *       graphic.
+   */
+  ::before {
+    content: "!";
+    position: absolute;
+    top: -0.2em;
+    left: 0.05em;
+    color: #960;
+    font-family: "Crimson Pro", serif;
+    font-size: 4em;
+  }
 }
