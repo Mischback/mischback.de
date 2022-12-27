@@ -3,6 +3,16 @@
 {% block main_container %}
 <main class="main-article">
   <article>
+    <nav>
+      {% if parents %}
+      <ul>
+        <li><a href="{{ pathto("index") }}">Home</a></li>
+        {% for parent in parents %}
+        <li><a href="{{ parent.link|e }}">{{ parent.title }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </nav>
     {{ body }}
   </article>
 
