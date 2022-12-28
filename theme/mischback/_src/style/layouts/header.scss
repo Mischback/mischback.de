@@ -1,0 +1,42 @@
+body > div:first-of-type > header {
+  display: grid;
+  grid-template-columns: 5em 1fr;
+  align-items: baseline;
+  margin-bottom: 10px;
+  padding: 0.1em 0 0.25em;
+  font-size: 0.9rem;
+
+  /* stylelint-disable selector-max-compound-selectors */
+  nav {
+    display: grid;
+    grid-column: 2 / -1;
+
+    /* stylelint-disable max-nesting-depth */
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      text-indent: 0;
+
+      li {
+        display: inline-block;
+        border-right: 0.1em solid #c00;
+
+        a {
+          display: block;
+          padding: 0.25em 0.5em;
+          color: #c00;
+          font-weight: bold;
+          text-decoration: none;
+
+          &:focus,
+          &:hover {
+            color: #0c0;
+          }
+        }
+      }
+    }
+    /* stylelint-enable max-nesting-depth */
+  }
+  /* stylelint-enable selector-max-compound-selectors */
+}
