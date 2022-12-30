@@ -19,7 +19,7 @@ html {
 body {
   /* TODO: Colorscheme building! */
   color: $color-primary-fg;
-  font-family: "Mona Sans", Verdana, "Droid Sans", sans-serif;
+  font-family: $font-stack-sans;
 }
 
 h1,
@@ -30,7 +30,7 @@ h5,
 h6 {
   margin-top: $text-content-vertical-rhythm * 3;
   margin-bottom: $text-content-vertical-rhythm;
-  font-family: "Mona Sans", Verdana, "Droid Sans", sans-serif;
+  font-family: $font-stack-sans;
 }
 
 h1 {
@@ -71,5 +71,5 @@ p {
 }
 
 code {
-  font-family: Hack, monospace;
+  font-family: $font-stack-mono;
 }

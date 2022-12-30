@@ -31,7 +31,7 @@
     left: -0.5em;
     transform: rotate(-90deg);
     color: #960;
-    font-family: "Crimson Pro", serif;
+    font-family: $font-stack-serif;
     font-size: 1.5em;
   }
 }
@@ -50,7 +50,7 @@
     top: -0.2em;
     left: 0.05em;
     color: #960;
-    font-family: "Crimson Pro", serif;
+    font-family: $font-stack-serif;
     font-size: 4em;
   }
 }

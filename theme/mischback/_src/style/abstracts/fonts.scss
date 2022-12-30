@@ -49,3 +49,8 @@
   font-weight: 700;
   src: url("fonts/HackBold.woff2") format("woff2");
 }
+
+/* The actual font stacks. */
+$font-stack-sans: "Mona Sans", verdana, sans-serif;
+$font-stack-serif: "Crimson Pro", serif;
+$font-stack-mono: hack, monospace;

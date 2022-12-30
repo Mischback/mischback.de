@@ -12,7 +12,7 @@ aside section {
   header {
     /* FIXME: This will be fixed with a coherent style later! */
     border-bottom: 1px solid $color-dev-border;
-    font-family: "dejavu_sans_bold", Verdana, "Droid Sans", sans-serif;
+    font-family: $font-stack-sans;
     font-size: 1.1em;
     font-weight: normal;
   }

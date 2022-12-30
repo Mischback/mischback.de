@@ -39,13 +39,13 @@ blockquote {
 
     /* TODO: Colorscheme building! */
     color: $color-secondary-fg;
-    font-family: serif;
+    font-family: $font-stack-serif;
     font-size: 5em;
     font-weight: bold;
   }
 
   p {
-    font-family: "Crimson Pro", serif;
+    font-family: $font-stack-serif;
 
     /* TODO: Adjust after finding the final serif font! */
     font-size: 1.1em;
