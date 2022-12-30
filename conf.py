@@ -171,3 +171,7 @@ html_theme = "mischback"
 #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_copy_source
 html_copy_source = False
+
+# Add permalinks to all headings and make them available with a custom icon.
+html_permalinks = True
+html_permalinks_icon = "#"

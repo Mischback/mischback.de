@@ -2,6 +2,12 @@
  * layout.
  */
 
+/* General styling of all headlines.
+ *
+ * This does not include the typographic settings!
+ */
+@import "headlines";
+
 /* Containers within the ``<aside>`` container. */
 @import "aside_box";
 

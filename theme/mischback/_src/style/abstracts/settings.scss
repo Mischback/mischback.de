@@ -4,7 +4,14 @@
  * more specific blocks.
  */
 
-/* Colors */
+/* Colors
+ *
+ * These are semantic colors, meaning they describe in which context that color
+ * is used.
+ *
+ * TODO: Move the actual color definitions (``rgb()``) to a file
+ *       ``colors.scss``.
+ */
 $color-primary-fg: rgb(8, 8, 8);
 $color-primary-bg: rgb(240, 240, 240);
 $color-primary-inverted-fg: $color-primary-bg;
@@ -14,3 +21,5 @@ $color-dev-border: rgb(128, 0, 0);
 $color-dev-highlight: rgb(255, 0, 128);
 $color-admonition-note-bg: rgb(220, 220, 220);
 $color-admonition-important-bg: rgb(220, 220, 128);
+$color-headlines: $color-primary-fg;
+$color-headlines-permalink: $color-secondary-fg;
