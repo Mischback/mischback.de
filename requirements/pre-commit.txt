@@ -16,11 +16,9 @@ nodeenv==1.7.0
     # via pre-commit
 platformdirs==2.5.4
     # via virtualenv
-pre-commit==2.20.0
-    # via -r requirements/pre-commit.in
+pre-commit==2.21.0
+    # via -r pre-commit.in
 pyyaml==6.0
-    # via pre-commit
-toml==0.10.2
     # via pre-commit
 virtualenv==20.16.7
     # via pre-commit
