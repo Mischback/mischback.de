@@ -4,14 +4,14 @@
 <main class="main-article">
   <article>
     <nav>
-      {% if parents %}
       <ul>
         <li><a href="{{ pathto("index") }}">Home</a></li>
-        {% for parent in parents %}
-        <li><a href="{{ parent.link|e }}">{{ parent.title }}</a></li>
-        {% endfor %}
+        {% if parents %}
+          {% for parent in parents %}
+          <li><a href="{{ parent.link|e }}">{{ parent.title }}</a></li>
+          {% endfor %}
+        {% endif %}
       </ul>
-      {% endif %}
     </nav>
     {{ body }}
   </article>
