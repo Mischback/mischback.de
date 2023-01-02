@@ -167,6 +167,10 @@ html_theme_path = [join(REPO_ROOT, "theme")]
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_theme
 html_theme = "mischback"
 
+html_theme_options = {
+    "show_breadcrumbs": False,
+}
+
 # Do **not** include the reST sources
 #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_copy_source

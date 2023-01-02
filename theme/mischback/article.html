@@ -3,6 +3,7 @@
 {% block main_container %}
 <main class="main-article">
   <article>
+    {% if theme_show_breadcrumbs %}
     <nav>
       <ul>
         <li><a href="{{ pathto("index") }}">Home</a></li>
@@ -13,6 +14,7 @@
         {% endif %}
       </ul>
     </nav>
+    {% endif %}
     {{ body }}
   </article>
 
