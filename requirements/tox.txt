@@ -20,9 +20,7 @@ py==1.11.0
     # via tox
 six==1.16.0
     # via tox
-tomli==2.0.1
-    # via tox
 tox==3.28.0
-    # via -r requirements/tox.in
-virtualenv==20.17.1
+    # via -r tox.in
+virtualenv==20.16.7
     # via tox

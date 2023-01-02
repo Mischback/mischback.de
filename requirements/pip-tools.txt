@@ -13,11 +13,9 @@ packaging==22.0
 pep517==0.13.0
     # via build
 pip-tools==6.12.1
-    # via -r requirements/pip-tools.in
-tomli==2.0.1
-    # via
-    #   build
-    #   pep517
+    # via -r pip-tools.in
+pyparsing==3.0.9
+    # via packaging
 wheel==0.38.4
     # via pip-tools
 
