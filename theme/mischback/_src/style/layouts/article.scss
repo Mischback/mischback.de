@@ -11,6 +11,8 @@
   justify-content: space-evenly;
 
   article {
+    @include content-box-visual;
+
     /* TODO: Verify the values of ``flex-basis`` and ``max-width``! */
     flex-basis: 44em;
     max-width: 44em;

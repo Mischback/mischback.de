@@ -168,7 +168,7 @@ html_theme_path = [join(REPO_ROOT, "theme")]
 html_theme = "mischback"
 
 html_theme_options = {
-    "show_breadcrumbs": False,
+    "show_breadcrumbs": True,
 }
 
 # Do **not** include the reST sources

@@ -1,0 +1,35 @@
+/* Provide styling for breadcrumbs navigation elements.
+ *
+ * The general idea is to display the breadcrumbs like a unix filepath. The
+ * actual HTML markup will provide them in a structured way (``ul``), the
+ * visual presentation converts them to a filepath.
+ *
+ * TODO: Substitute the ``Home`` link with a (custom) symbol?
+ * TODO: Provide ``:hover`` and ``:active`` styles!
+ */
+.breadcrumbs {
+  text-align: right;
+
+  ul {
+    @include horizontal-list;
+
+    /* stylelint-disable max-nesting-depth */
+    li {
+      margin: 0 1em 0 -2px;
+
+      /* Insert the *path seperator*. */
+      /* stylelint-disable selector-max-compound-selectors */
+      ::after {
+        content: " /";
+      }
+      /* stylelint-enable selector-max-compound-selectors */
+    }
+    /* stylelint-enable max-nesting-depth */
+  }
+
+  a {
+    color: #ccc;
+    text-decoration: none;
+    text-transform: lowercase;
+  }
+}
