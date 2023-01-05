@@ -5,15 +5,51 @@
 aside section {
   margin-bottom: 3em;
 
-  /* FIXME: This will be fixed with a coherent style later! */
-  border: 1px solid $color-dev-border;
+  /* Requires synchronization with the following element! */
+  border-radius: 1.25rem 0.25rem 0.25rem;
+
+  /* FIXME: https://github.com/Mischback/mischback.de/issues/28
+   *        Either make the color adjustable (or using a global variable) or
+   *        use black with an alpha channel (which would require to have the
+   *        alpha adjustable).
+   */
+  box-shadow: 0 0 1px 2px #333, 5px 5px 2px 0 #333;
   font-size: 0.9em;
 
   header {
-    /* FIXME: This will be fixed with a coherent style later! */
-    border-bottom: 1px solid $color-dev-border;
+    /* Interdependent with the border-radius settings below. */
+    padding: 0.25rem 0 0.25rem 1rem;
+
+    /* These have to be synchronized with the outer container (see above). */
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 0.25rem;
+
+    /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
+    background-image: linear-gradient(to top, #354253, #536781);
+
+    /* FIXME: https://github.com/Mischback/mischback.de/issues/28
+     *        Using black/white as shadow/highlight colors should be working,
+     *        but the alpha value should be adjustable!
+     *        Keep in mind that this might be dependent on the background's
+     *        color, so this might be a mixin with two or even three parameters
+     *        to control the alphas.
+     */
+    box-shadow: inset 0.05rem 0.05rem 0.5rem rgba(255, 255, 255, 40%),
+      inset -0.05rem -0.05rem 0.5rem rgba(0, 0, 0, 20%),
+      0 0.05rem 2px rgba(0, 0, 0, 100%);
+
+    /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
+    color: #ccc;
     font-family: $font-stack-sans;
-    font-size: 1.1em;
-    font-weight: normal;
+    font-size: 1.2em;
+    font-weight: 600;
+
+    /* This minimal adjustment helps with the provided ``text-shadow``. */
+    letter-spacing: 0.025em;
+    text-shadow: -0.025rem -0.025rem 0.05rem rgba(255, 255, 255, 40%),
+      0.025rem 0.025rem 0.025rem rgba(0, 0, 0, 100%),
+      0.025rem 0.05rem 0.025rem rgba(0, 0, 0, 100%),
+      0.025rem 0.075rem 0.025rem rgba(0, 0, 0, 100%),
+      0.025rem 0.1rem 0.025rem rgba(0, 0, 0, 100%);
   }
 }
