@@ -24,3 +24,10 @@ $color-admonition-important-bg: rgb(220, 220, 128);
 $color-headlines: $color-primary-fg;
 $color-headlines-permalink: $color-secondary-fg;
 $color-hyperlinks-normal: #3f2cdd;
+
+/* Animation timings
+ *
+ * Some animations should use common and coherent timings, other may be highly
+ * dependent on the animated item/object.
+ */
+$animation-timing-color-transition: 150ms;

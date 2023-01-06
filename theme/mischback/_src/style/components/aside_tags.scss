@@ -12,7 +12,8 @@ aside .article-tags {
         display: inline-block;
         margin: 0.5em 0.25em 0.25em 0;
         padding: 0.25em 0.5em;
-        transition: color 150ms, background-color 150ms;
+        transition: color $animation-timing-color-transition,
+          background-color $animation-timing-color-transition;
         border-radius: 0.4em;
 
         /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */

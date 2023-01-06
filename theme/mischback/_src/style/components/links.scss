@@ -1,5 +1,6 @@
 a {
-  transition: color 150ms, text-decoration-color 150ms,
+  transition: color $animation-timing-color-transition,
+    text-decoration-color $animation-timing-color-transition,
     text-underline-offset 300ms;
 
   /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
