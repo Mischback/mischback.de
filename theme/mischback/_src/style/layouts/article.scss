@@ -17,7 +17,6 @@
     flex-basis: 44em;
     max-width: 44em;
     margin-bottom: 1rem;
-    padding-bottom: $text-content-vertical-rhythm * 2;
     font-size: $text-content-font-size;
 
     /* Sphinx's generation process provides a clearly semantic markup, which is
@@ -37,9 +36,7 @@
       margin-right: 2em;
       margin-left: 2em;
       padding: 0;
-
-      /* FIXME: This will be fixed with a coherent style later! */
-      border: 1px solid $color-dev-border;
+      padding-bottom: $text-content-vertical-rhythm * 2;
       font-size: 1em;
     }
     /* stylelint-enable max-nesting-depth */
