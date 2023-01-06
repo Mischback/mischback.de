@@ -1,4 +1,16 @@
 a {
-  text-decoration: underline;
-  text-decoration-style: solid;
+  transition: color 150ms, text-decoration-color 150ms,
+    text-underline-offset 300ms;
+
+  /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
+  color: #00e;
+  text-decoration: underline currentcolor solid 0.1em;
+  text-underline-offset: 0.15em;
+
+  &:hover {
+    /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
+    color: #e00;
+    text-decoration-color: #e00;
+    text-underline-offset: 0.35em;
+  }
 }
