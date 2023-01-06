@@ -8,6 +8,8 @@
  * TODO: Provide ``:hover`` and ``:active`` styles!
  */
 .breadcrumbs {
+  font-family: $font-stack-mono;
+  font-size: 0.8em;
   text-align: right;
 
   ul {
@@ -15,12 +17,18 @@
 
     /* stylelint-disable max-nesting-depth */
     li {
-      margin: 0 1em 0 -2px;
+      /* These values are highly dependent on the font-family and weight and
+       * may need fine adjustments, if changed!
+       *
+       * Effectively we want 0.3em between the elements. The provided values
+       * ensure a sufficient right margin for the last element.
+       */
+      margin: 0 0.5em 0 -0.2em;
 
       /* Insert the *path seperator*. */
       /* stylelint-disable selector-max-compound-selectors */
       ::after {
-        content: " /";
+        content: "/";
       }
       /* stylelint-enable selector-max-compound-selectors */
     }
