@@ -27,9 +27,19 @@
     /* stylelint-enable max-nesting-depth */
   }
 
+  /* This is the general styling of the actual links.
+   *
+   * Please note, that the ``color`` attribute is only applied to the first
+   * occurence of the ``.breadcrumbs`` class and is overridden by the following
+   * selector, see https://stackoverflow.com/a/8539107 for details.
+   */
   a {
     color: #ccc;
     text-decoration: none;
     text-transform: lowercase;
+  }
+
+  ~ .breadcrumbs a {
+    color: #333;
   }
 }
