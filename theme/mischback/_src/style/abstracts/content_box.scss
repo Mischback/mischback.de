@@ -10,7 +10,7 @@
   /* Requires synchronization with the following element! */
   border-radius: 1.25rem 0.25rem 0.25rem;
 
-  /* FIXME: https://github.com/Mischback/mischback.de/issues/28
+  /* FIXME: #28
    *        Either make the color adjustable (or using a global variable) or
    *        use black with an alpha channel (which would require to have the
    *        alpha adjustable).
@@ -27,10 +27,10 @@
     border-top-left-radius: 1.25rem;
     border-top-right-radius: 0.25rem;
 
-    /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
+    /* FIXME: #28 */
     background-image: linear-gradient(to top, #354253, #536781);
 
-    /* FIXME: https://github.com/Mischback/mischback.de/issues/28
+    /* FIXME: #28
      *        Using black/white as shadow/highlight colors should be working,
      *        but the alpha value should be adjustable!
      *        Keep in mind that this might be dependent on the background's

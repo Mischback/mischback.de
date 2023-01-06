@@ -16,13 +16,13 @@ aside .article-tags {
           background-color $animation-timing-color-transition;
         border-radius: 0.4em;
 
-        /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
+        /* FIXME: #28 */
         background-color: rgb(255, 192, 0);
 
-        /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
+        /* FIXME: #28 */
         box-shadow: 0 0 1px rgb(128, 96, 0), 1px 1px 2px 1px #333;
 
-        /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
+        /* FIXME: #28 */
         color: rgb(128, 96, 0);
         font-weight: bold; /* TODO: Might need manual adjustment! */
         text-decoration: none;
@@ -31,7 +31,7 @@ aside .article-tags {
          *        is better delayed until working actually on #28
          */
         &:hover {
-          /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
+          /* FIXME: #28 */
           background-color: rgb(175, 255, 0);
           color: rgb(20, 50, 0);
         }
