@@ -8,11 +8,11 @@ aside .article-tags {
 
     /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
     li {
-      /* TODO: Style this like a badge! */
       a {
         display: inline-block;
         margin: 0.5em 0.25em 0.25em 0;
         padding: 0.25em 0.5em;
+        transition: color 150ms, background-color 150ms;
         border-radius: 0.4em;
 
         /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
@@ -25,6 +25,15 @@ aside .article-tags {
         color: rgb(128, 96, 0);
         font-weight: bold; /* TODO: Might need manual adjustment! */
         text-decoration: none;
+
+        /* FIXME: The hover style will need more attention, but probably this
+         *        is better delayed until working actually on #28
+         */
+        &:hover {
+          /* FIXME: https://github.com/Mischback/mischback.de/issues/28 */
+          background-color: rgb(175, 255, 0);
+          color: rgb(20, 50, 0);
+        }
       }
     }
     /* stylelint-enable max-nesting-depth, selector-max-compound-selectors */
