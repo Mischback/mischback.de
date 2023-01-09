@@ -20,22 +20,17 @@ aside section {
     /* This minimal adjustment helps with the provided ``text-shadow``. */
     letter-spacing: 0.025em;
 
-    /* stylelint-disable max-nesting-depth */
-    &::before {
-      content: "";
+    /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
+    svg {
+      --primary-color: #00f;
+
       display: inline-block;
       position: absolute;
       top: -0.6em;
       left: -1.25em;
       width: 2em;
       height: 2em;
-
-      /* Note: viewBox has to be speficied like this! Might be useful for a
-       *       whole sprite file!
-       */
-      background: url("/_static/icons/quote.svg#svgView(viewBox(0, 0, 64, 64))")
-        no-repeat;
     }
-    /* stylelint-enable max-nesting-depth */
+    /* stylelint-enable max-nesting-depth, selector-max-compound-selectors */
   }
 }
