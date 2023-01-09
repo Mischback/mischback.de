@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="64"
+   height="64"
+   viewBox="0 0 16.933333 16.933334"
+   version="1.1"
+   id="svg846"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="quote2.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview848"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="px"
+     showguides="true"
+     inkscape:lockguides="true"
+     inkscape:zoom="5.5731762"
+     inkscape:cx="29.695813"
+     inkscape:cy="38.936504"
+     inkscape:window-width="1842"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <sodipodi:guide
+       position="-0.26458334,16.404167"
+       orientation="0,64"
+       id="guide1011"
+       inkscape:locked="true" />
+    <sodipodi:guide
+       position="16.404167,17.4625"
+       orientation="64,0"
+       id="guide1013"
+       inkscape:locked="true" />
+    <sodipodi:guide
+       position="18.25625,0.52916667"
+       orientation="0,-64"
+       id="guide1015"
+       inkscape:locked="true" />
+    <sodipodi:guide
+       position="0.52916667,16.404167"
+       orientation="-64,0"
+       id="guide1017"
+       inkscape:locked="true" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid1055" />
+  </sodipodi:namedview>
+  <defs
+     id="defs843" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path11184"
+       style="fill-opacity:1"
+       d="m 11.435761,11.641529 c 0,0 -0.35651,0.178908 -1.11012,0.301303 m -3.5373214,0.540904 c 0,0 -0.1444951,-0.574091 -0.1483471,-0.761068 m 0.1483471,0.761068 c 2.1226408,4.631905 8.8855794,3.862733 8.8855794,3.862733 0,0 -3.036453,-1.451846 -4.238138,-4.70494 M 6.7883196,12.483736 C 2.9296045,12.31661 0.12504229,9.4790249 0.36334035,6.7051454 0.60163877,3.9312656 3.748054,1.3867279 7.6759808,0.74820984 11.603908,0.10969194 15.183915,1.5548346 16.086443,4.1432633 16.988971,6.7316921 15.101558,10.251228 11.435761,11.641529" />
+  </g>
+</svg>

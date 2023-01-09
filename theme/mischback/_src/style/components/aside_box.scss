@@ -9,6 +9,8 @@ aside section {
   font-size: 0.9em;
 
   header {
+    position: relative;
+
     /* FIXME: #28 */
     color: #ccc;
     font-family: $font-stack-sans;
@@ -17,5 +19,17 @@ aside section {
 
     /* This minimal adjustment helps with the provided ``text-shadow``. */
     letter-spacing: 0.025em;
+
+    /* stylelint-disable max-nesting-depth */
+    &::before {
+      content: url("/_static/icons/quote.svg");
+      display: inline-block;
+      position: absolute;
+      top: -1em;
+      left: -1em;
+      width: 1.5em;
+      height: 1.5em;
+    }
+    /* stylelint-enable max-nesting-depth */
   }
 }
