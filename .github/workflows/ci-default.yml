@@ -80,7 +80,7 @@ jobs:
           npm --prefix util/ci/validation install htmlhint html-validate
       - name: Run html5validator
         run: |
-          html5validator --root build/ --also-check-css --show-warnings \
+          html5validator --root build/ --also-check-css --also-check-svg --show-warnings \
             --ignore \
               "Consider using the \"h1\" element as a top-level heading only" \
               "Consider using \"h2\"-\"h6\" elements to add identifying headings to all" \
