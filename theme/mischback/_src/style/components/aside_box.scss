@@ -29,8 +29,12 @@ aside section {
       left: -1.25em;
       width: 2em;
       height: 2em;
-      background-image: url("/_static/icons/quote.svg");
-      background-size: 2em 2em;
+
+      /* Note: viewBox has to be speficied like this! Might be useful for a
+       *       whole sprite file!
+       */
+      background: url("/_static/icons/quote.svg#svgView(viewBox(0, 0, 64, 64))")
+        no-repeat;
     }
     /* stylelint-enable max-nesting-depth */
   }
