@@ -2,10 +2,16 @@
 <svg id="icon-sprite" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
   <symbol id="icon-quote" viewBox="0 0 64 64">
     <path
-      class="overall-icon-style"
       fill="#fff"
       stroke="#333"
       style="fill: var(--primary-color, #fff); stroke: var(--stroke-color, #333); stroke-width: var(--stroke-width, 5%); stroke-linecap: round; stroke-linejoin: round;"
       d="m 43.697183,42.599268 c 0,0 -1.33988,0.65596 -4.172194,1.104717 M 26.23058,45.687189 c 0,0 -0.543061,-2.104883 -0.557537,-2.790428 m 0.557537,2.790428 c 7.977577,16.982707 33.394911,14.162566 33.394911,14.162566 0,0 -11.411983,-5.323139 -15.928308,-17.250487 M 26.23058,45.687189 C 11.728267,45.074427 1.1878049,34.670528 2.0834073,24.500203 2.9790107,14.329877 14.804268,5.0004238 29.566701,2.6593212 44.329135,0.3182191 57.783971,5.6167807 61.175967,15.107158 c 3.391994,9.490377 -3.701521,22.394624 -17.478784,27.49211" />
+  </symbol>
+  <symbol id="icon-tags" viewBox="0 0 64 64">
+    <path
+      fill="#fff"
+      stroke="#333"
+      style="fill: var(--primary-color, #fff); stroke: var(--stroke-color, #333); stroke-width: var(--stroke-width, 5%); stroke-linecap: round; stroke-linejoin: round;"
+      d="M 15.583548,5.7584857 48.192673,20.640549 c 7.933474,3.620658 15.895997,18.045532 13.10178,24.254238 -2.794215,6.208707 -18.942356,9.043338 -26.685329,5.509621 L 2,35.522345 Z" />
   </symbol>
 </svg>

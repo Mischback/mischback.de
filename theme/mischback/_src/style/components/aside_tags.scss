@@ -1,4 +1,11 @@
 aside .article-tags {
+  /* stylelint-disable selector-max-compound-selectors */
+  header svg {
+    /* FIXME: #28 */
+    --primary-color: rgb(192, 0, 0);
+  }
+  /* stylelint-enable selector-max-compound-selectors */
+
   ul {
     @include horizontal-list;
 

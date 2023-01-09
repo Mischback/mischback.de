@@ -11,7 +11,12 @@
   <aside>
     {% if ct_document_tags %}
     <section class="article-tags">
-      <header>Tags</header>
+      <header>
+        <svg>
+          <use xlink:href="/_static/icons/quote.svg#icon-tags" />
+        </svg>
+        Tags
+      </header>
       <ul>
         {% for tag in ct_document_tags -%}
         <li><a href="{{ pathto(tag.pagename) }}">{{ tag.name }}</a></li>
