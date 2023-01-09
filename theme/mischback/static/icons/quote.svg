@@ -1,68 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="64"
-   height="64"
-   viewBox="0 0 16.933333 16.933334"
-   version="1.1"
-   id="svg846"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   sodipodi:docname="quote2.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview848"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:document-units="mm"
-     showgrid="false"
-     units="px"
-     showguides="true"
-     inkscape:lockguides="true"
-     inkscape:zoom="5.5731762"
-     inkscape:cx="29.695813"
-     inkscape:cy="38.936504"
-     inkscape:window-width="1842"
-     inkscape:window-height="1011"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1">
-    <sodipodi:guide
-       position="-0.26458334,16.404167"
-       orientation="0,64"
-       id="guide1011"
-       inkscape:locked="true" />
-    <sodipodi:guide
-       position="16.404167,17.4625"
-       orientation="64,0"
-       id="guide1013"
-       inkscape:locked="true" />
-    <sodipodi:guide
-       position="18.25625,0.52916667"
-       orientation="0,-64"
-       id="guide1015"
-       inkscape:locked="true" />
-    <sodipodi:guide
-       position="0.52916667,16.404167"
-       orientation="-64,0"
-       id="guide1017"
-       inkscape:locked="true" />
-    <inkscape:grid
-       type="xygrid"
-       id="grid1055" />
-  </sodipodi:namedview>
-  <defs
-     id="defs843" />
-  <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1">
+  <defs id="defs843" />
+  <g id="icon-quote">
     <path
        id="path11184"
        style="fill-opacity:1"
