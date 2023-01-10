@@ -298,7 +298,7 @@ overall structural and visual layout. As of now, the colors are just for
 visualization, as the colorscheme is the very last step of the theming.
 
 SASS compilation is established as part of the overall build process. As of now,
-this works really well, so it will be the role model while implementing the 
+this works really well, so it will be the role model while implementing the
 TypeScript build process. The generated assets (e.g. ``style.css``) are not yet
 *production ready*, which means they are not yet optimized for deployments.
 
@@ -306,7 +306,7 @@ TypeScript build process. The generated assets (e.g. ``style.css``) are not yet
    I tend to get distracted a lot lately. While working on the overall visual
    style, I got hooked by creating *eye-candy icons*, tried using *Inkscape* to
    actually create icons, had a deep dive into SVG and how such icons might be
-   included into the layout, using Javascript to perform *Progressive 
+   included into the layout, using Javascript to perform *Progressive
    Enhancement*.
-   
+
    That's an example of *going down the rabbit hole*...
