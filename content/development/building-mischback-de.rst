@@ -287,3 +287,26 @@ minimal wrapper script.
 To keep the source as clean as possible,
 `stylelint <https://github.com/thibaudcolas/pre-commit-stylelint>`_ is used as
 a ``pre-commit`` hook (with various plugins) to lint the source files.
+
+
+2023-10-10
+==========
+
+The custom theme is developed *from the inside out*, meaning first of all the
+typographic settings were top priority, before the development shifted to the
+overall structural and visual layout. As of now, the colors are just for
+visualization, as the colorscheme is the very last step of the theming.
+
+SASS compilation is established as part of the overall build process. As of now,
+this works really well, so it will be the role model while implementing the 
+TypeScript build process. The generated assets (e.g. ``style.css``) are not yet
+*production ready*, which means they are not yet optimized for deployments.
+
+.. note::
+   I tend to get distracted a lot lately. While working on the overall visual
+   style, I got hooked by creating *eye-candy icons*, tried using *Inkscape* to
+   actually create icons, had a deep dive into SVG and how such icons might be
+   included into the layout, using Javascript to perform *Progressive 
+   Enhancement*.
+   
+   That's an example of *going down the rabbit hole*...
