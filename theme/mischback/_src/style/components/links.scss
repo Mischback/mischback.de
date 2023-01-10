@@ -1,0 +1,17 @@
+a {
+  transition: color $animation-timing-color-transition,
+    text-decoration-color $animation-timing-color-transition,
+    text-underline-offset 300ms;
+
+  /* FIXME: #28 */
+  color: #00e;
+  text-decoration: underline currentcolor solid 0.1em;
+  text-underline-offset: 0.15em;
+
+  &:hover {
+    /* FIXME: #28 */
+    color: #e00;
+    text-decoration-color: #e00;
+    text-underline-offset: 0.35em;
+  }
+}

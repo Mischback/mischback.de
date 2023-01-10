@@ -1,0 +1,33 @@
+/* General settings.
+ *
+ * This file does provide global settings that may be picked up in different
+ * more specific blocks.
+ */
+
+/* Colors
+ *
+ * These are semantic colors, meaning they describe in which context that color
+ * is used.
+ *
+ * TODO: related to #28 - Move the actual color definitions (``rgb()``) to a
+ *       file ``colors.scss``.
+ */
+$color-primary-fg: rgb(8, 8, 8);
+$color-primary-bg: rgb(240, 240, 240);
+$color-primary-inverted-fg: $color-primary-bg;
+$color-primary-inverted-bg: $color-primary-fg;
+$color-secondary-fg: rgb(184, 184, 184);
+$color-dev-border: rgb(128, 0, 0);
+$color-dev-highlight: rgb(255, 0, 128);
+$color-admonition-note-bg: rgb(220, 220, 220);
+$color-admonition-important-bg: rgb(220, 220, 128);
+$color-headlines: $color-primary-fg;
+$color-headlines-permalink: $color-secondary-fg;
+$color-hyperlinks-normal: #3f2cdd;
+
+/* Animation timings
+ *
+ * Some animations should use common and coherent timings, other may be highly
+ * dependent on the animated item/object.
+ */
+$animation-timing-color-transition: 150ms;

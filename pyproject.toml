@@ -31,6 +31,10 @@ tabindex_no_positive = true
 # ``djlint`` is run through ``pre-commit`` and may be run manually using
 # ``make util/lint/djlint``.
 
+[tool.djlint]
+# H017: Tags should be self-closing, which is not true for void tags in HTML5
+ignore = "H017"
+
 # https://www.djlint.com/docs/configuration/#per_file_ignores
 [tool.djlint.per-file-ignores]
 # ignore recommendation to add meta description / keywords. These are provided

@@ -1,0 +1,75 @@
+/* Provide basic typography-related settings to widely used common elements.
+ *
+ * These rules only control the font styling (including ``em``-based sizes)
+ * and overall ``margin`` / ``padding`` settings.
+ *
+ * Colors should be applied while styling the containing elements in the
+ * context of the layout. A default text ``color`` is provided for the ``body``
+ * element.
+ */
+
+html {
+  /* Set the reference ``font-size``.
+   *
+   * This is actually dependent on the main font face.
+   */
+  font-size: 18px;
+}
+
+body {
+  /* FIXME: #28 */
+  color: $color-primary-fg;
+  font-family: $font-stack-sans;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: $text-content-vertical-rhythm * 3;
+  margin-bottom: $text-content-vertical-rhythm;
+  font-family: $font-stack-sans;
+}
+
+h1 {
+  margin-bottom: $text-content-vertical-rhythm * 1.5;
+  font-size: 2.25em;
+}
+
+h2 {
+  font-size: 1.7em;
+}
+
+h3 {
+  margin-top: $text-content-vertical-rhythm * 2;
+  font-size: 1.2em;
+}
+
+h4 {
+  margin-bottom: $text-content-vertical-rhythm;
+  font-size: 1.2em;
+}
+
+h5 {
+  margin-bottom: $text-content-vertical-rhythm;
+  font-size: 1em;
+}
+
+h6 {
+  margin-bottom: $text-content-vertical-rhythm;
+  font-size: 1em;
+}
+
+p {
+  margin-bottom: $text-content-vertical-rhythm;
+  font-size: $text-content-font-size;
+  font-stretch: 98%;
+  line-height: $text-content-line-height;
+  hyphens: auto;
+}
+
+code {
+  font-family: $font-stack-mono;
+}

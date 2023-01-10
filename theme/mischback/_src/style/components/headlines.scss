@@ -1,0 +1,27 @@
+/* General styling of all headlines.
+ *
+ * This does not include the typographic settings.
+ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $color-headlines;
+
+  a {
+    display: inline-block;
+    margin-left: 0.25em;
+    color: $color-headlines-permalink;
+    font-size: 0.8em;
+    text-decoration: none;
+
+    /* stylelint-disable max-nesting-depth */
+    &:hover {
+      text-decoration: underline;
+    }
+    /* stylelint-enable max-nesting-depth */
+  }
+}
