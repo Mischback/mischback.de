@@ -297,10 +297,11 @@ typographic settings were top priority, before the development shifted to the
 overall structural and visual layout. As of now, the colors are just for
 visualization, as the colorscheme is the very last step of the theming.
 
-SASS compilation is established as part of the overall build process. As of now,
-this works really well, so it will be the role model while implementing the
-TypeScript build process. The generated assets (e.g. ``style.css``) are not yet
-*production ready*, which means they are not yet optimized for deployments.
+SASS compilation is established as part of the overall build process. As of
+now, this works really well, so it will be the role model while implementing
+the TypeScript build process. The generated assets (e.g. ``style.css``) are
+not yet *production ready*, which means they are not yet optimized for
+deployments.
 
 .. note::
    I tend to get distracted a lot lately. While working on the overall visual
