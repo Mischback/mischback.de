@@ -1,5 +1,6 @@
 body > div:first-of-type > header {
   display: grid;
+  position: relative;
   grid-template-columns: 5em 1fr;
   align-items: baseline;
   margin-bottom: 10px;
@@ -7,6 +8,18 @@ body > div:first-of-type > header {
   font-size: 0.9rem;
 
   /* stylelint-disable selector-max-compound-selectors */
+  svg {
+    --primary-color: rgb(192, 0, 0);
+    --stroke-width: 3%;
+
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5em;
+    height: 2.5em;
+  }
+
   nav {
     display: grid;
     grid-column: 2 / -1;
