@@ -31,10 +31,11 @@ blockquote {
 
   &::before {
     content: "\201C";
+    display: block;
     position: absolute;
 
     /* TODO: Adjust after finding the final serif font! */
-    top: -0.2em;
+    top: -0.1em;
     left: 0.05em;
 
     /* FIXME: #28 */
