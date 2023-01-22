@@ -3,7 +3,7 @@ body > div:first-of-type > header {
   position: relative;
   grid-template-columns: 5em 1fr;
   align-items: baseline;
-  margin: 1rem 0 25px 2rem;
+  margin: 1rem 0 $text-content-vertical-rhythm * 4 2rem;
 
   /* Requires synchronization with the following element! */
   border-radius: 1.25rem 0.25rem 0.25rem 1.25rem;
