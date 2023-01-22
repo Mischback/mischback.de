@@ -14,14 +14,14 @@ body {
   box-sizing: border-box;
   grid-template-columns: 1fr calc(min(80rem, 100%)) 1fr; /* 80rem ~ 1024px at  16px base font */
 
+  /* FIXME: #28 */
+  background-color: #eee;
+
   > div:first-of-type {
     /* center this container in <body>'s grid */
     grid-column: 2 / -2;
 
     /* make space for the shadow; specified in "px" */
     margin-bottom: 10px;
-
-    /* FIXME: #28 */
-    background-color: $color-primary-bg;
   }
 }
