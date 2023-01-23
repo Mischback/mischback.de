@@ -19,6 +19,23 @@
     margin-bottom: 1rem;
     font-size: $text-content-font-size;
 
+    /* stylelint-disable max-nesting-depth */
+    > div {
+      position: relative;
+
+      /* stylelint-disable selector-max-compound-selectors */
+      svg {
+        display: inline-block;
+        position: absolute;
+        top: -0.4em;
+        left: -1.25em;
+        width: 2em;
+        height: 2em;
+        filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 40%));
+      }
+      /* stylelint-enable selector-max-compound-selectors */
+    }
+
     /* Sphinx's generation process provides a clearly semantic markup, which is
      * strictly hierarchic. The ``<article>`` will contain multiple nested
      * ``<section>`` containers (derived from the hierarchy of headlines in the
@@ -30,7 +47,6 @@
      * FIXME: Aim for ~80 characters per line; this is highly dependent on the
      *        font-face!
      */
-    /* stylelint-disable max-nesting-depth */
     > section {
       max-width: 41em;
       margin-right: 2em;

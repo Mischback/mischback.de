@@ -3,7 +3,12 @@
 {% block main_container %}
 <main class="main-article">
   <article>
-    {% include "breadcrumbs.html" %}
+    <div>
+      <svg>
+        <use xlink:href="/_static/icons/sprite.svg#icon-development" />
+      </svg>
+      {% include "breadcrumbs.html" %}
+    </div>
     {{ body }}
     {% include "breadcrumbs.html" %}
   </article>
