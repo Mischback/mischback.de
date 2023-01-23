@@ -4,9 +4,6 @@
 <main class="main-article">
   <article>
     <div>
-      <svg aria-hidden="true" focusable="false">
-        <use xlink:href="/_static/icons/sprite.svg#icon-development" />
-      </svg>
       {% include "breadcrumbs.html" %}
     </div>
     {{ body }}
@@ -14,10 +11,22 @@
   </article>
 
   <aside>
+    <section class="article-series">
+      <header>
+        <svg class="icon-series header-icon" aria-hidden="true" focusable="false">
+          <use xlink:href="/_static/icons/sprite.svg#icon-series" />
+        </svg>
+        Also in this series
+      </header>
+      <ul>
+        <li><a href="#">Another article</a></li>
+        <li><a href="#">And another article</a></li>
+      </ul>
+    </section>
     {% if ct_document_tags %}
     <section class="article-tags">
       <header>
-        <svg aria-hidden="true" focusable="false">
+        <svg class="icon-tags header-icon" aria-hidden="true" focusable="false">
           <use xlink:href="/_static/icons/sprite.svg#icon-tags" />
         </svg>
         Tags
@@ -32,7 +41,7 @@
     {% if meta.tubhrq %}
     <section>
       <header>
-        <svg aria-hidden="true" focusable="false">
+        <svg class="icon-quote header-icon" aria-hidden="true" focusable="false">
           <use xlink:href="/_static/icons/sprite.svg#icon-quote" />
         </svg>
         tubhrq</header>

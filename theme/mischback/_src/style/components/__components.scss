@@ -11,8 +11,18 @@
 /* General styling of links. */
 @import "links";
 
+/* Style for icons.
+ *
+ * The actual sizing/positioning will be handled in more specific styles, e.g.
+ * in ``aside_box.scss``.
+ */
+@import "icons";
+
 /* Containers within the ``<aside>`` container. */
 @import "aside_box";
+
+/* The tags associated with an article. */
+@import "aside_tags";
 
 /* Quotes including the author reference. */
 @import "blockquotes";
@@ -22,9 +32,6 @@
 
 /* Ordered and unordered lists. */
 @import "lists";
-
-/* The tags associated with an article. */
-@import "aside_tags";
 
 /* The breadcrumb navigation */
 @import "breadcrumbs";
