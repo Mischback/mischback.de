@@ -3,7 +3,11 @@ body > div:first-of-type > header {
   position: relative;
   grid-template-columns: 5em 1fr;
   align-items: baseline;
-  margin: $text-content-vertical-rhythm * 2 0 $text-content-vertical-rhythm * 3
+
+  /* prettier-ignore */
+  margin: $text-content-vertical-rhythm * 2
+    1rem
+    $text-content-vertical-rhythm * 3
     2rem;
 
   /* Requires synchronization with the following element! */
