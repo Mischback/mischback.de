@@ -12,15 +12,21 @@
 body {
   display: grid;
   box-sizing: border-box;
-  grid-template-columns: 1fr calc(min(80rem, 100%)) 1fr; /* 80rem ~ 1024px at  16px base font */
+  grid-template-columns: 1fr 1fr calc(min(71rem, 100%)) 1fr 1fr; /* 71rem ~ 1280px at 18px base font */
 
   /* FIXME: #28 */
   background-color: #eee;
 
-  > header,
-  > main,
-  > footer {
+  > header {
+    grid-column: 2 / -2;
+  }
+
+  > main {
     /* center this container in <body>'s grid */
+    grid-column: 3 / -3;
+  }
+
+  > footer {
     grid-column: 2 / -2;
   }
 }

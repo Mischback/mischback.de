@@ -1,6 +1,7 @@
 body > header {
   display: grid;
   position: relative;
+  grid-column: 2 / -2;
   grid-template-columns: 5em 1fr;
   align-items: baseline;
 
