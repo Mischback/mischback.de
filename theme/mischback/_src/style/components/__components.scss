@@ -35,3 +35,9 @@
 
 /* The breadcrumb navigation */
 @import "breadcrumbs";
+
+/* ``header`` and ``footer`` should be consistent through all documents, but
+ * they are still *components* of the overall layout.
+ */
+@import "header";
+@import "footer";
