@@ -1,3 +1,20 @@
+/* Provides an overall coherent shadow style for content boxes.
+ *
+ * Usually this will not be applied directly, instead the
+ * ``content-box-visual`` mixin will be used.
+ */
+@mixin content-box-shadow {
+  /* Apply minimal default margins to make room for the shadows */
+  margin: 5px 10px 10px 5px;
+
+  /* FIXME: #28
+   *        Either make the color adjustable (or using a global variable) or
+   *        use black with an alpha channel (which would require to have the
+   *        alpha adjustable).
+   */
+  box-shadow: 0 0 1px 2px #333, 5px 5px 2px 0 #333;
+}
+
 /* This mixin is the general visual style of content-containing containers.
  *
  * It is meant to provide some basic visual styling, like the overall shadows,
@@ -7,8 +24,7 @@
  * the main content box, which is usually an ``article`` container.
  */
 @mixin content-box-visual {
-  /* Apply minimal default margins to make room for the shadows */
-  margin: 5px 10px 10px 5px;
+  @include content-box-shadow;
 
   /* Requires synchronization with the following element! */
 
@@ -16,13 +32,6 @@
   border-radius: $default-border-radius * 5
     $default-border-radius
     $default-border-radius;
-
-  /* FIXME: #28
-   *        Either make the color adjustable (or using a global variable) or
-   *        use black with an alpha channel (which would require to have the
-   *        alpha adjustable).
-   */
-  box-shadow: 0 0 1px 2px #333, 5px 5px 2px 0 #333;
 
   > :first-child {
     min-height: 1.35rem;
