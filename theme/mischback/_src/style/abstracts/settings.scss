@@ -4,6 +4,15 @@
  * more specific blocks.
  */
 
+/* Overall coherent visual style
+ *
+ * These settings are applied in various places throughout the stylesheet, but
+ * have to be coherent/consistent.
+ */
+
+/* This is the default radius of containers' borders. */
+$default-border-radius: 0.25rem;
+
 /* Colors
  *
  * These are semantic colors, meaning they describe in which context that color

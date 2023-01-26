@@ -7,8 +7,15 @@
  * the main content box, which is usually an ``article`` container.
  */
 @mixin content-box-visual {
+  /* Apply minimal default margins to make room for the shadows */
+  margin: 5px 10px 10px 5px;
+
   /* Requires synchronization with the following element! */
-  border-radius: 1.25rem 0.25rem 0.25rem;
+
+  /* prettier-ignore */
+  border-radius: $default-border-radius * 5
+    $default-border-radius
+    $default-border-radius;
 
   /* FIXME: #28
    *        Either make the color adjustable (or using a global variable) or
@@ -24,8 +31,8 @@
     padding: 0.25rem 0 0.25rem 1.25rem;
 
     /* These have to be synchronized with the outer container (see above). */
-    border-top-left-radius: 1.25rem;
-    border-top-right-radius: 0.25rem;
+    border-top-left-radius: $default-border-radius * 5;
+    border-top-right-radius: $default-border-radius;
 
     /* FIXME: #28 */
     background-image: linear-gradient(to top, #354253, #536781);

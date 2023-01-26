@@ -1,18 +1,22 @@
 body > header {
   display: grid;
   position: relative;
-  grid-column: 2 / -2;
   grid-template-columns: 5em 1fr;
   align-items: baseline;
 
   /* prettier-ignore */
   margin: $text-content-vertical-rhythm * 2
-    1rem
+    10px
     $text-content-vertical-rhythm * 3
     2rem;
 
   /* Requires synchronization with the following element! */
-  border-radius: 1.25rem 0.25rem 0.25rem 1.25rem;
+
+  /* prettier-ignore */
+  border-radius: $default-border-radius * 5
+    $default-border-radius
+    $default-border-radius
+    $default-border-radius * 5;
 
   /* FIXME: #28 */
   background-image: linear-gradient(to top, #354253, #536781);
