@@ -1,5 +1,5 @@
 /* stylelint-disable max-nesting-depth, selector-max-id, selector-max-compound-selectors */
-body div:first-of-type footer {
+body > footer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(calc(min(25em, 100%)), 1fr));
   margin-top: 10px;

@@ -17,11 +17,10 @@ body {
   /* FIXME: #28 */
   background-color: #eee;
 
-  > div:first-of-type {
+  > header,
+  > main,
+  > footer {
     /* center this container in <body>'s grid */
     grid-column: 2 / -2;
-
-    /* make space for the shadow; specified in "px" */
-    margin-bottom: 10px;
   }
 }
