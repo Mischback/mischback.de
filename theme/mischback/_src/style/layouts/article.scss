@@ -4,23 +4,14 @@
  */
 
 .main-article {
-  display: flex;
-  flex-flow: row wrap;
-  align-content: space-around;
-  align-items: flex-start;
-  justify-content: space-evenly;
-
-  /* FIXME: Verify these values! The vertical gap (first value) is actually
-   *        made up. The horizontal gap (second value) covers the offset of
-   *        the icons of ``<aside>`` boxes.
-   */
-  gap: 10px 25px;
+  display: grid;
+  grid-template: ". content . aside ." / 5fr 44rem 3fr 20rem 1fr;
 
   article {
     @include content-box-visual;
 
-    flex: 1 1 44em;
-    max-width: 44em;
+    grid-area: content;
+    max-width: 44rem;
     margin-bottom: 1rem;
     font-size: $text-content-font-size;
 
@@ -41,9 +32,9 @@
      *        font-face!
      */
     > section {
-      max-width: 40em;
-      margin-right: 2em;
-      margin-left: 2em;
+      max-width: 40rem;
+      margin-right: 2rem;
+      margin-left: 2rem;
       padding: 0;
       padding-bottom: $text-content-vertical-rhythm * 2;
       font-size: 1em;
@@ -52,15 +43,13 @@
   }
 
   aside {
-    flex: 1 1 20rem;
-
     /* NOTE: The ``15px`` are based on the (horizontal) margins of the
      *       ``content-box-shadow`` mixin in ``abstracts/content-box.scss``!
      *
      *       This adjustment has to be made because the boxes are placed
      *       inside of the ``<aside>`` container.
      */
-    max-width: calc(44em + 15px);
+    grid-area: aside;
   }
 }
 
