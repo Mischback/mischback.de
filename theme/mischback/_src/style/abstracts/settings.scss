@@ -10,11 +10,8 @@
  * screen sizes.
  */
 
-/* At this point the desired layout covers the whole width of the viewport.
- *
- * 71rem ~ 1280px at 18px base font
- */
-$break-layout-full-width: 71rem;
+/* At this point the desired layout covers the whole width of the viewport. */
+$break-layout-full-width: 1280px;
 
 /* Overall coherent visual style
  *
@@ -23,7 +20,7 @@ $break-layout-full-width: 71rem;
  */
 
 /* This is the default radius of containers' borders. */
-$default-border-radius: 0.25rem;
+$default-border-radius: 5px;
 
 /* Colors
  *

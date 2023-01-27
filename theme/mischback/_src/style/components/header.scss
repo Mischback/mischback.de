@@ -27,10 +27,14 @@ body > header {
    *        Keep in mind that this might be dependent on the background's
    *        color, so this might be a mixin with two or even three parameters
    *        to control the alphas.
+   *
+   * Note: This ``box-shadow`` combines the ``box-shadow`` settings of the
+   *       ``content-box-visual`` mixin, meaning the *outer* shadows of the
+   *       actual box are merged with the *inner* shadows of the box's header
+   *       element!
    */
-  box-shadow: inset 0.05rem 0.05rem 0.5rem rgba(255, 255, 255, 40%),
-    inset -0.05rem -0.05rem 0.5rem rgba(0, 0, 0, 20%), 0 0 1px 2px #333,
-    5px 5px 2px 0 #333;
+  box-shadow: inset 1px 1px 9px rgba(255, 255, 255, 40%),
+    inset -1px -1px 9px rgba(0, 0, 0, 20%), 0 0 1px 2px #333, 5px 5px 2px 0 #333;
   font-size: 1rem;
 
   @include for-breakpoint(layout-full-width) {

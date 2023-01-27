@@ -2,6 +2,9 @@
  *
  * Usually this will not be applied directly, instead the
  * ``content-box-visual`` mixin will be used.
+ *
+ * As this is a purely visual style, all lengths are specified in **pixels**
+ * because they are **not** dependent on the general ``font-size``.
  */
 @mixin content-box-shadow {
   /* Apply minimal default margins to make room for the shadows */
@@ -37,7 +40,12 @@
     min-height: 1.35rem;
 
     /* Interdependent with the border-radius settings below. */
-    padding: 0.25rem 0 0.25rem 1.25rem;
+
+    /* prettier-ignore */
+    padding: $default-border-radius
+      0
+      $default-border-radius
+      $default-border-radius * 5;
 
     /* These have to be synchronized with the outer container (see above). */
     border-top-left-radius: $default-border-radius * 5;
@@ -53,10 +61,15 @@
      *        color, so this might be a mixin with two or even three parameters
      *        to control the alphas.
      */
-    box-shadow: inset 0.05rem 0.05rem 0.5rem rgba(255, 255, 255, 40%),
-      inset -0.05rem -0.05rem 0.5rem rgba(0, 0, 0, 20%),
-      0 0.05rem 2px rgba(0, 0, 0, 100%);
+    box-shadow: inset 1px 1px 9px rgba(255, 255, 255, 40%),
+      inset -1px -1px 9px rgba(0, 0, 0, 20%), 0 1px 2px rgba(0, 0, 0, 100%);
     line-height: 1.35rem;
+
+    /* FIXME: #28
+     *        Either make the color adjustable (or using a global variable) or
+     *        use black with an alpha channel (which would require to have the
+     *        alpha adjustable).
+     */
     text-shadow: -0.025rem -0.025rem 0.05rem rgba(255, 255, 255, 40%),
       0.025rem 0.025rem 0.025rem rgba(0, 0, 0, 100%),
       0.025rem 0.05rem 0.025rem rgba(0, 0, 0, 100%),
