@@ -8,6 +8,10 @@ aside section {
   margin-bottom: 3em;
   font-size: 0.9em;
 
+  @include for-breakpoint(layout-single-column) {
+    margin-bottom: 2rem;
+  }
+
   header {
     position: relative;
 
