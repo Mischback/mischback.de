@@ -14,7 +14,7 @@ body {
   box-sizing: border-box;
 
   /* ``$break-layout-full-width`` is defined in ``abstracts/settings.scss`` */
-  grid-template-columns: 1fr 1fr calc(min(#{$break-layout-full-width}, 100%)) 1fr 1fr;
+  grid-template-columns: 3fr 2fr calc(min(#{$break-layout-full-width}, 100%)) 2fr 3fr;
 
   /* FIXME: #28 */
   background-color: #eee;
