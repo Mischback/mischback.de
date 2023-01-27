@@ -12,7 +12,9 @@
 body {
   display: grid;
   box-sizing: border-box;
-  grid-template-columns: 1fr 1fr calc(min(71rem, 100%)) 1fr 1fr; /* 71rem ~ 1280px at 18px base font */
+
+  /* ``$break-layout-full-width`` is defined in ``abstracts/settings.scss`` */
+  grid-template-columns: 1fr 1fr calc(min(#{$break-layout-full-width}, 100%)) 1fr 1fr;
 
   /* FIXME: #28 */
   background-color: #eee;

@@ -4,6 +4,18 @@
  * more specific blocks.
  */
 
+/* Breakpoints
+ *
+ * These are the breakpoints that are used to make the layout work on any
+ * screen sizes.
+ */
+
+/* At this point the desired layout covers the whole width of the viewport.
+ *
+ * 71rem ~ 1280px at 18px base font
+ */
+$break-layout-full-width: 71rem;
+
 /* Overall coherent visual style
  *
  * These settings are applied in various places throughout the stylesheet, but
