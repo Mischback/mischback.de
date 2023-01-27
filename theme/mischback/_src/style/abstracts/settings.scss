@@ -19,6 +19,9 @@ $break-layout-single-column: 1220px;
 /* At this point the header icons must be moved inside. */
 $break-layout-header-icons: 840px;
 
+/* At this point the actual content starts to shrink. */
+$break-layout-shrink-content: 790px;
+
 /* Overall coherent visual style
  *
  * These settings are applied in various places throughout the stylesheet, but

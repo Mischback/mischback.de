@@ -36,12 +36,16 @@
      *        font-face!
      */
     > section {
-      max-width: 40rem;
       margin-right: 2rem;
       margin-left: 2rem;
       padding: 0;
       padding-bottom: $text-content-vertical-rhythm * 2;
       font-size: 1em;
+
+      @include for-breakpoint(layout-shrink-content) {
+        margin-right: 1rem;
+        margin-left: 1rem;
+      }
     }
     /* stylelint-enable max-nesting-depth */
   }
