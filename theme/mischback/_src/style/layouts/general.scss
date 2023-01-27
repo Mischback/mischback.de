@@ -12,23 +12,24 @@
 body {
   display: grid;
   box-sizing: border-box;
-
-  /* ``$break-layout-full-width`` is defined in ``abstracts/settings.scss`` */
-  grid-template-columns: 3fr 2fr calc(min(#{$break-layout-full-width}, 100%)) 2fr 3fr;
+  grid-template:
+    ". header header header ."
+    ". .      main   .      ."
+    ". footer footer footer ."
+    / 3fr 2fr calc(min(#{$break-layout-full-width}, 100%)) 2fr 3fr;
 
   /* FIXME: #28 */
   background-color: #eee;
 
   > header {
-    grid-column: 2 / -2;
+    grid-area: header;
   }
 
   > main {
-    /* center this container in <body>'s grid */
-    grid-column: 3 / -3;
+    grid-area: main;
   }
 
   > footer {
-    grid-column: 2 / -2;
+    grid-area: footer;
   }
 }
