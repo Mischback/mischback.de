@@ -15,6 +15,13 @@ body > footer {
   color: #ddd;
   font-size: 0.9rem;
 
+  @include for-breakpoint(layout-full-width) {
+    margin-right: 0;
+    margin-left: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
   a {
     /* FIXME: #28 */
     color: #e00;

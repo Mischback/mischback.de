@@ -1,0 +1,27 @@
+/* This mixin does handle the media queries related to breakpoints.
+ *
+ * These media queries with their directives should make the design as
+ * responsive as possible.
+ *
+ * This is based on https://stackoverflow.com/a/49421832
+ */
+
+/* prettier-ignore */
+$media-queries: (
+  "layout-full-width": unquote("only screen and (max-width: #{$break-layout-full-width})")
+);
+
+@mixin for-breakpoint($breakpoints) {
+  $conditions: ();
+  @each $breakpoint in $breakpoints {
+    $conditions: append(
+      $conditions,
+      #{inspect(map-get($media-queries, $breakpoint))},
+      comma
+    );
+  }
+
+  @media #{$conditions} {
+    @content;
+  }
+}

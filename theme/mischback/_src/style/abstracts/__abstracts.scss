@@ -3,6 +3,9 @@
 /* General settings. */
 @import "settings";
 
+/* Encapsulates breakpoint-related media queries to keep everythink DRY. */
+@import "breakpoint_mixin";
+
 /* Provide a coherent vertical spacing. */
 @import "vertical_spacing";
 

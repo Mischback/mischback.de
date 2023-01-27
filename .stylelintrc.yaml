@@ -7,3 +7,4 @@ extends:
 rules:
   color-function-notation: "legacy"
   indentation: 2
+  scss/no-global-function-names: null

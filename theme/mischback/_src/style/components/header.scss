@@ -33,6 +33,12 @@ body > header {
     5px 5px 2px 0 #333;
   font-size: 1rem;
 
+  @include for-breakpoint(layout-full-width) {
+    margin-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
   /* stylelint-disable selector-max-compound-selectors */
   svg {
     --primary-color: rgb(192, 0, 0);
