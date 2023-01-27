@@ -12,7 +12,12 @@
 
 /* At this point the desired layout covers the whole width of the viewport. */
 $break-layout-full-width: 1280px;
+
+/* At this point the layout switches to a single column. */
 $break-layout-single-column: 1220px;
+
+/* At this point the header icons must be moved inside. */
+$break-layout-header-icons: 840px;
 
 /* Overall coherent visual style
  *

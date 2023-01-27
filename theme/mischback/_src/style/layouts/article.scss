@@ -23,9 +23,6 @@
     font-size: $text-content-font-size;
 
     /* stylelint-disable max-nesting-depth */
-    > div {
-      position: relative;
-    }
 
     /* Sphinx's generation process provides a clearly semantic markup, which is
      * strictly hierarchic. The ``<article>`` will contain multiple nested

@@ -12,27 +12,8 @@ aside section {
     margin-bottom: 2rem;
   }
 
-  header {
-    position: relative;
-
-    /* FIXME: #28 */
-    color: #ccc;
-    font-family: $font-stack-sans;
+  > header {
     font-size: 1.2em;
     font-weight: 500;
-
-    /* This minimal adjustment helps with the provided ``text-shadow``. */
-    letter-spacing: 0.025em;
-
-    /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
-    svg {
-      display: inline-block;
-      position: absolute;
-      top: -0.4em;
-      left: -1.25em;
-      width: 2em;
-      height: 2em;
-    }
-    /* stylelint-enable max-nesting-depth, selector-max-compound-selectors */
   }
 }

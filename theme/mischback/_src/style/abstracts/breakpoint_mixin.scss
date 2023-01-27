@@ -9,7 +9,8 @@
 /* prettier-ignore */
 $media-queries: (
   "layout-full-width": unquote("only screen and (max-width: #{$break-layout-full-width})"),
-  "layout-single-column": unquote("only screen and (max-width: #{$break-layout-single-column})")
+  "layout-single-column": unquote("only screen and (max-width: #{$break-layout-single-column})"),
+  "layout-header-icons": unquote("only screen and (max-width: #{$break-layout-header-icons})")
 );
 
 @mixin for-breakpoint($breakpoints) {

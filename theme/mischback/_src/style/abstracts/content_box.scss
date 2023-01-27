@@ -37,6 +37,7 @@
     $default-border-radius;
 
   > :first-child {
+    position: relative;
     min-height: 1.35rem;
 
     /* Interdependent with the border-radius settings below. */
@@ -63,6 +64,13 @@
      */
     box-shadow: inset 1px 1px 9px rgba(255, 255, 255, 40%),
       inset -1px -1px 9px rgba(0, 0, 0, 20%), 0 1px 2px rgba(0, 0, 0, 100%);
+
+    /* FIXME: #28 */
+    color: #ccc;
+    font-family: $font-stack-sans;
+
+    /* This minimal adjustment helps with the provided ``text-shadow``. */
+    letter-spacing: 0.025em;
     line-height: 1.35rem;
 
     /* FIXME: #28
@@ -75,5 +83,22 @@
       0.025rem 0.05rem 0.025rem rgba(0, 0, 0, 100%),
       0.025rem 0.075rem 0.025rem rgba(0, 0, 0, 100%),
       0.025rem 0.1rem 0.025rem rgba(0, 0, 0, 100%);
+
+    @include for-breakpoint(layout-header-icons) {
+      padding-left: 2.25em;
+    }
+
+    svg {
+      display: inline-block;
+      position: absolute;
+      top: -0.4em;
+      left: -1.25em;
+      width: 2em;
+      height: 2em;
+
+      @include for-breakpoint(layout-header-icons) {
+        left: 0;
+      }
+    }
   }
 }
