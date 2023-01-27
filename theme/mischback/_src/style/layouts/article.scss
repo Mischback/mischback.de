@@ -7,6 +7,13 @@
   display: grid;
   grid-template: ". content . aside ." / 5fr 44rem 3fr 20rem 1fr;
 
+  @include for-breakpoint(layout-single-column) {
+    grid-template:
+      ". content ."
+      ". aside   ."
+      / 1fr calc(min(44rem, 100%)) 1fr;
+  }
+
   article {
     @include content-box-visual;
 
