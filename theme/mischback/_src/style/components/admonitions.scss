@@ -12,11 +12,12 @@
  */
 .admonition {
   position: relative;
-  margin-right: 3em;
-  margin-bottom: $text-content-vertical-rhythm;
-  margin-left: 3em;
+  margin: $text-content-vertical-rhythm * 2 3em;
   padding: 0.5em 0.5em 0 2em;
-  border: 1px solid #c00;
+  border-radius: $default-border-radius;
+
+  /* FIXME: #28 */
+  box-shadow: 0 0 1px 2px #333;
 
   .admonition-title {
     font-weight: bold;
