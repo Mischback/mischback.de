@@ -43,8 +43,7 @@ body > header {
     border-bottom-right-radius: 0;
   }
 
-  /* stylelint-disable selector-max-compound-selectors */
-  svg {
+  .logo-main {
     --primary-color: rgb(192, 0, 0);
     --stroke-width: 3%;
 
@@ -57,6 +56,7 @@ body > header {
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 25%));
   }
 
+  /* stylelint-disable selector-max-compound-selectors */
   nav {
     display: grid;
     grid-column: 2 / -1;
