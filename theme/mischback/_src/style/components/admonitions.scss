@@ -20,6 +20,11 @@
   box-shadow: 0 0 1px 2px #333;
 
   .admonition-title {
+    position: absolute;
+    left: 0;
+    transform: rotate(-90deg);
+    transform-origin: top left;
+    font-family: $font-stack-serif;
     font-weight: bold;
   }
 }
@@ -27,36 +32,18 @@
 .note {
   background-color: $color-admonition-note-bg;
 
-  /* TODO: This is not final! Might be replaced by an icon or a SVG-based
-   *       graphic.
-   */
-  &::before {
-    content: "note";
-    position: absolute;
-    top: 0.55em;
-    left: -0.5em;
-    transform: rotate(-90deg);
-    color: #960;
-    font-family: $font-stack-serif;
-    font-size: 1.5em;
+  .admonition-title {
+    top: 2.5em;
   }
 }
 
 .important {
   background-color: $color-admonition-important-bg;
 
-  /* For *important* boxes, add a **!**.
-   *
-   * TODO: This is not final! Might be replaced by an icon or a SVG-based
-   *       graphic.
-   */
-  &::before {
-    content: "!";
-    position: absolute;
-    top: -0.2em;
-    left: 0.05em;
+  .admonition-title {
+    top: 4.75em;
+
+    /* FIXME: #28 */
     color: #960;
-    font-family: $font-stack-serif;
-    font-size: 4em;
   }
 }
