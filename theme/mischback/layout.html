@@ -2,9 +2,11 @@
 
 {% block html_body %}
   <header>
-    <svg aria-hidden="true" focusable="false">
-      <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#logo-head" />
-    </svg>
+    <a href="{{ pathto("index") }}" title="Home">
+      <svg aria-hidden="true" focusable="false">
+        <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#logo-head" />
+      </svg>
+    </a>
     <nav>
       {% include "nav_primary_list.html" %}
     </nav>
