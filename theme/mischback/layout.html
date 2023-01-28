@@ -7,9 +7,16 @@
         <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#logo-head" />
       </svg>
     </a>
-    <nav>
+    <a href="#main-menu" class="menu-toggle">
+      Open Menu
+    </a>
+    <nav id="main-menu">
+      <a href="#main-menu-toggle" class="menu-close">
+        Close Menu
+      </a>
       {% include "nav_primary_list.html" %}
     </nav>
+    <a href="#main-menu-toggle" class="backdrop" hidden></a>
   </header>
 
   {% block main_container required %}
