@@ -83,6 +83,20 @@ body > header {
     /* just provide some space for the logo */
     margin-left: 5em;
 
+    @include for-breakpoint(layout-burger-nav) {
+      display: none;
+      position: absolute;
+      z-index: 999;
+      top: 0;
+      left: -200px; /* TODO: Might need adjustment! */
+      height: 100%;
+      margin: 0;
+      overflow-x: visible;
+      overflow-y: scroll;
+
+      /* TODO: Animation? */
+    }
+
     /* stylelint-disable max-nesting-depth */
     .menu-close {
       display: none;
