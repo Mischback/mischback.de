@@ -1,8 +1,5 @@
 body > header {
-  display: grid;
   position: relative;
-  grid-template-columns: 5em 1fr;
-  align-items: baseline;
 
   /* prettier-ignore */
   margin: $text-content-vertical-rhythm * 2
@@ -43,23 +40,58 @@ body > header {
     border-bottom-right-radius: 0;
   }
 
-  .logo-main {
-    --primary-color: rgb(192, 0, 0);
-    --stroke-width: 3%;
-
+  /* The website's main logo.
+   *
+   * The logo is provided as a SVG, enclosed in an ``<a>`` tag, which links to
+   * the homepage / root document.
+   */
+  .logo {
     display: block;
     position: absolute;
     top: -0.8rem;
     left: -1.25rem;
     width: 5.5em;
     height: 2.5em;
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 25%));
+
+    /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
+    svg {
+      --primary-color: rgb(192, 0, 0);
+      --stroke-width: 3%;
+
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 25%));
+    }
+    /* stylelint-enable max-nesting-depth, selector-max-compound-selectors */
+  }
+
+  /* Everything below this point is related to the website's main navigation!
+   *
+   * This includes the default navigation aswell as its responsive counterpart.
+   */
+
+  .menu-toggle {
+    display: none;
+
+    @include for-breakpoint(layout-burger-nav) {
+      display: inline-block;
+    }
   }
 
   /* stylelint-disable selector-max-compound-selectors */
   nav {
-    display: grid;
-    grid-column: 2 / -1;
+    /* just provide some space for the logo */
+    margin-left: 5em;
+
+    /* stylelint-disable max-nesting-depth */
+    .menu-close {
+      display: none;
+
+      @include for-breakpoint(layout-burger-nav) {
+        display: inline-block;
+      }
+    }
+    /* stylelint-enable max-nesting-depth */
 
     /* stylelint-disable max-nesting-depth */
     ul {

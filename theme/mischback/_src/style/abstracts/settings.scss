@@ -22,6 +22,9 @@ $break-layout-header-icons: 840px;
 /* At this point the actual content starts to shrink. */
 $break-layout-shrink-content: 790px;
 
+/* At this point the default navigation is *burgerized*. */
+$break-layout-burger-navigation: 500px;
+
 /* Overall coherent visual style
  *
  * These settings are applied in various places throughout the stylesheet, but

@@ -11,7 +11,8 @@ $media-queries: (
   "layout-full-width": unquote("only screen and (max-width: #{$break-layout-full-width})"),
   "layout-single-column": unquote("only screen and (max-width: #{$break-layout-single-column})"),
   "layout-header-icons": unquote("only screen and (max-width: #{$break-layout-header-icons})"),
-  "layout-shrink-content": unquote("only screen and (max-width: #{$break-layout-shrink-content})")
+  "layout-shrink-content": unquote("only screen and (max-width: #{$break-layout-shrink-content})"),
+  "layout-burger-nav": unquote("only screen and (max-width: #{$break-layout-burger-navigation})")
 );
 
 @mixin for-breakpoint($breakpoints) {
