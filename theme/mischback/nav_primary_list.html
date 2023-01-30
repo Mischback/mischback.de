@@ -1,4 +1,11 @@
 <ul>
-  <li><a href="{{ pathto("index") }}">Home</a></li>
+  <li>
+    <a href="{{ pathto("index") }}">
+      <svg class="nav-icon" aria-hidden="true" focusable="false">
+        <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-home" />
+      </svg>
+      Home
+    </a>
+  </li>
   <li><a href="{{ pathto("development/index") }}">Development</a></li>
 </ul>
