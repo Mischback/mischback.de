@@ -19,8 +19,8 @@ body > header {
 
   /* prettier-ignore */
   border-radius: $default-border-radius * 5
-    $default-border-radius
-    $default-border-radius
+    0
+    0
     $default-border-radius * 5;
 
   /* FIXME: #28 */
@@ -44,8 +44,8 @@ body > header {
 
   @include for-breakpoint(layout-full-width) {
     margin-right: 10px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-top-right-radius: $default-border-radius;
+    border-bottom-right-radius: $default-border-radius;
   }
 
   /* The website's main logo.
