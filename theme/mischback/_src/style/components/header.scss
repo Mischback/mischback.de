@@ -1,5 +1,10 @@
 body > header {
+  display: flex;
   position: relative;
+  align-content: center;
+  align-items: center;
+  justify-content: flex-start;
+  height: 2em;
 
   /* prettier-ignore */
   margin: $text-content-vertical-rhythm * 2
@@ -116,10 +121,11 @@ body > header {
 
     /* stylelint-disable max-nesting-depth */
     ul {
-      @include horizontal-list;
+      @include for-breakpoint(layout-burger-nav) {
+        @include horizontal-list;
 
-      margin: 0.5em 0;
-      text-indent: 0;
+        text-indent: 0;
+      }
 
       li {
         margin-bottom: 0;
