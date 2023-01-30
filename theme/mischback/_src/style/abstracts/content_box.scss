@@ -46,7 +46,7 @@
     padding: $default-border-radius
       0
       $default-border-radius
-      $default-border-radius * 5;
+      2.25em;
 
     /* These have to be synchronized with the outer container (see above). */
     border-top-left-radius: $default-border-radius * 5;
@@ -85,19 +85,19 @@
       0.025rem 0.1rem 0.025rem rgba(0, 0, 0, 100%);
 
     @include for-breakpoint(layout-header-icons) {
-      padding-left: 2.25em;
+      padding-left: $default-border-radius * 5;
     }
 
     svg {
       display: inline-block;
       position: absolute;
       top: -0.4em;
-      left: -1.25em;
+      left: 0;
       width: 2em;
       height: 2em;
 
       @include for-breakpoint(layout-header-icons) {
-        left: 0;
+        left: -1.25em;
       }
     }
   }

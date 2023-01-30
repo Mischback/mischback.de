@@ -5,11 +5,11 @@
 aside section {
   @include content-box-visual;
 
-  margin-bottom: 3em;
+  margin-bottom: 2em;
   font-size: 0.9em;
 
   @include for-breakpoint(layout-single-column) {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 
   > header {

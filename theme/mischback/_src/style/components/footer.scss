@@ -4,9 +4,11 @@ body > footer {
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(calc(min(25em, 100%)), 1fr));
+  margin-right: 0;
   margin-bottom: 0;
-  border-top-left-radius: $default-border-radius * 2;
-  border-top-right-radius: $default-border-radius * 2;
+  margin-left: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 
   /* FIXME: #28 */
   background-image: linear-gradient(to top, #0f0f0f, #636363);
@@ -16,10 +18,13 @@ body > footer {
   font-size: 0.9rem;
 
   @include for-breakpoint(layout-full-width) {
-    margin-right: 0;
-    margin-left: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+    /* These margins *should* be synchronized with the ``content-box-shadow``
+     * mixin (see ``abstracts/content_box.scss``).
+     */
+    margin-right: 10px;
+    margin-left: 5px;
+    border-top-left-radius: $default-border-radius * 2;
+    border-top-right-radius: $default-border-radius * 2;
   }
 
   a {

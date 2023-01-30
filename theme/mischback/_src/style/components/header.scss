@@ -3,7 +3,7 @@ body > header {
 
   /* prettier-ignore */
   margin: $text-content-vertical-rhythm * 2
-    10px
+    0
     $text-content-vertical-rhythm * 3
     1.5rem;
 
@@ -35,7 +35,7 @@ body > header {
   font-size: 1rem;
 
   @include for-breakpoint(layout-full-width) {
-    margin-right: 0;
+    margin-right: 10px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -71,38 +71,38 @@ body > header {
    */
 
   .menu-toggle {
-    display: none;
+    display: inline-block;
 
     @include for-breakpoint(layout-burger-nav) {
-      display: inline-block;
+      display: none;
     }
   }
 
   /* stylelint-disable selector-max-compound-selectors */
   nav {
-    /* just provide some space for the logo */
-    margin-left: 5em;
+    display: none;
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: -200px; /* TODO: Might need adjustment! */
+    height: 100%;
+    margin: 0;
+    overflow-x: visible;
+    overflow-y: scroll;
+
+    /* TODO: Animation? */
 
     @include for-breakpoint(layout-burger-nav) {
-      display: none;
-      position: absolute;
-      z-index: 999;
-      top: 0;
-      left: -200px; /* TODO: Might need adjustment! */
-      height: 100%;
-      margin: 0;
-      overflow-x: visible;
-      overflow-y: scroll;
-
-      /* TODO: Animation? */
+      /* just provide some space for the logo */
+      margin-left: 5em;
     }
 
     /* stylelint-disable max-nesting-depth */
     .menu-close {
-      display: none;
+      display: inline-block;
 
       @include for-breakpoint(layout-burger-nav) {
-        display: inline-block;
+        display: none;
       }
     }
     /* stylelint-enable max-nesting-depth */
