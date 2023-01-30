@@ -7,6 +7,9 @@ body > header {
     $text-content-vertical-rhythm * 3
     1.5rem;
 
+  /* just provide some space for the logo */
+  padding-left: 5em;
+
   /* Requires synchronization with the following element! */
 
   /* prettier-ignore */
@@ -93,8 +96,12 @@ body > header {
     /* TODO: Animation? */
 
     @include for-breakpoint(layout-burger-nav) {
-      /* just provide some space for the logo */
-      margin-left: 5em;
+      display: block;
+      position: relative;
+      top: auto;
+      left: auto;
+      height: auto;
+      overflow: auto;
     }
 
     /* stylelint-disable max-nesting-depth */
