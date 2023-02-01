@@ -124,16 +124,25 @@ body > header {
 
     /* stylelint-disable max-nesting-depth */
     ul {
+      @include reset-list;
+
+      margin-left: 2em;
+      font-size: 1.2em;
+
       @include for-breakpoint(layout-burger-nav) {
         /* This is for the full navigation. */
         @include horizontal-list;
 
+        font-size: 1em;
         text-indent: 0;
       }
 
       li {
-        margin-bottom: 0;
-        border-right: 0.1em solid #c00;
+        margin-bottom: 1em;
+
+        @include for-breakpoint(layout-burger-nav) {
+          margin-bottom: 0;
+        }
 
         a {
           display: block;
@@ -169,9 +178,13 @@ body > header {
       display: block;
       position: fixed;
       left: 0;
+      width: 100vw;
 
       .menu-close {
+        position: absolute;
         z-index: 1001;
+        top: 0;
+        right: 0;
       }
 
       + .menu-backdrop {
@@ -182,13 +195,18 @@ body > header {
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(0, 0, 0, 98%);
+
+        /* FIXME: somehow this is not working and results in plain black in
+         *        the actual CSS
+         */
+        background-color: rgba(0, 0, 0, 97%);
         cursor: default;
       }
 
       ul {
         position: relative;
         z-index: 1000;
+        margin-top: 2em;
       }
     }
     /* stylelint-enable max-nesting-depth, selector-no-qualifying-type */
