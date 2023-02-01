@@ -1,9 +1,5 @@
 body > header {
-  display: flex;
   position: relative;
-  align-content: center;
-  align-items: center;
-  justify-content: flex-start;
   height: 2em;
 
   /* prettier-ignore */
@@ -42,6 +38,14 @@ body > header {
     inset -1px -1px 9px rgba(0, 0, 0, 20%), 0 0 1px 2px #333, 5px 5px 2px 0 #333;
   font-size: 1rem;
 
+  @include for-breakpoint(layout-burger-nav) {
+    /* This is for the full navigation. */
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
   @include for-breakpoint(layout-full-width) {
     margin-right: 10px;
     border-top-right-radius: $default-border-radius;
@@ -63,9 +67,6 @@ body > header {
 
     /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
     svg {
-      --primary-color: rgb(192, 0, 0);
-      --stroke-width: 3%;
-
       width: 100%;
       height: 100%;
       filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 25%));
@@ -82,6 +83,7 @@ body > header {
     display: inline-block;
 
     @include for-breakpoint(layout-burger-nav) {
+      /* This is for the full navigation. */
       display: none;
     }
   }
@@ -92,15 +94,13 @@ body > header {
     position: absolute;
     z-index: 999;
     top: 0;
-    left: -200px; /* TODO: Might need adjustment! */
-    height: 100%;
+    left: -100vw;
     margin: 0;
     overflow-x: visible;
     overflow-y: scroll;
 
-    /* TODO: Animation? */
-
     @include for-breakpoint(layout-burger-nav) {
+      /* This is for the full navigation. */
       display: block;
       position: relative;
       top: auto;
@@ -109,11 +109,14 @@ body > header {
       overflow: auto;
     }
 
+    /* TODO: Animation? */
+
     /* stylelint-disable max-nesting-depth */
     .menu-close {
       display: inline-block;
 
       @include for-breakpoint(layout-burger-nav) {
+        /* This is for the full navigation. */
         display: none;
       }
     }
@@ -122,6 +125,7 @@ body > header {
     /* stylelint-disable max-nesting-depth */
     ul {
       @include for-breakpoint(layout-burger-nav) {
+        /* This is for the full navigation. */
         @include horizontal-list;
 
         text-indent: 0;
@@ -158,7 +162,36 @@ body > header {
         }
       }
     }
-    /* stylelint-enable max-nesting-depth */
+
+    /* stylelint-disable selector-no-qualifying-type */
+    &:target,
+    &[aria-expanded="true"] {
+      display: block;
+      position: fixed;
+      left: 0;
+
+      .menu-close {
+        z-index: 1001;
+      }
+
+      + .menu-backdrop {
+        display: block;
+        position: fixed;
+        z-index: 998;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 98%);
+        cursor: default;
+      }
+
+      ul {
+        position: relative;
+        z-index: 1000;
+      }
+    }
+    /* stylelint-enable max-nesting-depth, selector-no-qualifying-type */
   }
   /* stylelint-enable selector-max-compound-selectors */
 }
