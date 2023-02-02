@@ -43,8 +43,8 @@ repos:
     hooks:
       - id: black
   # isort (Python: automatically sort import statements)
-  - repo: https://github.com/timothycrosley/isort
-    rev: 5.10.1
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
     hooks:
       - id: isort
   # flake8 (linting)
