@@ -203,10 +203,15 @@ body > header {
         width: 100vw;
         height: 100vh;
 
-        /* FIXME: somehow this is not working and results in plain black in
-         *        the actual CSS
+        /* FIXME: #49
+         *
+         * This is related to #28 aswell, as the final colors will influence
+         * the actual color.
+         *
+         * The idea: Have a slightly transparent backdrop with a fully opaque
+         * navigation menu.
          */
-        background-color: rgba(0, 0, 0, 97%);
+        background-color: rgba(0, 0, 0, 95%);
         cursor: default;
       }
 
