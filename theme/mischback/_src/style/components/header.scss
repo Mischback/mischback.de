@@ -183,8 +183,15 @@ body > header {
       .menu-close {
         position: absolute;
         z-index: 1001;
-        top: 0;
-        right: 0;
+        top: 0.25em;
+        right: 0.25em;
+        width: 2em;
+        height: 2em;
+
+        svg {
+          width: 100%;
+          height: 100%;
+        }
       }
 
       + .menu-backdrop {

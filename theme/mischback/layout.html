@@ -9,7 +9,11 @@
     </a>
     <a href="#main-menu" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu">Open Menu</a>
     <nav id="main-menu" aria-label="Main menu">
-      <a href="#main-menu-toggle" id="main-menu-close" class="menu-close" aria-label="Close main menu">Close Menu</a>
+      <a href="#main-menu-toggle" id="main-menu-close" class="menu-close" aria-label="Close main menu">
+        <svg aria-hidden="true" focusable="false">
+          <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-menu-close" />
+        </svg>
+      </a>
       {% include "nav_primary_list.html" %}
     </nav>
     <a href="#main-menu-toggle" class="menu-backdrop" tabindex="-1" aria-hidden="true" hidden></a>
