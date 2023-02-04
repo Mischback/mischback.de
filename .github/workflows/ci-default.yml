@@ -86,7 +86,8 @@ jobs:
               "Consider using \"h2\"-\"h6\" elements to add identifying headings to all" \
               "is not a \"font-stretch\" value" \
               "is not a \"text-decoration\" value" \
-              "Property \"text-underline-offset\" doesn't exist"
+              "Property \"text-underline-offset\" doesn't exist" \
+              "Attribute \"aria-hidden\" is unnecessary for elements that have attribute \"hidden\""
       - name: Run htmlhint
         run: npm --prefix util/ci/validation exec -- htmlhint "./build/**/*.html" --config "./util/ci/htmlhint.conf"
       - name: Run html-validate
