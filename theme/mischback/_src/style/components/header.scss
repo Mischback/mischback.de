@@ -82,11 +82,30 @@ body > header {
 
   .menu-toggle {
     display: inline-block;
+    width: 1.75em;
+    height: 1.75em;
+    margin-top: 0.1em;
+    border-radius: 1em;
 
     @include for-breakpoint(layout-burger-nav) {
       /* This is for the full navigation. */
       display: none;
     }
+
+    /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
+    svg {
+      width: 1.2em;
+      height: 1.2em;
+      margin: 0.25em;
+    }
+    /* stylelint-enable selector-max-compound-selectors */
+
+    &:hover {
+      /* FIXME: #28 */
+      background-color: #ccc;
+      box-shadow: inset 0 0 2px 1px rgba(0, 0, 0, 40%);
+    }
+    /* stylelint-enable max-nesting-depth */
   }
 
   /* stylelint-disable selector-max-compound-selectors */
