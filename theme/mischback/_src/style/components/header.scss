@@ -60,6 +60,7 @@ body > header {
   .logo {
     display: block;
     position: absolute;
+    z-index: 1001;
     top: -0.8rem;
     left: -1.25rem;
     width: 5.5em;
@@ -93,7 +94,7 @@ body > header {
     display: none;
     position: absolute;
     z-index: 999;
-    top: 0;
+    top: 4rem;
     left: -100vw;
     margin: 0;
     overflow-x: visible;
@@ -184,7 +185,7 @@ body > header {
         position: absolute;
         z-index: 1001;
         top: 0.25em;
-        right: 0.25em;
+        right: 0.5em;
         width: 2em;
         height: 2em;
 
