@@ -143,9 +143,7 @@ body > header {
     /* stylelint-enable max-nesting-depth */
 
     /* stylelint-disable max-nesting-depth */
-    ul {
-      @include reset-list;
-
+    .nav-list {
       margin-left: 2em;
       font-size: 1.2em;
 
@@ -165,7 +163,6 @@ body > header {
         }
 
         a {
-          display: block;
           padding: 0 0.5em;
 
           /* FIXME: #28 */
@@ -181,12 +178,6 @@ body > header {
           &:hover {
             /* FIXME: #28 */
             color: #0c0;
-          }
-
-          .nav-icon {
-            width: 1.25em;
-            height: 1.25em;
-            vertical-align: text-bottom;
           }
         }
       }
@@ -235,7 +226,7 @@ body > header {
         cursor: default;
       }
 
-      ul {
+      .nav-list {
         position: relative;
         z-index: 1000;
         margin-top: 2em;
