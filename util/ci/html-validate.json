@@ -2,6 +2,12 @@
   "root": true,
   "extends": ["html-validate:recommended", "html-validate:document"],
   "rules": {
+    "attribute-boolean-style": [
+      "warn",
+      {
+        "style": "empty"
+      }
+    ],
     "prefer-native-element": [
       "error",
       {
