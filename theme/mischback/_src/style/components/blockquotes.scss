@@ -16,25 +16,20 @@
 blockquote {
   display: block;
   position: relative;
-
-  /* TODO: Re-use vertical rhythm for this! */
-  margin-bottom: 1em;
+  margin-bottom: $text-content-vertical-rhythm * 2;
   padding-top: 0.75em;
   padding-right: 0.5em;
   padding-bottom: 0.1em;
 
   /* stylelint-disable declaration-block-no-redundant-longhand-properties */
 
-  /* TODO: Adjust after finding the final serif font! */
-  padding-left: 3em !important;
+  padding-left: 2.5em !important;
   /* stylelint-enable declaration-block-no-redundant-longhand-properties */
 
   &::before {
     content: "\201C";
     display: block;
     position: absolute;
-
-    /* TODO: Adjust after finding the final serif font! */
     top: -0.1em;
     left: 0.05em;
 
@@ -47,8 +42,6 @@ blockquote {
 
   p {
     font-family: $font-stack-serif;
-
-    /* TODO: Adjust after finding the final serif font! */
     font-size: 1.1em;
     line-height: 1.25;
   }

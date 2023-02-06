@@ -50,6 +50,10 @@ aside {
       /* stylelint-disable selector-max-compound-selectors */
       li {
         a {
+          /* TODO: Style this!
+           *
+           * The general styling is delayed until #28 is completed.
+           */
           display: inline-block;
           margin: 0.5em 0.25em 0.25em 0;
           padding: 0.25em 0.5em;
@@ -65,12 +69,9 @@ aside {
 
           /* FIXME: #28 */
           color: rgb(128, 96, 0);
-          font-weight: bold; /* TODO: Might need manual adjustment! */
+          font-weight: bold;
           text-decoration: none;
 
-          /* FIXME: The hover style will need more attention, but probably this
-           *        is better delayed until working actually on #28
-           */
           &:hover {
             /* FIXME: #28 */
             background-color: rgb(175, 255, 0);
