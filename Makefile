@@ -37,6 +37,7 @@ STAMP_PRE_FONTS := $(STAMP_DIR)/fonts-ready
 STAMP_PRE_SASS := $(STAMP_DIR)/pre-sass
 STAMP_POST := $(STAMP_DIR)/post-processing
 STAMP_POST_PRETTIFY := $(STAMP_DIR)/post-prettify
+STAMP_NODE_READY := $(STAMP_DIR)/node-ready
 
 # Internal Python environments
 TOX_VENV_DIR := $(REPO_ROOT)/.tox-venv
@@ -105,9 +106,9 @@ $(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 # Compile SASS sources to an actual stylesheet
 #
 # FIXME: #49
-$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS)
+$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS) $(STAMP_NODE_READY)
 	$(create_dir)
-	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py -d $< $@"
+	npx sass --embed-sources --stop-on-error --verbose $< $@
 
 $(STAMP_POST) : $(STAMP_POST_PRETTIFY)
 	$(create_dir)
@@ -130,6 +131,7 @@ clean :
 	rm -rf $(STAMP_POST)
 	rm -rf $(STAMP_POST_PRETTIFY)
 	rm -rf $(THEME_DIR)/static/style.css
+	rm -rf $(THEME_DIR)/static/style.css.map
 .PHONY : clean
 
 
@@ -267,6 +269,10 @@ $(TOX_VENV_INSTALLED) : $(TOX_VENV_CREATED)
 # Install the pre-commit hooks
 $(PRE_COMMIT_READY) : | $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -e pre-commit -- pre-commit install
+
+# Install the required NodeJS packages
+$(STAMP_NODE_READY) : package.json
+	npm install
 
 # Create a directory as required by other recipes
 create_dir = @mkdir -p $(@D)
