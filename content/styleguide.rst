@@ -2,6 +2,8 @@
 :layout: article
 :summary: Visualizes the pre-defined design elements
 :keywords: sphinx theme,webdesign,visual design
+:tubhrq: It's not an experiment if you know it's going to work.
+:tubhrq_origin: Jeff Bezos
 :published: 2023-01-25
 :modified: 2023-02-09
 
