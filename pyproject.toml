@@ -5,11 +5,7 @@
 #
 # It does require *opt-in* to the actual rules.
 [tool.curlylint.rules]
-# FIXME: ``true`` means: all roles must be valid. However, providing a list of
-#        roles allows limitation to the actual roles in use.
 aria_role = true
-# FIXME: ``true`` means: the ``lang`` attribute must be present. However,
-#        providing a list of accepted values allows finer control.
 html_has_lang = true
 # Require all ``<img>`` tags to have the ``alt`` attribute (even empty).
 image_alt = true
@@ -21,7 +17,6 @@ image_alt = true
 meta_viewport = true
 # don't use the ``autofocus`` attribute on any element
 no_autofocus = true
-# TODO: Needs investigation!
 # Don't use positive values for ``tabindex`` attributes
 tabindex_no_positive = true
 
