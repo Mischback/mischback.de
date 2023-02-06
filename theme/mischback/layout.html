@@ -72,7 +72,12 @@
 
        For reference: ``&copy;`` is the copyright symbol (a ``c`` in a circle).
     #}
-    <div id="copyright-footer">&copy; 2022 by Mischback</div>
+    <div id="copyright-footer">
+      &copy; 2023 by Mischback
+      <svg aria-hidden="true" focusable="false">
+        <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#logo-foot" />
+      </svg>
+    </div>
     {# djlint:on #}
   </footer>
 {% endblock html_body %}
