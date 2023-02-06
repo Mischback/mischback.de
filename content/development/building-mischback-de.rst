@@ -6,6 +6,8 @@
          paper, sitting beside a big wastebasket. Then I use Emacs to enter
          the text into my machine.
 :tubhrq_origin: Donald E. Knuth
+:published: 2022-11-24
+:modified: 2023-02-09
 
 .. tags:: internal; log; webdesign;
 
