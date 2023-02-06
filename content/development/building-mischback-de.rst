@@ -7,7 +7,7 @@
          the text into my machine.
 :tubhrq_origin: Donald E. Knuth
 
-.. tags:: foo; bar;
+.. tags:: internal; log; webdesign;
 
 #####################
 Building mischback.de
@@ -289,7 +289,7 @@ To keep the source as clean as possible,
 a ``pre-commit`` hook (with various plugins) to lint the source files.
 
 
-2023-10-10
+2023-01-10
 ==========
 
 The custom theme is developed *from the inside out*, meaning first of all the
@@ -311,3 +311,18 @@ deployments.
    Enhancement*.
 
    That's an example of *going down the rabbit hole*...
+
+
+2023-02-09
+==========
+
+The overall structural layout is *kind of* finished.
+
+The layout is working on all screen sizes and is in fact readable **and**
+enjoyable on different devices, ranging from smartphones to desktops *(Yeah,
+this is highly subjective!)*.
+
+There's still a long list of things to do, though. The stylesheet was developed
+with only the content in mind (or technicall speaking: targeting the
+``article.html`` template). The overview pages are still completely lacking
+any dedicated styling.
