@@ -2,6 +2,8 @@
 :layout: article
 :summary: Visualizes the pre-defined design elements
 :keywords: sphinx theme,webdesign,visual design
+:published: 2023-01-25
+:modified: 2023-02-09
 
 .. tags:: internal; webdesign
 

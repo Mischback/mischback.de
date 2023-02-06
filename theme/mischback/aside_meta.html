@@ -1,0 +1,16 @@
+<section class="article-meta">
+  <header>
+    <svg class="icon-series header-icon" aria-hidden="true" focusable="false">
+      <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-meta" />
+    </svg>
+    Meta Information
+  </header>
+  <ul>
+    {% if meta.published %}
+    <li><b>Published:</b> {{ meta.published }}</li>
+    {% endif %}
+    {% if meta.modified %}
+    <li><b>Modified:</b> {{ meta.modified }}</li>
+    {% endif %}
+  </ul>
+</section>
