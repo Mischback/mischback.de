@@ -84,7 +84,7 @@ $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME) $(STAMP_PRE_SASS)
 # In order to optimize the fonts, the provided glyphs may be reduced
 # significantly.
 #
-# TODO: Actually implement the subsetting!
+# FIXME: #34
 $(STAMP_PRE_FONTS) : $(FONT_SRC_DIR)/Mona-Sans.woff2 $(FONT_SRC_DIR)/CrimsonPro-Regular.woff2 $(FONT_SRC_DIR)/hack-regular-subset.woff2 $(FONT_SRC_DIR)/hack-bold-subset.woff2
 	$(create_dir)
 	# TODO: Should require just subsetting!
@@ -104,7 +104,7 @@ $(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 
 # Compile SASS sources to an actual stylesheet
 #
-# FIXME: Remove debug flag
+# FIXME: #49
 $(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS)
 	$(create_dir)
 	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py -d $< $@"
