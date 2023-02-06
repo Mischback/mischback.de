@@ -4,17 +4,17 @@
 <main class="main-article">
   <article>
     <div>
-      {% include "breadcrumbs.html" %}
+      {% include "includes/breadcrumbs.html" %}
     </div>
     {{ body }}
-    {% include "breadcrumbs.html" %}
+    {% include "includes/breadcrumbs.html" %}
   </article>
 
   <aside>
-    {% if meta.published %} {% include "aside_meta.html" %} {% endif %}
-    {% if meta.series %} {% include "aside_series.html" %} {% endif %}
-    {% if ct_document_tags %} {% include "aside_tags.html" %} {% endif %}
-    {% if meta.tubhrq %} {% include "aside_tubhrq.html" %} {% endif %}
+    {% if meta.published %} {% include "includes/aside_meta.html" %} {% endif %}
+    {% if meta.series %} {% include "includes/aside_series.html" %} {% endif %}
+    {% if ct_document_tags %} {% include "includes/aside_tags.html" %} {% endif %}
+    {% if meta.tubhrq %} {% include "includes/aside_tubhrq.html" %} {% endif %}
   </aside>
 </main>
 {% endblock main_container %}
