@@ -21,6 +21,23 @@ aside {
     /* stylelint-enable max-nesting-depth */
   }
 
+  .article-meta {
+    /* stylelint-disable max-nesting-depth */
+    ul {
+      @include reset-list;
+
+      padding: 0.5em 0.5em 0.25em;
+      text-indent: 0;
+
+      /* stylelint-disable selector-max-compound-selectors */
+      li {
+        margin-bottom: 0.25em;
+      }
+      /* stylelint-enable selector-max-compound-selectors */
+    }
+    /* stylelint-enable max-nesting-depth */
+  }
+
   .article-tags {
     /* stylelint-disable max-nesting-depth */
     ul {
