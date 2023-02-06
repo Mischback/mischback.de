@@ -72,6 +72,12 @@ import_heading_localfolder = "local imports"
 #
 # Please note that ``tox`` >= 4.1 will support ``pyproject.toml`` natively, so
 # this configuration will have to be adjusted, probably heavily.
+#
+# FIXME: #49
+#        The ``pre-processing`` environment is no longer used for SCSS
+#        compilation but is still referencing the wrapper script.
+#        The environment may be re-used for other pre-processing task, e.g.
+#        the font subsetting, and is kept for reference.
 [tool.tox]
 legacy_tox_ini = """
 [tox]
