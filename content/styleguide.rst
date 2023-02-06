@@ -1,13 +1,13 @@
 
 :layout: article
-:summary: This document is used to develop the custom theme of mischback.de
+:summary: Visualizes the pre-defined design elements
 :keywords: sphinx theme,webdesign,visual design
 
-.. tags:: foo; bar; baz; Bar; baR
+.. tags:: internal; webdesign
 
-#################
-Theme Development
-#################
+##########
+Styleguide
+##########
 
 This page doesn't really provide content. It is meant to include all
 pre-defined *semantic elements* to demonstrate their styling. Having all of
