@@ -22,3 +22,16 @@ updates:
     labels:
       - "area/dependencies"
       - "lang/python"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "[npm]"
+      prefix-development: "[npm dev]"
+    labels:
+      - "area/dependencies"
+      - "lang/nodejs"
+      - "lang/ts"
