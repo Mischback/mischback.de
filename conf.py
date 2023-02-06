@@ -70,6 +70,12 @@ extensions = [
     #
     # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html
     "sphinx.ext.extlinks",
+    # Provide 404 pages
+    #
+    # This automatically generates a valid 404 page.
+    #
+    # https://github.com/readthedocs/sphinx-notfound-page
+    "notfound.extension",
     "mischback.content_tags",
     "mischback.sphinx_jinja2_debug",
     # "sphinx.ext.graphviz"
@@ -153,6 +159,11 @@ extlinks = {
 
 # Make ``sphinx.ext.extlinks`` emit warnings, if a shortcut is available.
 extlinks_detect_hardcoded_links = True
+
+notfound_urls_prefix = "/"
+# ``notfound_template`` is not specified here, as Sphinx normally renders the
+# file ``content/404.rst``, using the project's internal logic to determine the
+# template to be used.
 
 
 # ### HTML configuration
