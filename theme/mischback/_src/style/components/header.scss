@@ -144,7 +144,7 @@ body > header {
 
     /* stylelint-disable max-nesting-depth */
     .nav-list {
-      margin-left: 2em;
+      margin-left: 1em;
       font-size: 1.2em;
 
       @include for-breakpoint(layout-burger-nav) {
@@ -152,7 +152,6 @@ body > header {
         @include horizontal-list;
 
         font-size: 1em;
-        text-indent: 0;
       }
 
       li {
