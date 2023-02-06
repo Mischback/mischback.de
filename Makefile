@@ -62,7 +62,7 @@ MAKEFLAGS += --no-builtin-rules
 
 # Build and serve the actual generated website
 dev/srv : $(STAMP_POST_PRETTIFY)
-	$(TOX_CMD) -q -e dev-serve
+	$(TOX_CMD) -q -e sphinx -- python -m http.server 8082 --directory $(BUILD_DIR)
 .PHONY : dev/srv
 
 # Create the actual build

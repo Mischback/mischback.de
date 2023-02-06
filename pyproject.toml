@@ -88,16 +88,6 @@ skip_install = true
 commands =
   {posargs:sphinx-build --version}
 
-[testenv:dev-serve]
-basepython = {[testenv:sphinx]basepython}
-changedir = {toxinidir}/.build
-deps = {[testenv:sphinx]deps}
-envdir = {[testenv:sphinx]envdir}
-setenv = {[testenv:sphinx]setenv}
-skip_install = {[testenv:sphinx]skip_install}
-commands =
-  python -m http.server {posargs:8082}
-
 [testenv:pre-commit]
 basepython = python3
 deps =
