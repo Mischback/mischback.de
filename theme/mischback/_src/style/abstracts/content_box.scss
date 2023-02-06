@@ -1,0 +1,104 @@
+/* Provides an overall coherent shadow style for content boxes.
+ *
+ * Usually this will not be applied directly, instead the
+ * ``content-box-visual`` mixin will be used.
+ *
+ * As this is a purely visual style, all lengths are specified in **pixels**
+ * because they are **not** dependent on the general ``font-size``.
+ */
+@mixin content-box-shadow {
+  /* Apply minimal default margins to make room for the shadows */
+  margin: 5px 10px 10px 5px;
+
+  /* FIXME: #28
+   *        Either make the color adjustable (or using a global variable) or
+   *        use black with an alpha channel (which would require to have the
+   *        alpha adjustable).
+   */
+  box-shadow: 0 0 1px 2px #333, 5px 5px 2px 0 #333;
+}
+
+/* This mixin is the general visual style of content-containing containers.
+ *
+ * It is meant to provide some basic visual styling, like the overall shadows,
+ * styling of the *headline* element and stuff like that.
+ *
+ * It is meant to be applied to the dedicated boxes in the ``aside`` **and**
+ * the main content box, which is usually an ``article`` container.
+ */
+@mixin content-box-visual {
+  @include content-box-shadow;
+
+  /* Requires synchronization with the following element! */
+
+  /* prettier-ignore */
+  border-radius: $default-border-radius * 5
+    $default-border-radius
+    $default-border-radius;
+
+  > :first-child {
+    position: relative;
+    min-height: 1.35rem;
+
+    /* Interdependent with the border-radius settings below. */
+
+    /* prettier-ignore */
+    padding: $default-border-radius
+      0
+      $default-border-radius
+      2.25em;
+
+    /* These have to be synchronized with the outer container (see above). */
+    border-top-left-radius: $default-border-radius * 5;
+    border-top-right-radius: $default-border-radius;
+
+    /* FIXME: #28 */
+    background-image: linear-gradient(to top, #354253, #536781);
+
+    /* FIXME: #28
+     *        Using black/white as shadow/highlight colors should be working,
+     *        but the alpha value should be adjustable!
+     *        Keep in mind that this might be dependent on the background's
+     *        color, so this might be a mixin with two or even three parameters
+     *        to control the alphas.
+     */
+    box-shadow: inset 1px 1px 9px rgba(255, 255, 255, 40%),
+      inset -1px -1px 9px rgba(0, 0, 0, 20%), 0 1px 2px rgba(0, 0, 0, 100%);
+
+    /* FIXME: #28 */
+    color: #ccc;
+    font-family: $font-stack-sans;
+
+    /* This minimal adjustment helps with the provided ``text-shadow``. */
+    letter-spacing: 0.025em;
+    line-height: 1.35rem;
+
+    /* FIXME: #28
+     *        Either make the color adjustable (or using a global variable) or
+     *        use black with an alpha channel (which would require to have the
+     *        alpha adjustable).
+     */
+    text-shadow: -0.025rem -0.025rem 0.05rem rgba(255, 255, 255, 40%),
+      0.025rem 0.025rem 0.025rem rgba(0, 0, 0, 100%),
+      0.025rem 0.05rem 0.025rem rgba(0, 0, 0, 100%),
+      0.025rem 0.075rem 0.025rem rgba(0, 0, 0, 100%),
+      0.025rem 0.1rem 0.025rem rgba(0, 0, 0, 100%);
+
+    @include for-breakpoint(layout-header-icons) {
+      padding-left: $default-border-radius * 5;
+    }
+
+    svg {
+      display: inline-block;
+      position: absolute;
+      top: -0.4em;
+      left: 0;
+      width: 2em;
+      height: 2em;
+
+      @include for-breakpoint(layout-header-icons) {
+        left: -1.25em;
+      }
+    }
+  }
+}

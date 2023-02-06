@@ -1,0 +1,63 @@
+/* General settings.
+ *
+ * This file does provide global settings that may be picked up in different
+ * more specific blocks.
+ */
+
+/* Breakpoints
+ *
+ * These are the breakpoints that are used to make the layout work on any
+ * screen sizes.
+ */
+
+/* At this point the desired layout covers the whole width of the viewport. */
+$break-layout-full-width: 1280px;
+
+/* At this point the layout switches to a single column. */
+$break-layout-single-column: 1220px;
+
+/* At this point the header icons must be moved inside. */
+$break-layout-header-icons: 840px;
+
+/* At this point the actual content starts to shrink. */
+$break-layout-shrink-content: 790px;
+
+/* At this point the default navigation is *burgerized*. */
+$break-layout-burger-navigation: 565px;
+
+/* Overall coherent visual style
+ *
+ * These settings are applied in various places throughout the stylesheet, but
+ * have to be coherent/consistent.
+ */
+
+/* This is the default radius of containers' borders. */
+$default-border-radius: 5px;
+
+/* Colors
+ *
+ * These are semantic colors, meaning they describe in which context that color
+ * is used.
+ *
+ * TODO: related to #28 - Move the actual color definitions (``rgb()``) to a
+ *       file ``colors.scss``.
+ */
+$color-primary-fg: rgb(8, 8, 8);
+$color-primary-bg: rgb(240, 240, 240);
+$color-primary-inverted-fg: $color-primary-bg;
+$color-primary-inverted-bg: $color-primary-fg;
+$color-secondary-fg: rgb(184, 184, 184);
+$color-dev-border: rgb(128, 0, 0);
+$color-dev-highlight: rgb(255, 0, 128);
+$color-admonition-note-bg: rgb(220, 220, 220);
+$color-admonition-important-bg: rgb(220, 220, 128);
+$color-headlines: $color-primary-fg;
+$color-headlines-permalink: $color-secondary-fg;
+$color-hyperlinks-normal: #3f2cdd;
+
+/* Animation timings
+ *
+ * Some animations should use common and coherent timings, other may be highly
+ * dependent on the animated item/object.
+ */
+$animation-timing-color-transition: 150ms;

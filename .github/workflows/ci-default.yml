@@ -79,7 +79,15 @@ jobs:
           pip install html5validator
           npm --prefix util/ci/validation install htmlhint html-validate
       - name: Run html5validator
-        run: html5validator --root build/
+        run: |
+          html5validator --root build/ --also-check-css --also-check-svg --show-warnings \
+            --ignore \
+              "Consider using the \"h1\" element as a top-level heading only" \
+              "Consider using \"h2\"-\"h6\" elements to add identifying headings to all" \
+              "is not a \"font-stretch\" value" \
+              "is not a \"text-decoration\" value" \
+              "Property \"text-underline-offset\" doesn't exist" \
+              "Attribute \"aria-hidden\" is unnecessary for elements that have attribute \"hidden\""
       - name: Run htmlhint
         run: npm --prefix util/ci/validation exec -- htmlhint "./build/**/*.html" --config "./util/ci/htmlhint.conf"
       - name: Run html-validate

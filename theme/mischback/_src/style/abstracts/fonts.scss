@@ -1,0 +1,56 @@
+/* Theme-specific fonts are set up here. */
+
+/* The design's main font.
+ *
+ * "Mona Sans" is a brand new font made by GitHub. It is a variable font with
+ * adjustable weight and width, including italic variations.
+ *
+ * It will be used for text bodies, headlines and the main navigation.
+ */
+@font-face {
+  font-display: swap;
+  font-family: "Mona Sans";
+  font-stretch: 75% 125%;
+  font-weight: 200 900;
+  src: url("fonts/MonaSans.woff2") format("woff2 supports variations"),
+    url("fonts/MonaSans.woff2") format("woff2-variations");
+}
+
+/* A *serif* font is used as a contrast to the main text content.
+ *
+ * "Crimson Pro" is made by Jacques Le Bailly based on "Crimson" by
+ * Sebastian Koch.
+ *
+ * Ref: https://github.com/Fonthausen/CrimsonPro
+ */
+@font-face {
+  font-display: swap;
+  font-family: "Crimson Pro";
+  font-weight: normal;
+  src: url("fonts/CrimsonProRegular.woff2") format("woff2");
+}
+
+/* The monospace font is used for source code.
+ *
+ * Ref: https://github.com/source-foundry/Hack
+ */
+@font-face {
+  font-display: swap;
+  font-family: Hack;
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/HackRegular.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Hack;
+  font-style: normal;
+  font-weight: 700;
+  src: url("fonts/HackBold.woff2") format("woff2");
+}
+
+/* The actual font stacks. */
+$font-stack-sans: "Mona Sans", verdana, sans-serif;
+$font-stack-serif: "Crimson Pro", serif;
+$font-stack-mono: hack, monospace;

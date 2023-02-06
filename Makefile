@@ -19,6 +19,7 @@ REPO_ROOT := $(patsubst %/, %, $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 BUILD_DIR := $(REPO_ROOT)/.build
 CONTENT_DIR := $(REPO_ROOT)/content
 THEME_DIR := $(REPO_ROOT)/theme/mischback
+FONT_SRC_DIR := $(THEME_DIR)/_src/fonts
 STYLE_DIR := $(REPO_ROOT)/theme/mischback/_src/style
 
 # The source files for the actual content
@@ -32,6 +33,7 @@ SRC_STYLE := $(shell find $(STYLE_DIR) -type f)
 # Track certain things with artificial *stamps*.
 STAMP_DIR := $(REPO_ROOT)/.make-stamps
 STAMP_SPHINX := $(STAMP_DIR)/sphinx-build
+STAMP_PRE_FONTS := $(STAMP_DIR)/fonts-ready
 STAMP_PRE_SASS := $(STAMP_DIR)/pre-sass
 STAMP_POST := $(STAMP_DIR)/post-processing
 STAMP_POST_PRETTIFY := $(STAMP_DIR)/post-prettify
@@ -60,7 +62,7 @@ MAKEFLAGS += --no-builtin-rules
 
 # Build and serve the actual generated website
 dev/srv : $(STAMP_POST_PRETTIFY)
-	$(TOX_CMD) -q -e dev-serve
+	$(TOX_CMD) -q -e sphinx -- python -m http.server 8082 --directory $(BUILD_DIR)
 .PHONY : dev/srv
 
 # Create the actual build
@@ -77,6 +79,24 @@ $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME) $(STAMP_PRE_SASS)
 	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
 	touch $@
 
+# Prepare the fonts
+#
+# In order to optimize the fonts, the provided glyphs may be reduced
+# significantly.
+#
+# FIXME: #34
+$(STAMP_PRE_FONTS) : $(FONT_SRC_DIR)/Mona-Sans.woff2 $(FONT_SRC_DIR)/CrimsonPro-Regular.woff2 $(FONT_SRC_DIR)/hack-regular-subset.woff2 $(FONT_SRC_DIR)/hack-bold-subset.woff2
+	$(create_dir)
+	# TODO: Should require just subsetting!
+	#       License issues! See https://github.com/github/mona-sans/issues/19
+	cp $(FONT_SRC_DIR)/Mona-Sans.woff2 $(THEME_DIR)/static/fonts/MonaSans.woff2
+	# TODO: Apply subsetting! Might have license issues aswell!
+	cp $(FONT_SRC_DIR)/CrimsonPro-Regular.woff2 $(THEME_DIR)/static/fonts/CrimsonProRegular.woff2
+	# TODO This is already a subsetted font. Evaluate again!
+	cp $(FONT_SRC_DIR)/hack-regular-subset.woff2 $(THEME_DIR)/static/fonts/HackRegular.woff2
+	cp $(FONT_SRC_DIR)/hack-bold-subset.woff2 $(THEME_DIR)/static/fonts/HackBold.woff2
+	touch $@
+
 # Meta target to track all required stylesheets
 $(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 	$(create_dir)
@@ -84,8 +104,8 @@ $(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 
 # Compile SASS sources to an actual stylesheet
 #
-# FIXME: Remove debug flag
-$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE)
+# FIXME: #49
+$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS)
 	$(create_dir)
 	$(MAKE) util/pre-processing pre-processing_cmd="{toxinidir}/util/compile-sass.py -d $< $@"
 

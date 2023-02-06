@@ -1,0 +1,53 @@
+/* Provide styling for breadcrumbs navigation elements.
+ *
+ * The general idea is to display the breadcrumbs like a unix filepath. The
+ * actual HTML markup will provide them in a structured way (``ul``), the
+ * visual presentation converts them to a filepath.
+ *
+ * TODO: Substitute the ``Home`` link with a (custom) symbol?
+ * TODO: Provide ``:hover`` and ``:active`` styles (after #28)!
+ */
+.breadcrumbs {
+  font-family: $font-stack-mono;
+  font-size: 0.8em;
+  text-align: right;
+
+  ul {
+    @include horizontal-list;
+
+    /* stylelint-disable max-nesting-depth */
+    li {
+      /* These values are highly dependent on the font-family and weight and
+       * may need fine adjustments, if changed!
+       *
+       * Effectively we want 0.3em between the elements. The provided values
+       * ensure a sufficient right margin for the last element.
+       */
+      margin: 0 0.5em 0 -0.2em;
+
+      /* Insert the *path seperator*. */
+      /* stylelint-disable selector-max-compound-selectors */
+      ::after {
+        content: "/";
+      }
+      /* stylelint-enable selector-max-compound-selectors */
+    }
+    /* stylelint-enable max-nesting-depth */
+  }
+
+  /* This is the general styling of the actual links.
+   *
+   * Please note, that the ``color`` attribute is only applied to the first
+   * occurence of the ``.breadcrumbs`` class and is overridden by the following
+   * selector, see https://stackoverflow.com/a/8539107 for details.
+   */
+  a {
+    color: #ccc;
+    text-decoration: none;
+    text-transform: lowercase;
+  }
+
+  ~ .breadcrumbs a {
+    color: #333;
+  }
+}

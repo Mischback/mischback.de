@@ -24,14 +24,14 @@ repos:
         entry: ":summary:"
         args: [--negate]
         files: ^content/
-        exclude: index.rst
+        exclude: (index|404).rst
       - id: content_keywords
         name: All articles must have keywords
         language: pygrep
         entry: ":keywords:"
         args: [--negate]
         files: ^content/
-        exclude: index.rst
+        exclude: (index|404).rst
   # prettier (formatting for various file types)
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1
@@ -73,6 +73,7 @@ repos:
     hooks:
       - id: curlylint
         files: ^theme/mischback/
+        types_or: ["html"]
   # lint SASS
   - repo: https://github.com/thibaudcolas/pre-commit-stylelint
     rev: v14.16.0

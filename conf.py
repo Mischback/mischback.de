@@ -70,15 +70,21 @@ extensions = [
     #
     # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html
     "sphinx.ext.extlinks",
+    # Provide 404 pages
+    #
+    # This automatically generates a valid 404 page.
+    #
+    # https://github.com/readthedocs/sphinx-notfound-page
+    "notfound.extension",
     "mischback.content_tags",
     "mischback.sphinx_jinja2_debug",
-    # TODO: "sphinx.ext.graphviz"
-    #       If there is a use-case for these diagrams.
-    # TODO: "sphinx.ext.ifconfig"
-    #       Conditional content. Most likely not required.
-    # TODO: "sphinx.ext.intersphinx"
-    #       If there is a use-case for this. Might better be realized using
-    #       ``extlinks``.
+    # "sphinx.ext.graphviz"
+    # If there is a use-case for these diagrams.
+    # "sphinx.ext.ifconfig"
+    # Conditional content. Most likely not required.
+    # "sphinx.ext.intersphinx"
+    # If there is a use-case for this. Might better be realized using
+    # ``extlinks``.
 ]
 
 
@@ -154,6 +160,11 @@ extlinks = {
 # Make ``sphinx.ext.extlinks`` emit warnings, if a shortcut is available.
 extlinks_detect_hardcoded_links = True
 
+notfound_urls_prefix = "/"
+# ``notfound_template`` is not specified here, as Sphinx normally renders the
+# file ``content/404.rst``, using the project's internal logic to determine the
+# template to be used.
+
 
 # ### HTML configuration
 
@@ -167,7 +178,15 @@ html_theme_path = [join(REPO_ROOT, "theme")]
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_theme
 html_theme = "mischback"
 
+html_theme_options = {
+    "show_breadcrumbs": True,
+}
+
 # Do **not** include the reST sources
 #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_copy_source
 html_copy_source = False
+
+# Add permalinks to all headings and make them available with a custom icon.
+html_permalinks = True
+html_permalinks_icon = "#"

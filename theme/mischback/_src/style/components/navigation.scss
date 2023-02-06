@@ -1,0 +1,19 @@
+.nav-list {
+  @include reset-list;
+
+  /* reset the ``text-indent``, see ``components/lists.scss`` */
+  text-indent: 0;
+
+  li a {
+    display: inline-block;
+    padding: 0.1em 0.25em;
+
+    /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
+    .nav-icon {
+      width: 1.25em;
+      height: 1.25em;
+      vertical-align: text-bottom;
+    }
+    /* stylelint-enable max-nesting-depth, selector-max-compound-selectors */
+  }
+}

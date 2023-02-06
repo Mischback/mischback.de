@@ -1,0 +1,12 @@
+{% if theme_show_breadcrumbs %}
+<nav class="breadcrumbs">
+  <ul>
+    <li><a href="{{ pathto("index") }}">Home</a></li>
+    {% if parents %}
+      {% for parent in parents %}
+      <li><a href="{{ parent.link|e }}">{{ parent.title }}</a></li>
+      {% endfor %}
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}

@@ -14,5 +14,9 @@ Sitemap (Humans)
 
    Home <../index>
    ../development/index
-   ../*
-   *
+   ../technical-implementation
+   ../styleguide
+   ../contact
+   ../kontakt
+   ../privacy
+   ../datenschutz

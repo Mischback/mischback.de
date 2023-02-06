@@ -1,0 +1,43 @@
+/* Provide reusabel components, that may be used in different places of the
+ * layout.
+ */
+
+/* General styling of all headlines.
+ *
+ * This does not include the typographic settings!
+ */
+@import "headlines";
+
+/* General styling of links. */
+@import "links";
+
+/* Style for icons.
+ *
+ * The actual sizing/positioning will be handled in more specific styles, e.g.
+ * in ``aside_box.scss``.
+ */
+@import "icons";
+
+/* Containers within the ``<aside>`` container. */
+@import "aside_box";
+
+/* Quotes including the author reference. */
+@import "blockquotes";
+
+/* All admonitions (little content boxes). */
+@import "admonitions";
+
+/* Ordered and unordered lists. */
+@import "lists";
+
+/* The breadcrumb navigation */
+@import "breadcrumbs";
+
+/* General styling of navigation lists */
+@import "navigation";
+
+/* ``header`` and ``footer`` should be consistent through all documents, but
+ * they are still *components* of the overall layout.
+ */
+@import "header";
+@import "footer";

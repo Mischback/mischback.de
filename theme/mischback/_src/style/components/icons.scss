@@ -1,0 +1,35 @@
+/* This class is applied to all icons that decorate headers. */
+.header-icon {
+  /* FIXME: #28
+   * Keep the black but make the alpha channel adjustable!
+   */
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 40%));
+}
+
+/* Quotes
+ *
+ * This icon is applied in the following locations:
+ *   - ``<aside>`` -> *tubhrq* box
+ */
+.icon-quote {
+  /* FIXME: #28 */
+  --primary-color: #fff;
+  --stroke-color: #333;
+  --stroke-width: 5%;
+}
+
+/* Series
+ *
+ * This icon is applied in the following locations:
+ *   - ``<aside>`` -> *Also in this series* box
+ */
+.icon-series {
+  /* FIXME: This icon needs size adjustments in the actual aside box! */
+
+  /* FIXME: #28 */
+  --first-color: #c00;
+  --second-color: #fc0;
+  --third-color: #aaf;
+  --stroke-color: #0a0a0a;
+  --stroke-width: 3%;
+}

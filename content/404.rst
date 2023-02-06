@@ -1,0 +1,12 @@
+
+:orphan:
+:layout: 404
+
+##############
+Page not found
+##############
+
+**These aren't the droids you're looking for...**
+
+Sorry, this page does not exist. You may have followed a broken link or there
+may be a typo in the URL.

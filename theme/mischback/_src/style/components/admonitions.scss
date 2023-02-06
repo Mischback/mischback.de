@@ -1,0 +1,42 @@
+/* Admonitions are integral part of Sphinx / docutils. */
+.admonition {
+  position: relative;
+  margin: $text-content-vertical-rhythm * 2 0.5em;
+  padding: 0.5em 0.5em 0 2em;
+  border-radius: $default-border-radius;
+
+  /* FIXME: #28 */
+  box-shadow: 0 0 1px 2px #333;
+
+  @include for-breakpoint("layout-shrink-content") {
+    margin: $text-content-vertical-rhythm * 2 3em;
+  }
+
+  .admonition-title {
+    position: absolute;
+    left: 0;
+    transform: rotate(-90deg);
+    transform-origin: top left;
+    font-family: $font-stack-serif;
+    font-weight: bold;
+  }
+}
+
+.note {
+  background-color: $color-admonition-note-bg;
+
+  .admonition-title {
+    top: 2.5em;
+  }
+}
+
+.important {
+  background-color: $color-admonition-important-bg;
+
+  .admonition-title {
+    top: 4.75em;
+
+    /* FIXME: #28 */
+    color: #960;
+  }
+}

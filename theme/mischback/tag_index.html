@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block main_container %}
-
+<main>
   {% if ct_tags %}
   <ul>
     {% for tag in ct_tags -%}
@@ -9,5 +9,5 @@
     {% endfor %}
   </ul>
   {% endif %}
-
+</main>
 {% endblock main_container %}

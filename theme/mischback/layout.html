@@ -1,40 +1,83 @@
 {% extends "base.html" %}
 
 {% block html_body %}
-<header>
-  <nav>
-    {% include "nav_primary_list.html" %}
-  </nav>
-</header>
+  <header>
+    <a href="{{ pathto("index") }}" aria-label="Return to Home" title="Home" class="logo">
+      <svg aria-hidden="true" focusable="false">
+        <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#logo-head" />
+      </svg>
+    </a>
+    <a href="#main-menu" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu">
+      <svg aria-hidden="true" focusable="false">
+        <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-menu" />
+      </svg>
+    </a>
+    <nav id="main-menu" aria-label="Main menu">
+      <a href="#main-menu-toggle" id="main-menu-close" class="menu-close" aria-label="Close main menu">
+        <svg aria-hidden="true" focusable="false">
+          <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-menu-close" />
+        </svg>
+      </a>
+      {% include "includes/nav_primary_list.html" %}
+    </nav>
+    <a href="#main-menu-toggle" class="menu-backdrop" tabindex="-1" aria-hidden="true" hidden></a>
+  </header>
 
-<main>
   {% block main_container required %}
+    {# The *extending template file* **must provide** the ``<main>`` container
+       around this block's content.
+    #}
   {% endblock main_container %}
-</main>
 
-<footer>
-  <nav>
-    {% include "nav_primary_list.html" %}
-  </nav>
-  <nav>
-    <ul>
-      <li><a href="{{ pathto("contact") }}">Contact</a> / <a href="{{ pathto("kontakt") }}">Kontakt</a></li>
-      <li><a href="{{ pathto("privacy") }}">Privacy</a> / <a href="{{ pathto("datenschutz") }}">Datenschutz</a></li>
-      <li><a href="{{ pathto("sitemap") }}">Sitemap</a></li>
-    </ul>
-  </nav>
-  <aside>
-    <p>This website is powered by coffee, imagination, geekiness and more coffee. If you're interested in the more juicy technical details, have a look at <a href="#">the technical implementation</a>.</p>
-  </aside>
-  {# djlint:off
+  <footer>
+    <nav id="nav-footer">
+      {% include "includes/nav_primary_list.html" %}
+    </nav>
+    <nav id="administrative-footer">
+      <ul class="nav-list">
+        <li class="li-contact">
+          <a href="{{ pathto("contact") }}">
+            <svg class="nav-icon icon-contact" aria-hidden="true" focusable="false">
+              <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-contact" />
+            </svg>
+            Contact
+          </a> / <a href="{{ pathto("kontakt") }}">Kontakt</a>
+        </li>
+        <li class="li-privacy">
+          <a href="{{ pathto("privacy") }}">
+            <svg class="nav-icon icon-privacy" aria-hidden="true" focusable="false">
+              <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-privacy" />
+            </svg>
+            Privacy
+          </a> / <a href="{{ pathto("datenschutz") }}">Datenschutz</a>
+        </li>
+        <li class="li-sitemap">
+          <a href="{{ pathto("sitemap") }}">
+            <svg class="nav-icon icon-sitemap" aria-hidden="true" focusable="false">
+              <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-sitemap" />
+            </svg>
+            Sitemap
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <aside id="technical-footer">
+      <p>This website is powered by coffee, imagination, geekiness and more coffee. If you're interested in the more juicy technical details, have a look at <a href="{{ pathto("technical-implementation") }}">the technical implementation</a>.</p>
+    </aside>
+    {# djlint:off
 
-     djLint's rule H023 prohibits most HTML entities. There is no real reason
-     given in the docs, probably readability. Some entities are allowed, e.g.
-     all those to use HTML's special characters (like angel brackets).
+       djLint's rule H023 prohibits most HTML entities. There is no real reason
+       given in the docs, probably readability. Some entities are allowed, e.g.
+       all those to use HTML's special characters (like angel brackets).
 
-     For reference: ``&copy;`` is the copyright symbol (a ``c`` in a circle).
-  #}
-  <div>&copy; 2022 by Mischback</div>
-  {# djlint:on #}
-</footer>
+       For reference: ``&copy;`` is the copyright symbol (a ``c`` in a circle).
+    #}
+    <div id="copyright-footer">
+      &copy; 2023 by Mischback
+      <svg aria-hidden="true" focusable="false">
+        <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#logo-foot" />
+      </svg>
+    </div>
+    {# djlint:on #}
+  </footer>
 {% endblock html_body %}

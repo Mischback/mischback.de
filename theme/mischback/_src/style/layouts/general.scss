@@ -1,0 +1,35 @@
+/* The general and overall layout.
+ *
+ * This creates the general look and feel by placing the actual content in the
+ * center of the screen.
+ *
+ * Technically this uses a CSS ``grid`` on the ``<body>`` element and placing
+ * a single ``<div>`` container in that grid.
+ *
+ * The corresponding HTML code is in ``theme/mischback/layout.html`` (though
+ * there is not much to see there).
+ */
+body {
+  display: grid;
+  box-sizing: border-box;
+  grid-template:
+    ". header header header ."
+    ". .      main   .      ."
+    ". footer footer footer ."
+    / 3fr 2fr calc(min(#{$break-layout-full-width}, 100%)) 2fr 3fr;
+
+  /* FIXME: #28 */
+  background-color: #eee;
+
+  > header {
+    grid-area: header;
+  }
+
+  > main {
+    grid-area: main;
+  }
+
+  > footer {
+    grid-area: footer;
+  }
+}

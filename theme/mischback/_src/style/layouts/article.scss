@@ -1,0 +1,71 @@
+/* This is the styling of the text-based content, provided as article.
+ *
+ * The corresponding template is ``theme/mischback/article.html``.
+ */
+
+.main-article {
+  display: grid;
+  grid-template:
+    ". content ."
+    ". aside   ."
+    / 1fr calc(min(44rem, 100%)) 1fr;
+
+  @include for-breakpoint(layout-single-column) {
+    grid-template: ". content . aside ." / 5fr 44rem 3fr 20rem 1fr;
+  }
+
+  article {
+    @include content-box-visual;
+
+    grid-area: content;
+    max-width: 44rem;
+    margin-bottom: 2rem;
+    font-size: $text-content-font-size;
+
+    /* stylelint-disable max-nesting-depth */
+
+    /* Sphinx's generation process provides a clearly semantic markup, which is
+     * strictly hierarchic. The ``<article>`` will contain multiple nested
+     * ``<section>`` containers (derived from the hierarchy of headlines in the
+     * ``rST`` sources).
+     *
+     * This rule sets the outer dimension of the actual text body, using
+     * ``max-width``.
+     *
+     * FIXME: Aim for ~80 characters per line; this is highly dependent on the
+     *        font-face!
+     */
+    > section {
+      margin-right: 1rem;
+      margin-left: 1rem;
+      padding: 0;
+      padding-bottom: $text-content-vertical-rhythm * 2;
+      font-size: 1em;
+
+      @include for-breakpoint(layout-shrink-content) {
+        margin-right: 2rem;
+        margin-left: 2rem;
+      }
+    }
+    /* stylelint-enable max-nesting-depth */
+  }
+
+  aside {
+    /* NOTE: The ``15px`` are based on the (horizontal) margins of the
+     *       ``content-box-shadow`` mixin in ``abstracts/content-box.scss``!
+     *
+     *       This adjustment has to be made because the boxes are placed
+     *       inside of the ``<aside>`` container.
+     */
+    grid-area: aside;
+  }
+}
+
+/* Fix inline code samples.
+ *
+ * TODO: Beside the font (Hack), this does not stand out in any way, which is
+ *       a little too integrated.
+ */
+article p code {
+  font-size: 0.9em;
+}
