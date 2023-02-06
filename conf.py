@@ -72,13 +72,13 @@ extensions = [
     "sphinx.ext.extlinks",
     "mischback.content_tags",
     "mischback.sphinx_jinja2_debug",
-    # TODO: "sphinx.ext.graphviz"
-    #       If there is a use-case for these diagrams.
-    # TODO: "sphinx.ext.ifconfig"
-    #       Conditional content. Most likely not required.
-    # TODO: "sphinx.ext.intersphinx"
-    #       If there is a use-case for this. Might better be realized using
-    #       ``extlinks``.
+    # "sphinx.ext.graphviz"
+    # If there is a use-case for these diagrams.
+    # "sphinx.ext.ifconfig"
+    # Conditional content. Most likely not required.
+    # "sphinx.ext.intersphinx"
+    # If there is a use-case for this. Might better be realized using
+    # ``extlinks``.
 ]
 
 
