@@ -36,13 +36,28 @@
     <nav id="administrative-footer">
       <ul class="nav-list">
         <li class="li-contact">
-          <a href="{{ pathto("contact") }}">Contact</a> / <a href="{{ pathto("kontakt") }}">Kontakt</a>
+          <a href="{{ pathto("contact") }}">
+            <svg class="nav-icon icon-contact" aria-hidden="true" focusable="false">
+              <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-contact" />
+            </svg>
+            Contact
+          </a> / <a href="{{ pathto("kontakt") }}">Kontakt</a>
         </li>
         <li class="li-privacy">
-          <a href="{{ pathto("privacy") }}">Privacy</a> / <a href="{{ pathto("datenschutz") }}">Datenschutz</a>
+          <a href="{{ pathto("privacy") }}">
+            <svg class="nav-icon icon-privacy" aria-hidden="true" focusable="false">
+              <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-privacy" />
+            </svg>
+            Privacy
+          </a> / <a href="{{ pathto("datenschutz") }}">Datenschutz</a>
         </li>
         <li class="li-sitemap">
-          <a href="{{ pathto("sitemap") }}">Sitemap</a>
+          <a href="{{ pathto("sitemap") }}">
+            <svg class="nav-icon icon-sitemap" aria-hidden="true" focusable="false">
+              <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-sitemap" />
+            </svg>
+            Sitemap
+          </a>
         </li>
       </ul>
     </nav>
