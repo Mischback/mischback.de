@@ -134,6 +134,14 @@ clean :
 	rm -rf $(THEME_DIR)/static/style.css.map
 .PHONY : clean
 
+full-clean : clean
+	rm -rf $(STAMP_DIR)
+	rm -rf $(REPO_ROOT)/node_modules
+	rm -rf $(REPO_ROOT)/.npm
+	rm -rf $(REPO_ROOT)/.tox
+	rm -rf $(REPO_ROOT)/.tox-venv
+.PHONY : full-clean
+
 
 # ##### Utility Stuff
 #
