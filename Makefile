@@ -271,8 +271,11 @@ $(PRE_COMMIT_READY) : | $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -e pre-commit -- pre-commit install
 
 # Install the required NodeJS packages
-$(STAMP_NODE_READY) : package.json
-	npm install
+#
+# Uses npm's ``ci`` to create the required NodeJS environment. It (re-) uses
+# a local cache for npm in order to speed up builds during CI.
+$(STAMP_NODE_READY) : package.json package-lock.json
+	npm ci --cache .npm --prefer-offline
 
 # Create a directory as required by other recipes
 create_dir = @mkdir -p $(@D)

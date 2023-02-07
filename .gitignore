@@ -20,6 +20,7 @@ theme/mischback/static/fonts/**
 
 # NodeJS modules
 node_modules/
+.npm/
 
 # Python byte-compiled / optimized / DLL files
 __pycache__/

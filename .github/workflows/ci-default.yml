@@ -39,9 +39,9 @@ jobs:
           path: |
             .tox
             .tox-venv
-            node_modules
+            .npm
             ${{ env.pythonLocation }}
-          key: tox-${{ env.pythonLocation }}-${{ hashFiles('requirements/tox.txt', 'requirements/sphinx.txt', 'pyproject.toml', 'package.json') }}
+          key: build-${{ hashFiles( env.pythonLocation, 'requirements/tox.txt', 'requirements/sphinx.txt', 'pyproject.toml', 'package.json', 'package-lock.json') }}
       - name: Run Sphinx's linkcheck
         run: make util/lint/sphinx-linkcheck
       - name: Build HTML output
