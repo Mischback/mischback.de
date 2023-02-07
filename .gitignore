@@ -5,6 +5,7 @@
 # included in VCS (SASS compilation is provided through the Makefile and
 # dependent on various other things).
 theme/mischback/static/style.css
+theme/mischback/static/style.css.map
 
 # The theme's font files are meant to be pre-processed, so the actual files
 # should be ignored
@@ -19,6 +20,7 @@ theme/mischback/static/fonts/**
 
 # NodeJS modules
 node_modules/
+.npm/
 
 # Python byte-compiled / optimized / DLL files
 __pycache__/

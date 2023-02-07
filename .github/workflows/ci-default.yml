@@ -18,7 +18,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "3.10"
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
 
@@ -31,16 +31,17 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
-      - name: Cache tox's environments [EXPERIMENTAL]
+          python-version: "3.10"
+      - name: Cache build environment
         id: cache-tox
         uses: actions/cache@v3
         with:
           path: |
             .tox
             .tox-venv
+            .npm
             ${{ env.pythonLocation }}
-          key: tox-${{ env.pythonLocation }}-${{ hashFiles('requirements/tox.txt', 'requirements/sphinx.txt', 'pyproject.toml') }}
+          key: build-${{ hashFiles( env.pythonLocation, 'requirements/tox.txt', 'requirements/sphinx.txt', 'requirements/post-processing.txt', 'pyproject.toml', 'package.json', 'package-lock.json') }}
       - name: Run Sphinx's linkcheck
         run: make util/lint/sphinx-linkcheck
       - name: Build HTML output
@@ -63,7 +64,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "3.10"
       - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
