@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
-      - name: Cache tox's environments [EXPERIMENTAL]
+      - name: Cache build environment
         id: cache-tox
         uses: actions/cache@v3
         with:
@@ -41,7 +41,7 @@ jobs:
             .tox-venv
             .npm
             ${{ env.pythonLocation }}
-          key: build-${{ hashFiles( env.pythonLocation, 'requirements/tox.txt', 'requirements/sphinx.txt', 'pyproject.toml', 'package.json', 'package-lock.json') }}
+          key: build-${{ hashFiles( env.pythonLocation, 'requirements/tox.txt', 'requirements/sphinx.txt', 'requirements/post-processing.txt', 'pyproject.toml', 'package.json', 'package-lock.json') }}
       - name: Run Sphinx's linkcheck
         run: make util/lint/sphinx-linkcheck
       - name: Build HTML output
