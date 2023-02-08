@@ -56,12 +56,32 @@ def parse_args():
     return parser.parse_args()
 
 
+def compress():  # noqa D103
+    print("[DEBUG] command: compress")
+
+
+def resize(sizes):  # noqa D103
+    print("[DEBUG] command: resize")
+    print("[DEBUG] sizes: {}".format(sizes))
+
+    # TODO: create the pipelines for resizing, based on ``args.size``, writing
+    #       the files to a *temporary directory* in a lossless format without
+    #       any compression.
+
+    # TODO: call ``compress()`` with the desired formats.
+
+
 def main():
     """Execute the processing."""
     # get the arguments
     args = parse_args()
 
     print("[DEBUG] args: {}".format(args))
+
+    if args.command == "resize":
+        resize(args.size)
+    elif args.command == "compress":
+        compress()
 
 
 if __name__ == "__main__":
