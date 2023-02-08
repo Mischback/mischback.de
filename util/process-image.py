@@ -13,18 +13,44 @@ def parse_args():
     The function sets up the ``ArgumentParser`` and returns the parsed
     arguments for further processing.
     """
-    parser = argparse.ArgumentParser(
-        description="Create required responsive images from source file"
+    # create the main parser
+    parser = argparse.ArgumentParser(description="Create required responsive images")
+
+    # create a subparser for commands
+    subparser = parser.add_subparsers(
+        dest="command", required=True, help="The command to be run"
     )
 
-    # mandatory arguments
-    parser.add_argument(
-        "source_file", action="store", help="Path/name of the source file"
+    # create the parser for ``resize`` command
+    resize = subparser.add_parser("resize")
+    resize.add_argument(
+        "--source", action="store", type=str, required=True, help="The source file"
     )
-    parser.add_argument(
-        "destination_directory",
+    resize.add_argument(
+        "--destination",
         action="store",
+        type=str,
+        required=True,
         help="Path to the destination directory",
+    )
+    resize.add_argument(
+        "--size",
+        action="append",
+        nargs=2,
+        required=True,
+        help="A combination of semantic name and a width in pixels",
+    )
+    resize.add_argument(
+        "--format", action="append", help="The desired target format(s)"
+    )
+
+    # create the parser for ``compress`` command
+    compress = subparser.add_parser("compress")
+    compress.add_argument(
+        "--source", action="store", type=str, required=True, help="The source file"
+    )
+    compress.add_argument(
+        "--format", action="append", help="The desired target format(s)"
     )
 
     return parser.parse_args()
