@@ -45,7 +45,22 @@ def parse_args():
     return parser.parse_args()
 
 
-def cmd_compress(source):
+def _compress(img, target_format):
+    """Apply compression to an image.
+
+    Parameters
+    ----------
+    img :
+        The image to be compressed, provided as ``libvips`` Image object.
+    target_format : str
+        The desired output format.
+    """
+    print("[DEBUG] _compress()")
+    print("[DEBUG] img:           {}".format(img))
+    print("[DEBUG] target_format: {}".format(target_format))
+
+
+def cmd_compress(source, target_formats):
     """Provide the compression mode of operation.
 
     The compression and disk I/O is implemented by ``_compress()``,this
@@ -55,9 +70,18 @@ def cmd_compress(source):
     ----------
     source : str
         The path to and filename of the source file.
+    target_formats : list
+        A list of ``str`` of desired target formats.
     """
-    print("[DEBUG] command: compress")
-    print("[DEBUG] source: {}".format(source))
+    print("[DEBUG] cmd_compress()")
+    print("[DEBUG] source:         {}".format(source))
+    print("[DEBUG] target_formats: {}".format(target_formats))
+
+    # TODO: Open the source for ``libvips``
+    img = source
+
+    for t in target_formats:
+        _compress(img, t)
 
 
 def main():
@@ -68,7 +92,7 @@ def main():
     print("[DEBUG] args: {}".format(args))
 
     if args.command == "compress":
-        cmd_compress(args.source)
+        cmd_compress(args.source, args.format)
 
 
 if __name__ == "__main__":
