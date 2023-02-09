@@ -6,6 +6,11 @@
 # Python imports
 import argparse
 
+TFORMAT_JPG = "jpg"
+TFORMAT_PNG = "png"
+TFORMAT_WEBP = "webp"
+TFORMAT_AVIF = "avif"
+
 
 def parse_args():
     """Parse the command line arguments.
@@ -35,7 +40,7 @@ def parse_args():
     )
     parser.add_argument(
         "--format",
-        choices=["jpg", "png", "webp", "avif"],
+        choices=[TFORMAT_JPG, TFORMAT_PNG, TFORMAT_WEBP, TFORMAT_AVIF],
         action="append",
         type=str,
         required=True,
@@ -58,6 +63,20 @@ def _compress(img, target_format):
     print("[DEBUG] _compress()")
     print("[DEBUG] img:           {}".format(img))
     print("[DEBUG] target_format: {}".format(target_format))
+
+    # TODO: Implement the actual compression calls in dedicated functions
+    #       These should return the compressed images as buffers, the actual
+    #       disk I/O should be performed in this function.
+    if target_format == TFORMAT_JPG:
+        pass
+    elif target_format == TFORMAT_PNG:
+        pass
+    elif target_format == TFORMAT_WEBP:
+        pass
+    elif target_format == TFORMAT_AVIF:
+        pass
+    else:
+        print("[ERROR] Unknown target format!")
 
 
 def cmd_compress(source, target_formats):
