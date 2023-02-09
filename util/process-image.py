@@ -16,59 +16,37 @@ def parse_args():
     # create the main parser
     parser = argparse.ArgumentParser(description="Create required responsive images")
 
-    # create a subparser for commands
-    subparser = parser.add_subparsers(
-        dest="command", required=True, help="The command to be run"
+    parser.add_argument(
+        "command",
+        choices=["compress"],
+        action="store",
+        type=str,
+        help="Determine the script's mode of operation",
     )
-
-    # create the parser for ``resize`` command
-    resize = subparser.add_parser("resize")
-    resize.add_argument(
+    parser.add_argument(
         "--source", action="store", type=str, required=True, help="The source file"
     )
-    resize.add_argument(
+    parser.add_argument(
         "--destination",
         action="store",
         type=str,
         required=True,
         help="Path to the destination directory",
     )
-    resize.add_argument(
-        "--size",
+    parser.add_argument(
+        "--format",
+        choices=["jpg", "png", "webp", "avif"],
         action="append",
-        nargs=2,
+        type=str,
         required=True,
-        help="A combination of semantic name and a width in pixels",
-    )
-    resize.add_argument(
-        "--format", action="append", help="The desired target format(s)"
-    )
-
-    # create the parser for ``compress`` command
-    compress = subparser.add_parser("compress")
-    compress.add_argument(
-        "--source", action="store", type=str, required=True, help="The source file"
-    )
-    compress.add_argument(
-        "--format", action="append", help="The desired target format(s)"
+        help="The desired output format(s)",
     )
 
     return parser.parse_args()
 
 
-def compress():  # noqa D103
+def cmd_compress():  # noqa D103
     print("[DEBUG] command: compress")
-
-
-def resize(sizes):  # noqa D103
-    print("[DEBUG] command: resize")
-    print("[DEBUG] sizes: {}".format(sizes))
-
-    # TODO: create the pipelines for resizing, based on ``args.size``, writing
-    #       the files to a *temporary directory* in a lossless format without
-    #       any compression.
-
-    # TODO: call ``compress()`` with the desired formats.
 
 
 def main():
@@ -78,10 +56,8 @@ def main():
 
     print("[DEBUG] args: {}".format(args))
 
-    if args.command == "resize":
-        resize(args.size)
-    elif args.command == "compress":
-        compress()
+    if args.command == "compress":
+        cmd_compress()
 
 
 if __name__ == "__main__":
