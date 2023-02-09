@@ -45,8 +45,19 @@ def parse_args():
     return parser.parse_args()
 
 
-def cmd_compress():  # noqa D103
+def cmd_compress(source):
+    """Provide the compression mode of operation.
+
+    The compression and disk I/O is implemented by ``_compress()``,this
+    function just picks up the source file and then calls the actual payload.
+
+    Parameters
+    ----------
+    source : str
+        The path to and filename of the source file.
+    """
     print("[DEBUG] command: compress")
+    print("[DEBUG] source: {}".format(source))
 
 
 def main():
@@ -57,7 +68,7 @@ def main():
     print("[DEBUG] args: {}".format(args))
 
     if args.command == "compress":
-        cmd_compress()
+        cmd_compress(args.source)
 
 
 if __name__ == "__main__":
