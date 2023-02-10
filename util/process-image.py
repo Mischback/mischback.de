@@ -163,11 +163,53 @@ def _compress_webp(img, dest, compression_factor=75, lossless=None):
 
     return img.webpsave(
         dest,
-        lossless=lossless,
         Q=compression_factor,
+        lossless=lossless,
         effort=6,
         strip=True,
         profile="none",
+    )
+
+
+def _compress_avif(img, dest, compression_factor=50, lossless=None):
+    """Apply Avif compression and save the file to disk.
+
+    This function exposes some Avif compression settings, but other options are
+    pre-defined and set aiming for minimal file sizes, at the cost of
+    computation time.
+
+    Parameters
+    ----------
+    img :
+        The image to be compressed, provided as ``libvips`` Image object.
+    dest : ``Path``
+        The destination, the full path/filename (including the suffix) for the
+        output file.
+    compression_factor : int
+        The Avif compression factor (0-100; default: 50).
+    lossless : bool, None
+        Flag controlling the *lossless* mode; if set to ``None``, this will be
+        determined automatically, depending on the input file format, or - more
+        specifically - if the input file format is a lossless format, the
+        output will be lossless aswell.
+    """
+    print("[DEBUG] _compress_avif()")
+    print("[DEBUG] img:                {}".format(img))
+    print("[DEBUG] dest:               {}".format(dest))
+    print("[DEBUG] compression_factor: {}".format(compression_factor))
+    print("[DEBUG] lossless:           {}".format(lossless))
+
+    if lossless is None:
+        if img.get("vips-loader") == "jpegload":
+            lossless = False
+        else:
+            lossless = True
+
+    return img.heifsave(
+        dest,
+        Q=compression_factor,
+        lossless=lossless,
+        effort=9,
     )
 
 
@@ -193,7 +235,6 @@ def _compress(img, dest_dir, target_format):
     )
     print("[DEBUG] dest:          {}".format(dest))
 
-    # TODO: Implement the actual compression calls in dedicated functions
     if target_format == TFORMAT_JPG:
         return _compress_jpg(img, dest)
     elif target_format == TFORMAT_PNG:
@@ -201,7 +242,7 @@ def _compress(img, dest_dir, target_format):
     elif target_format == TFORMAT_WEBP:
         return _compress_webp(img, dest)
     elif target_format == TFORMAT_AVIF:
-        pass
+        return _compress_avif(img, dest)
     else:
         print("[ERROR] Unknown target format!")
 
