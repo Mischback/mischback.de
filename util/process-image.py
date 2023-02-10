@@ -71,7 +71,7 @@ def _compress_jpg(img, dest, compression_factor=75, interlace=True):
     compression_factor : int
         The JPEG compression factor (0-100; default: 75).
     interlace : bool
-        Flag controlling the generation of progressive JPEGs.
+        Flag controlling the generation of progressive JPEGs (default: True).
     """
     print("[DEBUG] _compress_jpg()")
     print("[DEBUG] img:                {}".format(img))
@@ -90,6 +90,40 @@ def _compress_jpg(img, dest, compression_factor=75, interlace=True):
         overshoot_deringing=True,
         optimize_scans=True,
         quant_table=3,
+    )
+
+
+def _compress_png(img, dest, compression_factor=6, interlace=True):
+    """Apply PNG compression and save the file to disk.
+
+    This function exposes some PNG compression settings, but other options are
+    pre-defined and set aiming for minimal file sizes, at the cost of
+    computation time.
+
+    Parameters
+    ----------
+    img :
+        The image to be compressed, provided as ``libvips`` Image object.
+    dest : ``Path``
+        The destination, the full path/filename (including the suffix) for the
+        output file.
+    compression_factor : int
+        The PNG compression factor (0-9; default: 6).
+    interlace : bool
+        Flag controlling the generation of interlaced PNG (default: True).
+    """
+    print("[DEBUG] _compress_jpg()")
+    print("[DEBUG] img:                {}".format(img))
+    print("[DEBUG] dest:               {}".format(dest))
+    print("[DEBUG] compression_factor: {}".format(compression_factor))
+    print("[DEBUG] interlace:          {}".format(interlace))
+
+    return img.pngsave(
+        dest,
+        compression=compression_factor,
+        interlace=interlace,
+        profile="none",
+        palette=False,
     )
 
 
@@ -119,7 +153,7 @@ def _compress(img, dest_dir, target_format):
     if target_format == TFORMAT_JPG:
         return _compress_jpg(img, dest)
     elif target_format == TFORMAT_PNG:
-        pass
+        return _compress_png(img, dest)
     elif target_format == TFORMAT_WEBP:
         pass
     elif target_format == TFORMAT_AVIF:
