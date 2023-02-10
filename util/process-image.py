@@ -5,9 +5,10 @@
 
 # Python imports
 import argparse
+from pathlib import Path
 
 # external imports
-import pyvips  # noqa F401
+import pyvips
 
 TFORMAT_JPG = "jpg"
 TFORMAT_PNG = "png"
@@ -53,25 +54,39 @@ def parse_args():
     return parser.parse_args()
 
 
-def _compress(img, target_format):
+def _compress_jpg(img, dest):
+    print("[DEBUG] _compress_jpg()")
+    print("[DEBUG] img:  {}".format(img))
+    print("[DEBUG] dest: {}".format(dest))
+
+    return img.jpegsave(dest, Q=100, optimize_coding=True, strip=True)
+
+
+def _compress(img, dest_dir, target_format):
     """Apply compression to an image.
 
     Parameters
     ----------
     img :
         The image to be compressed, provided as ``libvips`` Image object.
+    dest_dir : str
+        The directory to place the output file(s) into.
     target_format : str
         The desired output format.
     """
     print("[DEBUG] _compress()")
     print("[DEBUG] img:           {}".format(img))
+    print("[DEBUG] dest_dir:      {}".format(dest_dir))
     print("[DEBUG] target_format: {}".format(target_format))
 
+    dest = Path(dest_dir, Path(img.filename).stem).with_suffix(
+        ".{}".format(target_format.lower())
+    )
+    print("[DEBUG] dest:          {}".format(dest))
+
     # TODO: Implement the actual compression calls in dedicated functions
-    #       These should return the compressed images as buffers, the actual
-    #       disk I/O should be performed in this function.
     if target_format == TFORMAT_JPG:
-        pass
+        return _compress_jpg(img, dest)
     elif target_format == TFORMAT_PNG:
         pass
     elif target_format == TFORMAT_WEBP:
@@ -82,7 +97,7 @@ def _compress(img, target_format):
         print("[ERROR] Unknown target format!")
 
 
-def cmd_compress(source, target_formats):
+def cmd_compress(source, dest_dir, target_formats):
     """Provide the compression mode of operation.
 
     The compression and disk I/O is implemented by ``_compress()``,this
@@ -92,18 +107,21 @@ def cmd_compress(source, target_formats):
     ----------
     source : str
         The path to and filename of the source file.
+    dest_dir : str
+        The directory to place the output file(s) into.
     target_formats : list
         A list of ``str`` of desired target formats.
     """
     print("[DEBUG] cmd_compress()")
     print("[DEBUG] source:         {}".format(source))
+    print("[DEBUG] dest_dir:       {}".format(dest_dir))
     print("[DEBUG] target_formats: {}".format(target_formats))
 
-    # TODO: Open the source for ``libvips``
-    img = source
+    # open the source for/with ``libvips``
+    img = pyvips.Image.new_from_file(source)
 
     for t in target_formats:
-        _compress(img, t)
+        _compress(img, dest_dir, t)
 
 
 def main():
@@ -114,7 +132,7 @@ def main():
     print("[DEBUG] args: {}".format(args))
 
     if args.command == "compress":
-        cmd_compress(args.source, args.format)
+        cmd_compress(args.source, args.destination, args.format)
 
 
 if __name__ == "__main__":
