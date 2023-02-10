@@ -5,11 +5,42 @@
 
 # Python imports
 import argparse
+import logging
+import logging.config
 from pathlib import Path
 
 # external imports
 import pyvips
 
+# get a module-level logger
+logger = logging.getLogger()
+
+LOGGING_DEFAULT_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "console_output": {
+            "format": "[%(levelname)s] %(name)s: %(message)s",
+        },
+    },
+    "handlers": {
+        "default": {
+            "level": "DEBUG",
+            "formatter": "console_output",
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["default"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
+
+# define some constants
 TFORMAT_JPG = "jpg"
 TFORMAT_PNG = "png"
 TFORMAT_WEBP = "webp"
@@ -73,11 +104,11 @@ def _compress_jpg(img, dest, compression_factor=75, interlace=True):
     interlace : bool
         Flag controlling the generation of progressive JPEGs (default: True).
     """
-    print("[DEBUG] _compress_jpg()")
-    print("[DEBUG] img:                {}".format(img))
-    print("[DEBUG] dest:               {}".format(dest))
-    print("[DEBUG] compression_factor: {}".format(compression_factor))
-    print("[DEBUG] interlace:          {}".format(interlace))
+    logger.debug("_compress_jpg()")
+    logger.debug("img: %r", img)
+    logger.debug("dest: %s", dest)
+    logger.debug("compression_factor: %d", compression_factor)
+    logger.debug("interlace: %r", interlace)
 
     return img.jpegsave(
         dest,
@@ -112,11 +143,11 @@ def _compress_png(img, dest, compression_factor=6, interlace=True):
     interlace : bool
         Flag controlling the generation of interlaced PNG (default: True).
     """
-    print("[DEBUG] _compress_png()")
-    print("[DEBUG] img:                {}".format(img))
-    print("[DEBUG] dest:               {}".format(dest))
-    print("[DEBUG] compression_factor: {}".format(compression_factor))
-    print("[DEBUG] interlace:          {}".format(interlace))
+    logger.debug("_compress_png()")
+    logger.debug("img: %r", img)
+    logger.debug("dest: %s", dest)
+    logger.debug("compression_factor: %d", compression_factor)
+    logger.debug("interlace: %r", interlace)
 
     return img.pngsave(
         dest,
@@ -149,11 +180,11 @@ def _compress_webp(img, dest, compression_factor=75, lossless=None):
         specifically - if the input file format is a lossless format, the
         output will be lossless aswell.
     """
-    print("[DEBUG] _compress_webp()")
-    print("[DEBUG] img:                {}".format(img))
-    print("[DEBUG] dest:               {}".format(dest))
-    print("[DEBUG] compression_factor: {}".format(compression_factor))
-    print("[DEBUG] lossless:           {}".format(lossless))
+    logger.debug("_compress_webp()")
+    logger.debug("img: %r", img)
+    logger.debug("dest: %s", dest)
+    logger.debug("compression_factor: %d", compression_factor)
+    logger.debug("lossless: %r", lossless)
 
     if lossless is None:
         if img.get("vips-loader") == "jpegload":
@@ -193,11 +224,11 @@ def _compress_avif(img, dest, compression_factor=50, lossless=None):
         specifically - if the input file format is a lossless format, the
         output will be lossless aswell.
     """
-    print("[DEBUG] _compress_avif()")
-    print("[DEBUG] img:                {}".format(img))
-    print("[DEBUG] dest:               {}".format(dest))
-    print("[DEBUG] compression_factor: {}".format(compression_factor))
-    print("[DEBUG] lossless:           {}".format(lossless))
+    logger.debug("_compress_avif()")
+    logger.debug("img: %r", img)
+    logger.debug("dest: %s", dest)
+    logger.debug("compression_factor: %d", compression_factor)
+    logger.debug("lossless: %r", lossless)
 
     if lossless is None:
         if img.get("vips-loader") == "jpegload":
@@ -225,15 +256,15 @@ def _compress(img, dest_dir, target_format):
     target_format : str
         The desired output format.
     """
-    print("[DEBUG] _compress()")
-    print("[DEBUG] img:           {}".format(img))
-    print("[DEBUG] dest_dir:      {}".format(dest_dir))
-    print("[DEBUG] target_format: {}".format(target_format))
+    logger.debug("_compress()")
+    logger.debug("img: %r", img)
+    logger.debug("dest_dir: %s", dest_dir)
+    logger.debug("target_format: %s", target_format)
 
     dest = Path(dest_dir, Path(img.filename).stem).with_suffix(
         ".{}".format(target_format.lower())
     )
-    print("[DEBUG] dest:          {}".format(dest))
+    logger.debug("dest: %s", dest)
 
     if target_format == TFORMAT_JPG:
         return _compress_jpg(img, dest)
@@ -244,6 +275,7 @@ def _compress(img, dest_dir, target_format):
     elif target_format == TFORMAT_AVIF:
         return _compress_avif(img, dest)
     else:
+        # FIXME: **real** error handling required!
         print("[ERROR] Unknown target format!")
 
 
@@ -262,13 +294,15 @@ def cmd_compress(source, dest_dir, target_formats):
     target_formats : list
         A list of ``str`` of desired target formats.
     """
-    print("[DEBUG] cmd_compress()")
-    print("[DEBUG] source:         {}".format(source))
-    print("[DEBUG] dest_dir:       {}".format(dest_dir))
-    print("[DEBUG] target_formats: {}".format(target_formats))
+    logger.debug("cmd_compress()")
+    logger.debug("source: %s", source)
+    logger.debug("dest_dir: %s", dest_dir)
+    logger.debug("target_formats: %r", target_formats)
 
     # open the source for/with ``libvips``
     img = pyvips.Image.new_from_file(source)
+
+    logger.info("Compressing %s into the following formats: %r", source, target_formats)
 
     for t in target_formats:
         _compress(img, dest_dir, t)
@@ -279,11 +313,14 @@ def main():
     # get the arguments
     args = parse_args()
 
-    print("[DEBUG] args: {}".format(args))
+    logger.debug("args: %r", args)
 
     if args.command == "compress":
         cmd_compress(args.source, args.destination, args.format)
 
 
 if __name__ == "__main__":
+    # setup the logging module
+    logging.config.dictConfig(LOGGING_DEFAULT_CONFIG)
+
     main()
