@@ -112,7 +112,7 @@ def _compress_png(img, dest, compression_factor=6, interlace=True):
     interlace : bool
         Flag controlling the generation of interlaced PNG (default: True).
     """
-    print("[DEBUG] _compress_jpg()")
+    print("[DEBUG] _compress_png()")
     print("[DEBUG] img:                {}".format(img))
     print("[DEBUG] dest:               {}".format(dest))
     print("[DEBUG] compression_factor: {}".format(compression_factor))
@@ -124,6 +124,50 @@ def _compress_png(img, dest, compression_factor=6, interlace=True):
         interlace=interlace,
         profile="none",
         palette=False,
+    )
+
+
+def _compress_webp(img, dest, compression_factor=75, lossless=None):
+    """Apply WebP compression and save the file to disk.
+
+    This function exposes some WebP compression settings, but other options are
+    pre-defined and set aiming for minimal file sizes, at the cost of
+    computation time.
+
+    Parameters
+    ----------
+    img :
+        The image to be compressed, provided as ``libvips`` Image object.
+    dest : ``Path``
+        The destination, the full path/filename (including the suffix) for the
+        output file.
+    compression_factor : int
+        The WebP compression factor (0-100; default: 75).
+    lossless : bool, None
+        Flag controlling the *lossless* mode; if set to ``None``, this will be
+        determined automatically, depending on the input file format, or - more
+        specifically - if the input file format is a lossless format, the
+        output will be lossless aswell.
+    """
+    print("[DEBUG] _compress_webp()")
+    print("[DEBUG] img:                {}".format(img))
+    print("[DEBUG] dest:               {}".format(dest))
+    print("[DEBUG] compression_factor: {}".format(compression_factor))
+    print("[DEBUG] lossless:           {}".format(lossless))
+
+    if lossless is None:
+        if img.get("vips-loader") == "jpegload":
+            lossless = False
+        else:
+            lossless = True
+
+    return img.webpsave(
+        dest,
+        lossless=lossless,
+        Q=compression_factor,
+        effort=6,
+        strip=True,
+        profile="none",
     )
 
 
@@ -155,7 +199,7 @@ def _compress(img, dest_dir, target_format):
     elif target_format == TFORMAT_PNG:
         return _compress_png(img, dest)
     elif target_format == TFORMAT_WEBP:
-        pass
+        return _compress_webp(img, dest)
     elif target_format == TFORMAT_AVIF:
         pass
     else:
