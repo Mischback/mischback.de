@@ -157,6 +157,10 @@ tree :
 	tree --dirsfirst -I "node_modules|requirements|LICENSE|package-lock.json|README.md"
 .PHONY : tree
 
+util/responsive-image :
+	$(MAKE) util/image-processing image-processing_cmd="{toxinidir}/util/process-image.py compress --format jpg --source ./_imp/source/foo.jpg --destination ./_imp/out"
+.PHONY : util/responsive-image
+
 # Run ``black``
 util/lint/black :
 	$(MAKE) util/pre-commit pre-commit_id="black" pre-commit_files="--all-files"
@@ -244,6 +248,12 @@ sphinx-build_options ?= ""
 util/sphinx/build : conf.py requirements/sphinx.txt pyproject.toml $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e sphinx -- sphinx-build $(sphinx-build_options) -b $(sphinx_builder) -c $(sphinx_config-dir) $(CONTENT_DIR) $(BUILD_DIR)
 .PHONY : util/sphinx/build
+
+# Run commands in the ``image-processing`` environment.
+image-processing_cmd ?= ""
+util/image-processing : requirements/image-processing.txt pyproject.toml $(TOX_VENV_INSTALLED)
+	$(TOX_CMD) -q -e image-processing -- $(image-processing_cmd)
+.PHONY : util/image-processing
 
 # Run commands in the ``pre-processing`` environment.
 pre-processing_cmd ?= ""

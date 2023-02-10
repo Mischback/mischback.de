@@ -26,3 +26,6 @@ node_modules/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# FIXME: This is just a temporary setup for development of image-processing
+_imp/

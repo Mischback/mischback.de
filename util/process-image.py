@@ -6,6 +6,9 @@
 # Python imports
 import argparse
 
+# external imports
+import pyvips  # noqa F401
+
 TFORMAT_JPG = "jpg"
 TFORMAT_PNG = "png"
 TFORMAT_WEBP = "webp"
