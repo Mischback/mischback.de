@@ -54,12 +54,43 @@ def parse_args():
     return parser.parse_args()
 
 
-def _compress_jpg(img, dest):
-    print("[DEBUG] _compress_jpg()")
-    print("[DEBUG] img:  {}".format(img))
-    print("[DEBUG] dest: {}".format(dest))
+def _compress_jpg(img, dest, compression_factor=75, interlace=True):
+    """Apply JPEG compression and save the file to disk.
 
-    return img.jpegsave(dest, Q=100, optimize_coding=True, strip=True)
+    This function exposes some JPEG compression settings, but other options are
+    pre-defined and set aiming for minimal file sizes, at the cost of
+    computation time.
+
+    Parameters
+    ----------
+    img :
+        The image to be compressed, provided as ``libvips`` Image object.
+    dest : ``Path``
+        The destination, the full path/filename (including the suffix) for the
+        output file.
+    compression_factor : int
+        The JPEG compression factor (0-100; default: 75).
+    interlace : bool
+        Flag controlling the generation of progressive JPEGs.
+    """
+    print("[DEBUG] _compress_jpg()")
+    print("[DEBUG] img:                {}".format(img))
+    print("[DEBUG] dest:               {}".format(dest))
+    print("[DEBUG] compression_factor: {}".format(compression_factor))
+    print("[DEBUG] interlace:          {}".format(interlace))
+
+    return img.jpegsave(
+        dest,
+        Q=compression_factor,
+        profile="none",
+        optimize_coding=True,
+        interlace=interlace,
+        strip=True,
+        trellis_quant=True,
+        overshoot_deringing=True,
+        optimize_scans=True,
+        quant_table=3,
+    )
 
 
 def _compress(img, dest_dir, target_format):
