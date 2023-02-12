@@ -46,6 +46,11 @@ TFORMAT_PNG = "png"
 TFORMAT_WEBP = "webp"
 TFORMAT_AVIF = "avif"
 
+DEF_JPEG_COMPRESSION = 75
+DEF_PNG_COMPRESSION = 6
+DEF_WEBP_COMPRESSION = 75
+DEF_AVIF_COMPRESSION = 50
+
 
 def parse_args():
     """Parse the command line arguments.
@@ -81,11 +86,53 @@ def parse_args():
         required=True,
         help="The desired output format(s)",
     )
+    parser.add_argument(
+        "--jpeg-compression",
+        action="store",
+        type=int,
+        choices=range(0, 100),
+        default=DEF_JPEG_COMPRESSION,
+        required=False,
+        help="The compression factor for JPEG (default: {})".format(
+            DEF_JPEG_COMPRESSION
+        ),
+    )
+    parser.add_argument(
+        "--png-compression",
+        action="store",
+        type=int,
+        choices=range(0, 9),
+        default=DEF_PNG_COMPRESSION,
+        required=False,
+        help="The compression factor for PNG (default: {})".format(DEF_PNG_COMPRESSION),
+    )
+    parser.add_argument(
+        "--webp-compression",
+        action="store",
+        type=int,
+        choices=range(0, 100),
+        default=DEF_WEBP_COMPRESSION,
+        required=False,
+        help="The compression factor for WebP (default: {})".format(
+            DEF_WEBP_COMPRESSION
+        ),
+    )
+    parser.add_argument(
+        "--avif-compression",
+        action="store",
+        type=int,
+        choices=range(0, 100),
+        default=DEF_AVIF_COMPRESSION,
+        required=False,
+        help="The compression factor for AVIF (default: {})".format(
+            DEF_AVIF_COMPRESSION
+        ),
+    )
 
     return parser.parse_args()
 
 
-def _compress_jpg(img, dest, compression_factor=75, interlace=True):
+def _compress_jpg(img, dest, compression_factor=DEF_JPEG_COMPRESSION, interlace=True):
     """Apply JPEG compression and save the file to disk.
 
     This function exposes some JPEG compression settings, but other options are
@@ -124,7 +171,7 @@ def _compress_jpg(img, dest, compression_factor=75, interlace=True):
     )
 
 
-def _compress_png(img, dest, compression_factor=6, interlace=True):
+def _compress_png(img, dest, compression_factor=DEF_PNG_COMPRESSION, interlace=True):
     """Apply PNG compression and save the file to disk.
 
     This function exposes some PNG compression settings, but other options are
@@ -158,7 +205,7 @@ def _compress_png(img, dest, compression_factor=6, interlace=True):
     )
 
 
-def _compress_webp(img, dest, compression_factor=75, lossless=None):
+def _compress_webp(img, dest, compression_factor=DEF_WEBP_COMPRESSION, lossless=None):
     """Apply WebP compression and save the file to disk.
 
     This function exposes some WebP compression settings, but other options are
@@ -202,7 +249,7 @@ def _compress_webp(img, dest, compression_factor=75, lossless=None):
     )
 
 
-def _compress_avif(img, dest, compression_factor=50, lossless=None):
+def _compress_avif(img, dest, compression_factor=DEF_AVIF_COMPRESSION, lossless=None):
     """Apply Avif compression and save the file to disk.
 
     This function exposes some Avif compression settings, but other options are
