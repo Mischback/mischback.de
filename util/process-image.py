@@ -7,6 +7,7 @@
 import argparse
 import logging
 import logging.config
+import math
 from pathlib import Path
 
 # external imports
@@ -68,7 +69,7 @@ def parse_args():
 
     parser.add_argument(
         "command",
-        choices=["compress"],
+        choices=["compress", "responsive"],
         action="store",
         type=str,
         help="Determine the script's mode of operation",
@@ -82,6 +83,14 @@ def parse_args():
         type=str,
         required=True,
         help="Path to the destination directory",
+    )
+    parser.add_argument(
+        "--size",
+        nargs=2,
+        dest="sizes",
+        action="append",
+        required=True,
+        help="The desired output size(s)",
     )
     parser.add_argument(
         "--format",
@@ -513,6 +522,7 @@ def _compress(
     img,
     target_format,
     args,
+    override_stem=None,
 ):
     """Apply compression to an image.
 
@@ -528,15 +538,22 @@ def _compress(
         The desired output format.
     args : dict
         The argument dictionary, as provided by Python's ``argparse``.
+    override_stem : str, None
+        Override the *stem* of the output filename.
     """
     logger.debug("_compress()")
     logger.debug("img: %r", img)
     logger.debug("target_format: %s", target_format)
     logger.debug("args: %r", args)
 
-    dest = Path(args.destination, Path(img.filename).stem).with_suffix(
-        ".{}".format(target_format.lower())
-    )
+    if override_stem is None:
+        dest = Path(args.destination, Path(img.filename).stem).with_suffix(
+            ".{}".format(target_format.lower())
+        )
+    else:
+        dest = Path(args.destination, override_stem).with_suffix(
+            ".{}".format(target_format.lower())
+        )
     logger.debug("dest: %s", dest)
 
     if target_format == TFORMAT_JPG:
@@ -575,6 +592,33 @@ def _compress(
         print("[ERROR] Unknown target format!")
 
 
+def _resize(img, target_width):
+    """Resize an image to a ``target_width``.
+
+    Parameters
+    ----------
+    img :
+        The image to be resized, provided as ``libvips`` Image object.
+    target_width : int
+        The desired width of the resized image.
+    """
+    logger.debug("_resize()")
+    logger.debug("img: %r", img)
+    logger.debug("target_width: %d", target_width)
+
+    target_height = math.floor(img.height / (img.width / target_width))
+    logger.info("Generating resized image (%d/%d)", target_width, target_height)
+
+    return img.thumbnail_image(
+        target_width,
+        height=target_height,
+        size="down",
+        no_rotate=True,
+        crop=True,
+        linear=True,
+    )
+
+
 def cmd_compress(args):
     """Provide the compression mode of operation.
 
@@ -600,11 +644,39 @@ def cmd_compress(args):
     )
 
     for tformat in args.formats:
-        _compress(
-            img,
-            tformat,
-            args,
-        )
+        _compress(img, tformat, args)
+
+
+def cmd_responsive(args):
+    """Provide the responsive mode of operation.
+
+    This generates smaller versions of the *source* image, intended to be used
+    with HTML ``srcset`` in ``<img>`` and ``<picture>`` elements.
+
+    The resized images are automatically processed by the ``_compress()``
+    function, which takes care of disk I/O.
+
+    Parameters
+    ----------
+    args : dict
+        The argument dictionary, as provided by Python's ``argparse``.
+    """
+    logger.debug("cmd_responsive()")
+
+    # open the source for/with ``libvips``
+    img = pyvips.Image.new_from_file(args.source)
+    stem = Path(img.filename).stem
+
+    for tsize in args.sizes:
+        logger.debug("tsize: %r", tsize)
+        resized = _resize(img, int(tsize[1]))
+
+        logger.debug("Resized: %r", resized)
+
+        override_stem = "{}-{}".format(stem, tsize[0])
+
+        for tformat in args.formats:
+            _compress(resized, tformat, args, override_stem=override_stem)
 
 
 def main():
@@ -616,6 +688,8 @@ def main():
 
     if args.command == "compress":
         cmd_compress(args)
+    elif args.command == "responsive":
+        cmd_responsive(args)
 
 
 if __name__ == "__main__":
