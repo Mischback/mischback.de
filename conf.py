@@ -77,6 +77,7 @@ extensions = [
     # https://github.com/readthedocs/sphinx-notfound-page
     "notfound.extension",
     "mischback.content_tags",
+    "mischback.responsive_images",
     "mischback.sphinx_jinja2_debug",
     # "sphinx.ext.graphviz"
     # If there is a use-case for these diagrams.
