@@ -36,7 +36,7 @@ LOGGING_DEFAULT_CONFIG = {
     "loggers": {
         "": {
             "handlers": ["default"],
-            "level": "DEBUG",
+            "level": "INFO",
             "propagate": True,
         },
     },
@@ -644,13 +644,16 @@ def cmd_compress(args):
 
     # open the source for/with ``libvips``
     img = pyvips.Image.new_from_file(args.source)
+    output = []
 
     logger.info(
         "Compressing %s into the following formats: %r", args.source, args.formats
     )
 
     for tformat in args.formats:
-        _compress(img, tformat, args)
+        output.append(_compress(img, tformat, args))
+
+    return output
 
 
 def cmd_responsive(args):
@@ -672,6 +675,7 @@ def cmd_responsive(args):
     # open the source for/with ``libvips``
     img = pyvips.Image.new_from_file(args.source)
     stem = Path(img.filename).stem
+    output = []
 
     for tsize in args.sizes:
         logger.debug("tsize: %r", tsize)
@@ -682,7 +686,11 @@ def cmd_responsive(args):
         override_stem = "{}-{}".format(stem, tsize[0])
 
         for tformat in args.formats:
-            _compress(resized, tformat, args, override_stem=override_stem)
+            output.append(
+                _compress(resized, tformat, args, override_stem=override_stem)
+            )
+
+    return output
 
 
 def main():
@@ -693,9 +701,13 @@ def main():
     logger.debug("args: %r", args)
 
     if args.command == "compress":
-        cmd_compress(args)
+        output = cmd_compress(args)
     elif args.command == "responsive":
-        cmd_responsive(args)
+        output = cmd_responsive(args)
+
+    print("The following files were generated:")
+    for f in output:
+        print("- {}".format(f))
 
 
 if __name__ == "__main__":
