@@ -311,13 +311,15 @@ def _compress_png(
 
     logger.info("Compressing PNG with Q = %d", compression_factor)
 
-    return img.pngsave(
+    img.pngsave(
         dest,
         compression=compression_factor,
         interlace=interlace,
         profile="none",
         palette=False,
     )
+
+    return dest
 
 
 def _compress_webp(
@@ -411,7 +413,7 @@ def _compress_webp(
 
     # at this point, the compression_factor is as high as possible, write the
     # file to disk!
-    return img.webpsave(
+    img.webpsave(
         dest,
         Q=compression_factor,
         lossless=lossless,
@@ -419,6 +421,8 @@ def _compress_webp(
         strip=True,
         profile="none",
     )
+
+    return dest
 
 
 def _compress_avif(
@@ -510,12 +514,14 @@ def _compress_avif(
 
     # at this point, the compression_factor is as high as possible, write the
     # file to disk!
-    return img.heifsave(
+    img.heifsave(
         dest,
         Q=compression_factor,
         lossless=lossless,
         effort=9,
     )
+
+    return dest
 
 
 def _compress(
