@@ -158,7 +158,7 @@ tree :
 .PHONY : tree
 
 util/responsive-image :
-	$(MAKE) util/image-processing image-processing_cmd="{toxinidir}/util/process-image.py compress --format jpg --source ./_imp/source/foo.jpg --destination ./_imp/out"
+	$(MAKE) util/image-processing image-processing_cmd="{toxinidir}/util/process-image.py compress --required-ssim 0.98 --format jpg --jpeg-compression 55 --format png --png-compression 9 --source ./_imp/source/foo.jpg --destination ./_imp/out"
 .PHONY : util/responsive-image
 
 # Run ``black``

@@ -121,7 +121,7 @@ def parse_args():
         "--png-compression",
         action="store",
         type=int,
-        choices=range(0, 9),
+        choices=range(0, 10),
         default=DEF_PNG_COMPRESSION,
         required=False,
         help="The compression factor for PNG (default: {})".format(DEF_PNG_COMPRESSION),
@@ -278,6 +278,10 @@ def _compress_png(
     pre-defined and set aiming for minimal file sizes, at the cost of
     computation time.
 
+    The function does not implement any automatic calculation of the
+    compression factor, as PNG is a lossless format. To generate the smallest
+    possible PNG output, set ``compression_factor`` to its maximum.
+
     Parameters
     ----------
     img :
@@ -295,6 +299,8 @@ def _compress_png(
     logger.debug("dest: %s", dest)
     logger.debug("compression_factor: %d", compression_factor)
     logger.debug("interlace: %r", interlace)
+
+    logger.info("Compressing PNG with Q = %d", compression_factor)
 
     return img.pngsave(
         dest,
