@@ -85,11 +85,19 @@ def parse_args():
     )
     parser.add_argument(
         "--format",
+        dest="formats",
         choices=[TFORMAT_JPG, TFORMAT_PNG, TFORMAT_WEBP, TFORMAT_AVIF],
         action="append",
         type=str,
         required=True,
         help="The desired output format(s)",
+    )
+    parser.add_argument(
+        "--required-ssim",
+        action="store",
+        type=float,
+        required=False,
+        help="The required structural similarity",
     )
     parser.add_argument(
         "--jpeg-compression",
@@ -104,6 +112,7 @@ def parse_args():
     )
     parser.add_argument(
         "--jpeg-no-interlace",
+        dest="jpeg_interlace",
         action="store_false",
         required=False,
         help="Don't use interlace mode for JPEGs",
@@ -119,6 +128,7 @@ def parse_args():
     )
     parser.add_argument(
         "--png-no-interlace",
+        dest="png_interlace",
         action="store_false",
         required=False,
         help="Don't use interlace mode for PNGs",
@@ -136,6 +146,7 @@ def parse_args():
     )
     parser.add_argument(
         "--webp-force-lossless",
+        dest="webp_lossless",
         action="store",
         default=DEF_WEBP_LOSSLESS,
         help="Force lossless-mode for WebP compression",
@@ -153,6 +164,7 @@ def parse_args():
     )
     parser.add_argument(
         "--avif-force-lossless",
+        dest="avif_lossless",
         action="store",
         default=DEF_AVIF_LOSSLESS,
         help="Force lossless-mode for AVIF compression",
@@ -383,43 +395,67 @@ def _compress_avif(
     )
 
 
-def _compress(img, dest_dir, target_format, required_ssim=None):
+def _compress(
+    img,
+    target_format,
+    args,
+):
     """Apply compression to an image.
 
     Parameters
     ----------
     img :
         The image to be compressed, provided as ``libvips`` Image object.
-    dest_dir : str
-        The directory to place the output file(s) into.
     target_format : str
         The desired output format.
+    args : dict
+        The argument dictionary, as provided by Python's ``argparse``.
     """
     logger.debug("_compress()")
     logger.debug("img: %r", img)
-    logger.debug("dest_dir: %s", dest_dir)
     logger.debug("target_format: %s", target_format)
-    logger.debug("required_ssim: %r", required_ssim)
+    logger.debug("args: %r", args)
 
-    dest = Path(dest_dir, Path(img.filename).stem).with_suffix(
+    dest = Path(args.destination, Path(img.filename).stem).with_suffix(
         ".{}".format(target_format.lower())
     )
     logger.debug("dest: %s", dest)
 
     if target_format == TFORMAT_JPG:
-        return _compress_jpg(img, dest, required_ssim)
+        return _compress_jpg(
+            img,
+            dest,
+            required_ssim=args.required_ssim,
+            compression_factor=args.jpeg_compression,
+            interlace=args.jpeg_interlace,
+        )
     elif target_format == TFORMAT_PNG:
-        return _compress_png(img, dest)
+        return _compress_png(
+            img,
+            dest,
+            compression_factor=args.png_compression,
+            interlace=args.png_interlace,
+        )
     elif target_format == TFORMAT_WEBP:
-        return _compress_webp(img, dest)
+        return _compress_webp(
+            img,
+            dest,
+            compression_factor=args.webp_compression,
+            lossless=args.webp_lossless,
+        )
     elif target_format == TFORMAT_AVIF:
-        return _compress_avif(img, dest)
+        return _compress_avif(
+            img,
+            dest,
+            compression_factor=args.avif_compression,
+            lossless=args.avif_lossless,
+        )
     else:
         # FIXME: **real** error handling required!
         print("[ERROR] Unknown target format!")
 
 
-def cmd_compress(source, dest_dir, target_formats):
+def cmd_compress(args):
     """Provide the compression mode of operation.
 
     The compression and disk I/O is implemented by ``_compress()``,this
@@ -429,23 +465,22 @@ def cmd_compress(source, dest_dir, target_formats):
     ----------
     source : str
         The path to and filename of the source file.
-    dest_dir : str
-        The directory to place the output file(s) into.
-    target_formats : list
-        A list of ``str`` of desired target formats.
     """
     logger.debug("cmd_compress()")
-    logger.debug("source: %s", source)
-    logger.debug("dest_dir: %s", dest_dir)
-    logger.debug("target_formats: %r", target_formats)
 
     # open the source for/with ``libvips``
-    img = pyvips.Image.new_from_file(source)
+    img = pyvips.Image.new_from_file(args.source)
 
-    logger.info("Compressing %s into the following formats: %r", source, target_formats)
+    logger.info(
+        "Compressing %s into the following formats: %r", args.source, args.formats
+    )
 
-    for t in target_formats:
-        _compress(img, dest_dir, t)
+    for tformat in args.formats:
+        _compress(
+            img,
+            tformat,
+            args,
+        )
 
 
 def main():
@@ -456,7 +491,7 @@ def main():
     logger.debug("args: %r", args)
 
     if args.command == "compress":
-        cmd_compress(args.source, args.destination, args.format)
+        cmd_compress(args)
 
 
 if __name__ == "__main__":
