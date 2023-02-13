@@ -312,7 +312,11 @@ def _compress_png(
 
 
 def _compress_webp(
-    img, dest, compression_factor=DEF_WEBP_COMPRESSION, lossless=DEF_WEBP_LOSSLESS
+    img,
+    dest,
+    required_ssim=None,
+    compression_factor=DEF_WEBP_COMPRESSION,
+    lossless=DEF_WEBP_LOSSLESS,
 ):
     """Apply WebP compression and save the file to disk.
 
@@ -338,15 +342,56 @@ def _compress_webp(
     logger.debug("_compress_webp()")
     logger.debug("img: %r", img)
     logger.debug("dest: %s", dest)
+    logger.debug("required_ssim: %r", required_ssim)
     logger.debug("compression_factor: %d", compression_factor)
     logger.debug("lossless: %r", lossless)
 
     if lossless is None:
         if img.get("vips-loader") == "jpegload":
             lossless = False
+            logger.info(
+                "Detected lossy input file, automatically switching to lossy output!"
+            )
         else:
             lossless = True
+            logger.info(
+                "Detected lossless input file, automatically switching to lossless output!"
+            )
 
+    if required_ssim is not None:
+        original = img.numpy()
+        mssim = 0
+        candidate = ""
+
+        while mssim <= required_ssim:
+            compression_factor += 1
+
+            # This might seem complex, but is only chaining different operations:
+            #   1) use ``webpsave_buffer`` to apply WebP compression
+            #   2) create a new ``Image`` from that buffer
+            #   3) call ``numpy()`` on that image
+            candidate = pyvips.Image.new_from_buffer(
+                img.webpsave_buffer(
+                    Q=compression_factor,
+                    lossless=lossless,
+                    effort=6,
+                    strip=True,
+                    profile="none",
+                ),
+                "",
+            ).numpy()
+
+            # calculate the structural similarity
+            mssim = ssim(original, candidate, win_size=3)
+
+            logger.debug(
+                "Checking compression %d: mssim: %f", compression_factor, mssim
+            )
+
+    logger.info("Compressing WebP with Q = %d", compression_factor)
+
+    # at this point, the compression_factor is as high as possible, write the
+    # file to disk!
     return img.webpsave(
         dest,
         Q=compression_factor,
@@ -358,7 +403,11 @@ def _compress_webp(
 
 
 def _compress_avif(
-    img, dest, compression_factor=DEF_AVIF_COMPRESSION, lossless=DEF_AVIF_LOSSLESS
+    img,
+    dest,
+    required_ssim=None,
+    compression_factor=DEF_AVIF_COMPRESSION,
+    lossless=DEF_AVIF_LOSSLESS,
 ):
     """Apply Avif compression and save the file to disk.
 
@@ -384,15 +433,54 @@ def _compress_avif(
     logger.debug("_compress_avif()")
     logger.debug("img: %r", img)
     logger.debug("dest: %s", dest)
+    logger.debug("required_ssim: %r", required_ssim)
     logger.debug("compression_factor: %d", compression_factor)
     logger.debug("lossless: %r", lossless)
 
     if lossless is None:
         if img.get("vips-loader") == "jpegload":
             lossless = False
+            logger.info(
+                "Detected lossy input file, automatically switching to lossy output!"
+            )
         else:
             lossless = True
+            logger.info(
+                "Detected lossless input file, automatically switching to lossless output!"
+            )
 
+    if required_ssim is not None:
+        original = img.numpy()
+        mssim = 0
+        candidate = ""
+
+        while mssim <= required_ssim:
+            compression_factor += 1
+
+            # This might seem complex, but is only chaining different operations:
+            #   1) use ``heifsave_buffer`` to apply AVIF compression
+            #   2) create a new ``Image`` from that buffer
+            #   3) call ``numpy()`` on that image
+            candidate = pyvips.Image.new_from_buffer(
+                img.heifsave_buffer(
+                    Q=compression_factor,
+                    lossless=lossless,
+                    effort=9,
+                ),
+                "",
+            ).numpy()
+
+            # calculate the structural similarity
+            mssim = ssim(original, candidate, win_size=3)
+
+            logger.debug(
+                "Checking compression %d: mssim: %f", compression_factor, mssim
+            )
+
+    logger.info("Compressing AVIF with Q = %d", compression_factor)
+
+    # at this point, the compression_factor is as high as possible, write the
+    # file to disk!
     return img.heifsave(
         dest,
         Q=compression_factor,
@@ -446,6 +534,7 @@ def _compress(
         return _compress_webp(
             img,
             dest,
+            required_ssim=args.required_ssim,
             compression_factor=args.webp_compression,
             lossless=args.webp_lossless,
         )
@@ -453,6 +542,7 @@ def _compress(
         return _compress_avif(
             img,
             dest,
+            required_ssim=args.required_ssim,
             compression_factor=args.avif_compression,
             lossless=args.avif_lossless,
         )
