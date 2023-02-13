@@ -331,6 +331,16 @@ def _compress_webp(
     dest : ``Path``
         The destination, the full path/filename (including the suffix) for the
         output file.
+    required_ssim : float
+        The required value of (mean) structural similarity between the original
+        (input, see ``img``) and the compressed version. Given in the range of
+        [0, 1], recommended values are ``>0.97``. Default value is ``None``,
+        skipping automatic calculation of compression factor.
+
+        If specified, the ``compression_factor`` is used as the starting point
+        of the automatic calculation and should be specified **lower** than the
+        expected required compression factor and certainly lower than the
+        default value of ``75``.
     compression_factor : int
         The WebP compression factor (0-100; default: 75).
     lossless : bool, None
@@ -422,6 +432,16 @@ def _compress_avif(
     dest : ``Path``
         The destination, the full path/filename (including the suffix) for the
         output file.
+    required_ssim : float
+        The required value of (mean) structural similarity between the original
+        (input, see ``img``) and the compressed version. Given in the range of
+        [0, 1], recommended values are ``>0.97``. Default value is ``None``,
+        skipping automatic calculation of compression factor.
+
+        If specified, the ``compression_factor`` is used as the starting point
+        of the automatic calculation and should be specified **lower** than the
+        expected required compression factor and certainly lower than the
+        default value of ``50``.
     compression_factor : int
         The Avif compression factor (0-100; default: 50).
     lossless : bool, None
@@ -496,6 +516,10 @@ def _compress(
 ):
     """Apply compression to an image.
 
+    This function is the common interface to all specific compression
+    functions. It evaluates the ``args`` parameters and applies the required
+    ones to the speicifc compression functions.
+
     Parameters
     ----------
     img :
@@ -554,13 +578,17 @@ def _compress(
 def cmd_compress(args):
     """Provide the compression mode of operation.
 
-    The compression and disk I/O is implemented by ``_compress()``,this
-    function just picks up the source file and then calls the actual payload.
+    The compression and disk I/O is implemented by ``_compress()`` and its
+    related compression functions. This function just picks up the source file
+    and then calls the actual payload.
+
+    The specific arguments controlling the compression are passed through and
+    are evaluated in ``_compress()``.
 
     Parameters
     ----------
-    source : str
-        The path to and filename of the source file.
+    args : dict
+        The argument dictionary, as provided by Python's ``argparse``.
     """
     logger.debug("cmd_compress()")
 
