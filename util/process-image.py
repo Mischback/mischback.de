@@ -11,6 +11,7 @@ from pathlib import Path
 
 # external imports
 import pyvips
+from skimage.metrics import structural_similarity as ssim
 
 # get a module-level logger
 logger = logging.getLogger()
@@ -187,7 +188,41 @@ def _compress_jpg(
     logger.debug("compression_factor: %d", compression_factor)
     logger.debug("interlace: %r", interlace)
 
-    return img.jpegsave(
+    original = img.numpy()
+    mssim = 0
+    compression_factor = 49
+    while mssim <= 0.98:
+        compression_factor += 1
+
+        # This might seem complex, but is only chaining different operations:
+        #   1) use ``jpegsave_buffer`` to apply JPEG compression
+        #   2) create a new ``Image`` from that buffer
+        #   3) call ``numpy()`` on that image
+        candidate = pyvips.Image.new_from_buffer(
+            img.jpegsave_buffer(
+                Q=compression_factor,
+                profile="none",
+                optimize_coding=True,
+                interlace=interlace,
+                strip=True,
+                trellis_quant=True,
+                overshoot_deringing=True,
+                optimize_scans=True,
+                quant_table=3,
+            ),
+            "",
+        ).numpy()
+
+        # calculate the structural similarity
+        mssim = ssim(original, candidate, win_size=3)
+
+        logger.debug("Checking compression %d: mssim: %f", compression_factor, mssim)
+
+    logger.info("Compressing JPEG with Q = %d", compression_factor)
+
+    # at this point, the compression_factor is as high as possible, write the
+    # file to disk!
+    img.jpegsave(
         dest,
         Q=compression_factor,
         profile="none",
@@ -199,6 +234,8 @@ def _compress_jpg(
         optimize_scans=True,
         quant_table=3,
     )
+
+    return dest
 
 
 def _compress_png(
