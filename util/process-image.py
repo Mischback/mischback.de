@@ -162,7 +162,11 @@ def parse_args():
 
 
 def _compress_jpg(
-    img, dest, compression_factor=DEF_JPEG_COMPRESSION, interlace=DEF_JPEG_INTERLACE
+    img,
+    dest,
+    required_ssim=None,
+    compression_factor=DEF_JPEG_COMPRESSION,
+    interlace=DEF_JPEG_INTERLACE,
 ):
     """Apply JPEG compression and save the file to disk.
 
@@ -177,6 +181,16 @@ def _compress_jpg(
     dest : ``Path``
         The destination, the full path/filename (including the suffix) for the
         output file.
+    required_ssim : float
+        The required value of (mean) structural similarity between the original
+        (input, see ``img``) and the compressed version. Given in the range of
+        [0, 1], recommended values are ``>0.97``. Default value is ``None``,
+        skipping automatic calculation of compression factor.
+
+        If specified, the ``compression_factor`` is used as the starting point
+        of the automatic calculation and should be specified **lower** than the
+        expected required compression factor and certainly lower than the
+        default value of ``75``.
     compression_factor : int
         The JPEG compression factor (0-100; default: 75).
     interlace : bool
@@ -185,38 +199,43 @@ def _compress_jpg(
     logger.debug("_compress_jpg()")
     logger.debug("img: %r", img)
     logger.debug("dest: %s", dest)
+    logger.debug("required_ssim: %r", required_ssim)
     logger.debug("compression_factor: %d", compression_factor)
     logger.debug("interlace: %r", interlace)
 
-    original = img.numpy()
-    mssim = 0
-    compression_factor = 49
-    while mssim <= 0.98:
-        compression_factor += 1
+    if required_ssim is not None:
+        original = img.numpy()
+        mssim = 0
+        candidate = ""
 
-        # This might seem complex, but is only chaining different operations:
-        #   1) use ``jpegsave_buffer`` to apply JPEG compression
-        #   2) create a new ``Image`` from that buffer
-        #   3) call ``numpy()`` on that image
-        candidate = pyvips.Image.new_from_buffer(
-            img.jpegsave_buffer(
-                Q=compression_factor,
-                profile="none",
-                optimize_coding=True,
-                interlace=interlace,
-                strip=True,
-                trellis_quant=True,
-                overshoot_deringing=True,
-                optimize_scans=True,
-                quant_table=3,
-            ),
-            "",
-        ).numpy()
+        while mssim <= required_ssim:
+            compression_factor += 1
 
-        # calculate the structural similarity
-        mssim = ssim(original, candidate, win_size=3)
+            # This might seem complex, but is only chaining different operations:
+            #   1) use ``jpegsave_buffer`` to apply JPEG compression
+            #   2) create a new ``Image`` from that buffer
+            #   3) call ``numpy()`` on that image
+            candidate = pyvips.Image.new_from_buffer(
+                img.jpegsave_buffer(
+                    Q=compression_factor,
+                    profile="none",
+                    optimize_coding=True,
+                    interlace=interlace,
+                    strip=True,
+                    trellis_quant=True,
+                    overshoot_deringing=True,
+                    optimize_scans=True,
+                    quant_table=3,
+                ),
+                "",
+            ).numpy()
 
-        logger.debug("Checking compression %d: mssim: %f", compression_factor, mssim)
+            # calculate the structural similarity
+            mssim = ssim(original, candidate, win_size=3)
+
+            logger.debug(
+                "Checking compression %d: mssim: %f", compression_factor, mssim
+            )
 
     logger.info("Compressing JPEG with Q = %d", compression_factor)
 
@@ -364,7 +383,7 @@ def _compress_avif(
     )
 
 
-def _compress(img, dest_dir, target_format):
+def _compress(img, dest_dir, target_format, required_ssim=None):
     """Apply compression to an image.
 
     Parameters
@@ -380,6 +399,7 @@ def _compress(img, dest_dir, target_format):
     logger.debug("img: %r", img)
     logger.debug("dest_dir: %s", dest_dir)
     logger.debug("target_format: %s", target_format)
+    logger.debug("required_ssim: %r", required_ssim)
 
     dest = Path(dest_dir, Path(img.filename).stem).with_suffix(
         ".{}".format(target_format.lower())
@@ -387,7 +407,7 @@ def _compress(img, dest_dir, target_format):
     logger.debug("dest: %s", dest)
 
     if target_format == TFORMAT_JPG:
-        return _compress_jpg(img, dest)
+        return _compress_jpg(img, dest, required_ssim)
     elif target_format == TFORMAT_PNG:
         return _compress_png(img, dest)
     elif target_format == TFORMAT_WEBP:
