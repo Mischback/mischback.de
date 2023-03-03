@@ -211,9 +211,32 @@ class ResponsiveImageSources:  # noqa D101
             iter({item for item in self._sources if item.src_path == src_path}), None
         )
 
+    def get_fallback(self, fileformat):  # noqa D102
+        return self.get_source_files(fileformat=fileformat)[0]
+
     def get_src_path_list(self):
         """Return the paths of all source files as list."""
         return {item.src_path for item in self._sources}
+
+    def get_source_files(self, fileformat=None, min_width=0):  # noqa: D102
+        if fileformat is None:
+            source_files = list(
+                {item for item in self._sources if (item.width >= min_width)}
+            )
+        else:
+            source_files = list(
+                {
+                    item
+                    for item in self._sources
+                    if (
+                        item.width >= min_width and item.mime == EXT_TO_MIME[fileformat]
+                    )
+                }
+            )
+
+        source_files.sort(key=lambda src: src.width)
+
+        return source_files
 
 
 class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
@@ -310,6 +333,41 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
                     continue
 
 
+def visit_image(self, node, original_visit_image):  # noqa D103
+    logger.debug("%s", node)
+
+    sources = node.get("responsive_sources", None)
+
+    # The ``ResponsiveImageCollector`` did not find responsive versions of the
+    # image, so we just use the original implementation of ``visit_image()``.
+    if sources is None:
+        logger.debug("No responsive_sources, falling back to original visit_node()")
+        return original_visit_image(self, node)
+
+    # Start the <picture> element
+    self.body.append("<picture>")
+
+    # Create the actual <img> element
+    # FIXME: Instead of creating this manually, we could rely on the original
+    #        implementation.
+    #        This does require, that the relevant information is provided in
+    #        the right attributes.
+    # TODO: How and when to determine the target path of the image?!
+    fallback = sources.get_fallback(Path(node["uri"]).suffix)
+    alt_text = node.get("alt", "")
+    self.body.append(
+        '<img src="{img_src}" alt="{alt_text}" width="{img_width}" height="{img_height}">'.format(
+            img_src=fallback.src_path,
+            img_width=fallback.width,
+            img_height=fallback.height,
+            alt_text=alt_text,
+        )
+    )
+
+    # Close the <picture> element
+    self.body.append("</picture>")
+
+
 def integrate_into_build_process(app):
     """Integrate the extension into Sphinx's build process.
 
@@ -331,6 +389,17 @@ def integrate_into_build_process(app):
     if not hasattr(app.env, "responsive_images"):
         app.env.responsive_images = FilenameUniqDict()
     app.add_env_collector(ResponsiveImageCollector)
+
+    # Replace the original ``visit_image()`` with a custom wrapper
+    #
+    # This code is based on the implementation in ``sphinxext-photofinish``.
+    translator_class = app.builder.get_translator_class()
+    original_visit_image = translator_class.visit_image
+
+    def visit_image_replacement(translator, node):
+        visit_image(translator, node, original_visit_image)
+
+    translator_class.visit_image = visit_image_replacement
 
 
 def setup(app):
