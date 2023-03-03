@@ -200,6 +200,21 @@ class ResponsiveImageSources:  # noqa D101
             return self._sources.add(new_source)
         return NotImplemented
 
+    def get_by_src_path(self, src_path):
+        """Return an ``ResponsiveImageSourceFile`` by its path."""
+        # see https://stackoverflow.com/a/22693614
+        #
+        # The list comprehension *should* return just a single element, which
+        # is returned with ``next(iter(...))``. If the comprehension is empty,
+        # ``None`` is returned.
+        return next(
+            iter({item for item in self._sources if item.src_path == src_path}), None
+        )
+
+    def get_src_path_list(self):
+        """Return the paths of all source files as list."""
+        return {item.src_path for item in self._sources}
+
 
 class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
     def clear_doc(self, app, env, docname):  # noqa D102
@@ -223,21 +238,30 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
             # attributes of the node. Hopefully this does not interfere with
             # Sphinx's existing codebase.
             imguri = search_image_for_language(node["uri"], app.env)
-            logger.debug("imguri: %r", imguri)
 
             img_src_path, _ = app.env.relfn2path(imguri, docname)
-            logger.debug("img_src_path: %r", img_src_path)
+            img_src_path = Path(app.srcdir, img_src_path)
 
+            # Determine the available *responsive* versions of the image
             self.collect_sources(
                 img_src_path, app.config.responsive_images_size_suffixes, formats
             )
+
+            # Add the *responsive sources* to the document's dependencies and
+            # track them in the build environment.
+            for src_path in self.sources.get_src_path_list():
+                app.env.dependencies[docname].add(str(src_path))
+                app.env.responsive_images.add_file(docname, src_path)
+
+            # Add the *responsive sources* to the actual node
+            node["responsive_sources"] = self.sources
 
     def collect_sources(self, ref_path, size_suffixes, formats):
         """Determine the responsive versions of the image.
 
         Parameters
         ----------
-        ref_path : str
+        ref_path : Path
             The source file, as referenced in the directive, provided as plain
             :py:`str`. This will be processed to generate the *responsive
             filenames*.
@@ -250,12 +274,40 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
 
         ref_path = Path(ref_path)
         logger.debug("ref_path: %r", ref_path)
-        logger.debug("stem: %r", ref_path.stem)
-        logger.debug("parent: %r", ref_path.parent)
 
         for s in size_suffixes:
+            new_stem = "{}{}".format(ref_path.stem, s)
             for f in formats:
-                logger.debug("%r, %r", s, f)
+                work_path = ref_path.with_stem(new_stem).with_suffix(f)
+
+                try:
+                    self.sources.add(ResponsiveImageSourceFile(work_path))
+                except ResponsiveImageSourceFile.ProcessingError:
+                    # Could not determine image's dimensions.
+                    #
+                    # Try to recover from an already-processed version of the
+                    # corresponding size, most likely JPG or PNG.
+                    try:
+                        fallback = self.sources.get_by_src_path(
+                            ref_path.with_stem(new_stem)
+                        )
+                        self.sources.add(
+                            ResponsiveImageSourceFile(
+                                work_path,
+                                file_width=fallback.width,
+                                file_height=fallback.height,
+                            )
+                        )
+                    except Exception:
+                        # Note: This will raise a warning. When running with
+                        #       Sphinx's ``-W`` option, this will fail the
+                        #       build!
+                        logger.warning(
+                            "Could not determine dimensions for %s - skipping!"
+                        )
+                except FileNotFoundError:
+                    logger.debug("File not found: %s - skipping!", work_path)
+                    continue
 
 
 def integrate_into_build_process(app):
