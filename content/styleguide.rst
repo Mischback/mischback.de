@@ -13,6 +13,9 @@
 Styleguide
 ##########
 
+.. image:: /img/foo.jpg
+   :alt: Just a test image
+
 This page doesn't really provide content. It is meant to include all
 pre-defined *semantic elements* to demonstrate their styling. Having all of
 them available in one document is meant as a reference aswell as the means to
