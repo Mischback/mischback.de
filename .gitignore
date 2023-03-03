@@ -29,3 +29,4 @@ __pycache__/
 
 # FIXME: This is just a temporary setup for development of image-processing
 _imp/
+content/img/

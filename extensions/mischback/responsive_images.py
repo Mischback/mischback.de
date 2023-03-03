@@ -1,8 +1,38 @@
-"""Generate the required (HTML) markup for responsive images.
+"""Provide *responsive images* for HTML-based output."""
 
-This extension handles the markup generation only, the actual images are
-generated using the utility script in ``util/process-image.py``.
-"""
+
+# Python imports
+import logging
+import logging.config
+
+EXTENSION_LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "console_output": {
+            "format": "[%(levelname)s] [%(name)s:%(lineno)d] %(message)s",
+        },
+    },
+    "handlers": {
+        "default": {
+            "level": "DEBUG",
+            "formatter": "console_output",
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["default"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
+logging.config.dictConfig(EXTENSION_LOGGING)
+
+# get a module-level logger
+logger = logging.getLogger(__name__)
 
 
 def setup(app):
@@ -12,7 +42,7 @@ def setup(app):
     https://www.sphinx-doc.org/en/master/development/tutorials/helloworld.html#writing-the-extension
     for reference.
     """
-    print("HELLO responsive_images")
+    logger.debug("setup() for responsive_images extension")
 
     return {
         "version": "0.0.1",
