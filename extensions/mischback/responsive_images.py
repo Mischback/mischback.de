@@ -8,6 +8,7 @@ from functools import total_ordering
 from pathlib import Path
 
 # Sphinx imports
+from sphinx.builders import Builder
 from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.environment.collectors import EnvironmentCollector
 from sphinx.util import FilenameUniqDict
@@ -368,6 +369,26 @@ def visit_image(self, node, original_visit_image):  # noqa D103
     self.body.append("</picture>")
 
 
+def post_process_images(self, doctree, original_post_process_images):  # noqa D103
+    logger.debug("custom post_process_images()")
+
+    # call the original function first!
+    original_post_process_images(doctree)
+
+    for node in doctree.findall(nodes.image):
+        sources = node.get("responsive_sources", None)
+
+        if sources is None:
+            logger.debug("nodes.image without responsive sources - skipping!")
+            continue
+
+        logger.debug("nodes.image **with** responsive sources: %r", sources)
+        logger.debug(self.env.responsive_images)
+
+        for s in sources._sources:
+            logger.debug("source: %r", s)
+
+
 def integrate_into_build_process(app):
     """Integrate the extension into Sphinx's build process.
 
@@ -400,6 +421,17 @@ def integrate_into_build_process(app):
         visit_image(translator, node, original_visit_image)
 
     translator_class.visit_image = visit_image_replacement
+
+    # Replace the original ``post_process_images()`` with a custom wrapper
+    original_post_process_images = app.builder.post_process_images
+
+    def post_process_images_replacement(builder, doctree):
+        post_process_images(builder, doctree, original_post_process_images)
+
+    app.builder.post_process_images = post_process_images_replacement.__get__(
+        app.builder, Builder
+    )
+    logger.debug("Builder.post_process_images(): %r", app.builder.post_process_images)
 
 
 def setup(app):
