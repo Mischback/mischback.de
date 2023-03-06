@@ -126,8 +126,8 @@ class ResponsiveImageSourceFile:
 
     Attributes
     ----------
-    src_path : Path
-        The actual path (relative to Sphinx's working directory) to the image
+    img_path : Path
+        The actual path (relative to Sphinx's source directory) to the image
         file.
 
         Note: This is **not** the final path for Sphinx's output/build process.
@@ -144,8 +144,8 @@ class ResponsiveImageSourceFile:
     class ProcessingError(RuntimeError):
         """Indicate problems during processing."""
 
-    def __init__(self, src_path, file_width=None, file_height=None):
-        file_dim = _get_image_size(src_path)
+    def __init__(self, img_path, srcdir, file_width=None, file_height=None):
+        file_dim = _get_image_size(Path(srcdir, img_path))
 
         if file_dim is None:
             if (file_width is None) or (file_height is None):
@@ -153,10 +153,10 @@ class ResponsiveImageSourceFile:
             else:
                 file_dim = (file_width, file_height)
 
-        self.src_path = src_path
+        self.img_path = img_path
         self.width = file_dim[0]
         self.height = file_dim[1]
-        self.mime = EXT_TO_MIME[src_path.suffix]
+        self.mime = EXT_TO_MIME[img_path.suffix]
 
     def __eq__(self, other):
         """Check equality with ``other`` object."""
@@ -181,14 +181,14 @@ class ResponsiveImageSourceFile:
     def __repr__(self):
         """Provide an instance's ``representation``."""
         # see https://stackoverflow.com/a/12448200
-        return "<ResponsiveImageSourceFile(src_path={}, file_width={}, file_height={})>".format(
-            self.src_path.__repr__(), self.width.__repr__(), self.height.__repr__()
+        return "<ResponsiveImageSourceFile(img_path={}, file_width={}, file_height={})>".format(
+            self.img_path.__repr__(), self.width.__repr__(), self.height.__repr__()
         )
 
     def __key(self):
         """Provide internal representation of the instance."""
         # see https://stackoverflow.com/a/2909119
-        return (self.src_path, self.width, self.height, self.mime)
+        return (self.img_path, self.width, self.height, self.mime)
 
 
 class ResponsiveImageSources:  # noqa D101
@@ -206,7 +206,7 @@ class ResponsiveImageSources:  # noqa D101
             return self._sources.add(new_source)
         return NotImplemented
 
-    def get_by_src_path(self, src_path):
+    def get_by_img_path(self, img_path):
         """Return an ``ResponsiveImageSourceFile`` by its path."""
         # see https://stackoverflow.com/a/22693614
         #
@@ -214,15 +214,15 @@ class ResponsiveImageSources:  # noqa D101
         # is returned with ``next(iter(...))``. If the comprehension is empty,
         # ``None`` is returned.
         return next(
-            iter({item for item in self._sources if item.src_path == src_path}), None
+            iter({item for item in self._sources if item.img_path == img_path}), None
         )
 
     def get_fallback(self, fileformat):  # noqa D102
         return self.get_source_files(fileformat=fileformat)[0]
 
-    def get_src_path_list(self):
+    def get_img_path_list(self):
         """Return the paths of all source files as list."""
-        return {item.src_path for item in self._sources}
+        return {item.img_path for item in self._sources}
 
     def get_source_files(self, fileformat=None, min_width=0):  # noqa: D102
         if fileformat is None:
@@ -259,7 +259,7 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
         )
 
         for node in doctree.findall(nodes.image):
-            logger.debug("Processing node [%s] in [%s]", node, docname)
+            # logger.debug("Processing node [%s] in [%s]", node, docname)
 
             # We can't determine, if we're running before or after the built-in
             # ``ImageCollector``, which modifies the node while processing it.
@@ -268,30 +268,31 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
             # Sphinx's existing codebase.
             imguri = search_image_for_language(node["uri"], app.env)
 
-            img_src_path, _ = app.env.relfn2path(imguri, docname)
-            logger.debug("srcdir, img_src_path: %r, %r", app.srcdir, img_src_path)
-            # img_src_path = Path(app.srcdir, img_src_path)
+            img_path, _ = app.env.relfn2path(imguri, docname)
 
             # Determine the available *responsive* versions of the image
             self.collect_sources(
-                img_src_path, app.config.responsive_images_size_suffixes, formats
+                img_path,
+                app.config.responsive_images_size_suffixes,
+                formats,
+                app.srcdir,
             )
 
             # Add the *responsive sources* to the document's dependencies and
             # track them in the build environment.
-            for src_path in self.sources.get_src_path_list():
+            for src_path in self.sources.get_img_path_list():
                 app.env.dependencies[docname].add(str(src_path))
                 app.env.responsive_images.add_file(docname, str(src_path))
 
             # Add the *responsive sources* to the actual node
             node["responsive_sources"] = self.sources
 
-    def collect_sources(self, ref_path, size_suffixes, formats):
+    def collect_sources(self, ref_path, size_suffixes, formats, app_srcdir):
         """Determine the responsive versions of the image.
 
         Parameters
         ----------
-        ref_path : Path
+        ref_path : str
             The source file, as referenced in the directive, provided as plain
             :py:`str`. This will be processed to generate the *responsive
             filenames*.
@@ -299,11 +300,12 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
             A list of suffixes to identify different sizes.
         formats : list(str)
             A list of formats (file extensions).
+        app_srcdir : str
+            Full path to Sphinx's source directory.
         """
         self.sources = ResponsiveImageSources()
 
         ref_path = Path(ref_path)
-        logger.debug("ref_path: %r", ref_path)
 
         for s in size_suffixes:
             new_stem = "{}{}".format(ref_path.stem, s)
@@ -311,19 +313,20 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
                 work_path = ref_path.with_stem(new_stem).with_suffix(f)
 
                 try:
-                    self.sources.add(ResponsiveImageSourceFile(work_path))
+                    self.sources.add(ResponsiveImageSourceFile(work_path, app_srcdir))
                 except ResponsiveImageSourceFile.ProcessingError:
                     # Could not determine image's dimensions.
                     #
                     # Try to recover from an already-processed version of the
                     # corresponding size, most likely JPG or PNG.
                     try:
-                        fallback = self.sources.get_by_src_path(
+                        fallback = self.sources.get_by_img_path(
                             ref_path.with_stem(new_stem)
                         )
                         self.sources.add(
                             ResponsiveImageSourceFile(
                                 work_path,
+                                app_srcdir,
                                 file_width=fallback.width,
                                 file_height=fallback.height,
                             )
@@ -336,7 +339,7 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
                             "Could not determine dimensions for %s - skipping!"
                         )
                 except FileNotFoundError:
-                    logger.debug("File not found: %s - skipping!", work_path)
+                    # logger.debug("File not found: %s - skipping!", work_path)
                     continue
 
 
@@ -364,7 +367,7 @@ def visit_image(self, node, original_visit_image):  # noqa D103
     alt_text = node.get("alt", "")
     self.body.append(
         '<img src="{img_src}" alt="{alt_text}" width="{img_width}" height="{img_height}">'.format(
-            img_src=fallback.src_path,
+            img_src=fallback.img_path,
             img_width=fallback.width,
             img_height=fallback.height,
             alt_text=alt_text,
@@ -376,7 +379,7 @@ def visit_image(self, node, original_visit_image):  # noqa D103
 
 
 def post_process_images(self, doctree, original_post_process_images):  # noqa D103
-    logger.debug("custom post_process_images()")
+    # logger.debug("custom post_process_images()")
 
     # call the original function first!
     original_post_process_images(doctree)
@@ -389,8 +392,8 @@ def post_process_images(self, doctree, original_post_process_images):  # noqa D1
             continue
 
         logger.debug("nodes.image **with** responsive sources: %r", sources)
-        logger.debug(self.env.responsive_images)
-        logger.debug(self.env.images)
+        # logger.debug(self.env.responsive_images)
+        # logger.debug(self.env.images)
 
         for s in sources._sources:
             logger.debug("source: %r", s)
@@ -408,7 +411,6 @@ def integrate_into_build_process(app):
     See :func:`setup`.
     """
     # Only intgegrate the extension if this is an HTML build
-    logger.debug("Detecting builder: %r", app.builder)
     if not isinstance(app.builder, StandaloneHTMLBuilder):
         logger.info("Detected a non-HTML builder. Skipping extension setup!")
         return
@@ -438,7 +440,6 @@ def integrate_into_build_process(app):
     app.builder.post_process_images = post_process_images_replacement.__get__(
         app.builder, Builder
     )
-    logger.debug("Builder.post_process_images(): %r", app.builder.post_process_images)
 
 
 def setup(app):
