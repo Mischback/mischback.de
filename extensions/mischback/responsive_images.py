@@ -195,6 +195,11 @@ class ResponsiveImageSources:  # noqa D101
     def __init__(self):
         self._sources = set()
 
+    def __len__(self):
+        """Get the number of sources."""
+        # see https://stackoverflow.com/a/15114062
+        return len(self._sources)
+
     def add(self, new_source):
         """Add a new source file."""
         if isinstance(new_source, ResponsiveImageSourceFile):
@@ -264,7 +269,8 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
             imguri = search_image_for_language(node["uri"], app.env)
 
             img_src_path, _ = app.env.relfn2path(imguri, docname)
-            img_src_path = Path(app.srcdir, img_src_path)
+            logger.debug("srcdir, img_src_path: %r, %r", app.srcdir, img_src_path)
+            # img_src_path = Path(app.srcdir, img_src_path)
 
             # Determine the available *responsive* versions of the image
             self.collect_sources(
@@ -275,7 +281,7 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
             # track them in the build environment.
             for src_path in self.sources.get_src_path_list():
                 app.env.dependencies[docname].add(str(src_path))
-                app.env.responsive_images.add_file(docname, src_path)
+                app.env.responsive_images.add_file(docname, str(src_path))
 
             # Add the *responsive sources* to the actual node
             node["responsive_sources"] = self.sources
@@ -337,11 +343,11 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
 def visit_image(self, node, original_visit_image):  # noqa D103
     logger.debug("%s", node)
 
-    sources = node.get("responsive_sources", None)
+    sources = node.get("responsive_sources", [])
 
     # The ``ResponsiveImageCollector`` did not find responsive versions of the
     # image, so we just use the original implementation of ``visit_image()``.
-    if sources is None:
+    if len(sources) < 1:
         logger.debug("No responsive_sources, falling back to original visit_node()")
         return original_visit_image(self, node)
 
@@ -376,14 +382,15 @@ def post_process_images(self, doctree, original_post_process_images):  # noqa D1
     original_post_process_images(doctree)
 
     for node in doctree.findall(nodes.image):
-        sources = node.get("responsive_sources", None)
+        sources = node.get("responsive_sources", [])
 
-        if sources is None:
+        if len(sources) < 1:
             logger.debug("nodes.image without responsive sources - skipping!")
             continue
 
         logger.debug("nodes.image **with** responsive sources: %r", sources)
         logger.debug(self.env.responsive_images)
+        logger.debug(self.env.images)
 
         for s in sources._sources:
             logger.debug("source: %r", s)
