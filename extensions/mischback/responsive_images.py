@@ -4,6 +4,7 @@
 # Python imports
 import logging
 import logging.config
+import urllib.parse
 from functools import total_ordering
 from pathlib import Path
 
@@ -406,6 +407,57 @@ def visit_image(self, node, original_visit_image):  # noqa D103
     # Start the <picture> element
     self.body.append("<picture>")
 
+    # Generate the <source> elements
+    #
+    # The <source> elements are generated depending on the breakpoints (as
+    # specified from the extension's configuration) and the file formats.
+    #
+    # Note: Generating *mobile first* breakpoints is hardcoded as of now!
+    formats = _get_sorted_format_list(self.builder.app.config.responsive_images_formats)
+    bpoints = [(0, 0)] + self.builder.app.config.responsive_images_layout_breakpoints
+    bpoints.sort(reverse=True)
+
+    for b in bpoints:
+        for f in formats:
+            gen_source = ["<source", ">"]
+            tmp_sources = sources.get_source_files(fileformat=f, min_width=b[1])
+
+            # All further processing is only done, if there are matching source
+            # files!
+            if len(tmp_sources) > 0:
+                gen_source.insert(1, 'type="{}"'.format(tmp_sources[0].mime))
+                gen_source.insert(1, 'width="{}"'.format(tmp_sources[0].width))
+                gen_source.insert(1, 'height="{}"'.format(tmp_sources[0].height))
+
+                # The media query needs only to be applied if there is an actual
+                # min-width!
+                if b[0] > 0:
+                    gen_source.insert(1, 'media="(min-width: {}px)"'.format(b[0]))
+
+                # Include all matching source files into the ``srcset``.
+                #
+                # Provide the actual path (relative to the document's location)
+                # dynamically.
+                tmp_srcset = []
+                for s in tmp_sources:
+                    tmp_srcset.append(
+                        "{img_path} {img_width}w".format(
+                            img_path=Path(
+                                self.builder.imgpath,
+                                urllib.parse.quote(
+                                    self.builder.images[str(s.img_path)]
+                                ),
+                            ),
+                            img_width=s.width,
+                        )
+                    )
+
+                gen_source.insert(1, 'srcset="{}"'.format(", ".join(tmp_srcset)))
+
+                # Actually append the <source> element
+                logger.debug("Generated source: %r", gen_source)
+                self.body.append(" ".join(gen_source))
+
     # Create the actual <img> element
     #
     # One might be tempted to re-use ``original_visit_image()`` here, after
@@ -473,7 +525,7 @@ def post_process_images(self, doctree, original_post_process_images):
             continue
 
         for s in sources._sources:
-            logger.debug("source: %r", s)
+            # logger.debug("source: %r", s)
             s_img_path = str(s.img_path)
             if s_img_path not in self.env.responsive_images:
                 continue
@@ -571,6 +623,21 @@ def setup(app):
     app.add_config_value(
         "responsive_images_size_suffixes",
         ["-tiny", "-small", "-medium", "-big", "-large", "-xlarge"],
+        "env",
+    )
+
+    # This configuration value maps *layout breakpoints* to minimum required
+    # *image widths*.
+    #
+    # During processing, a default *non-breakpoint* ``(0, 0)`` is provided
+    # automatically.
+    #
+    # TODO: Provide a sane default value, probably even an empty list.
+    # TODO: Add documentation about the required format (tuple, including
+    #       meaning of the elements)
+    app.add_config_value(
+        "responsive_images_layout_breakpoints",
+        [(777, 444), (500, 222)],
         "env",
     )
 
