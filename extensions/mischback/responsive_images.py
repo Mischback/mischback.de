@@ -394,7 +394,7 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
 
 
 def visit_image(self, node, original_visit_image):  # noqa D103
-    logger.debug("%s", node)
+    # logger.debug("%s", node)
 
     sources = node.get("responsive_sources", [])
 
@@ -468,14 +468,16 @@ def visit_image(self, node, original_visit_image):  # noqa D103
     # a ``style`` attribute to the ``<img>`` tag with the image's dimensions,
     # which is **not desired**.
     #
-    # TODO: How and when to determine the target path of the image?!
     # TODO: Apply CSS classes!
     # TODO: Apply ``loading`` attributes!
     fallback = sources.get_fallback(Path(node["uri"]).suffix)
     alt_text = node.get("alt", "")
     self.body.append(
         '<img src="{img_src}" alt="{alt_text}" width="{img_width}" height="{img_height}">'.format(
-            img_src=fallback.img_path,
+            img_src=Path(
+                self.builder.imgpath,
+                urllib.parse.quote(self.builder.images[str(fallback.img_path)]),
+            ),
             img_width=fallback.width,
             img_height=fallback.height,
             alt_text=alt_text,
