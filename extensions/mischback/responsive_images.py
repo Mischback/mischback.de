@@ -119,8 +119,11 @@ class ResponsiveImageSourceFile:
 
     Parameters
     ----------
-    src_path : :class:`Path`
-        The filename, including it's path (relative to Sphinx's root directory).
+    img_path : :class:`Path`
+        The filename, including it's path (relative to Sphinx's source
+        directory).
+    src_dir : str
+        The path to Sphinx's source directory.
     file_width: int, None
     file_height: int, None
 
@@ -191,7 +194,16 @@ class ResponsiveImageSourceFile:
         return (self.img_path, self.width, self.height, self.mime)
 
 
-class ResponsiveImageSources:  # noqa D101
+class ResponsiveImageSources:
+    """A set of responsive image sources.
+
+    The class is meant to manage the available responsive image sources,
+    represented as :class:`ResponsiveImageSourceFile` instances **per node**.
+
+    It wraps around Python's ``set`` and provides several functions to access
+    and filter the sources.
+    """
+
     def __init__(self):
         self._sources = set()
 
@@ -201,13 +213,25 @@ class ResponsiveImageSources:  # noqa D101
         return len(self._sources)
 
     def add(self, new_source):
-        """Add a new source file."""
+        """Add a new source file.
+
+        new_source : ResponsiveImageSourceFile
+        """
         if isinstance(new_source, ResponsiveImageSourceFile):
             return self._sources.add(new_source)
         return NotImplemented
 
     def get_by_img_path(self, img_path):
-        """Return an ``ResponsiveImageSourceFile`` by its path."""
+        """Return an ``ResponsiveImageSourceFile`` by its path.
+
+        Parameters
+        ----------
+        img_path : Path
+
+        Returns
+        -------
+        ResponsiveImageSourceFile
+        """
         # see https://stackoverflow.com/a/22693614
         #
         # The list comprehension *should* return just a single element, which
@@ -217,14 +241,38 @@ class ResponsiveImageSources:  # noqa D101
             iter({item for item in self._sources if item.img_path == img_path}), None
         )
 
-    def get_fallback(self, fileformat):  # noqa D102
+    def get_fallback(self, fileformat):
+        """Get the *smallest* image source of the given *fileformat*.
+
+        Parameters
+        ----------
+        fileformat : str
+
+        Returns
+        -------
+        ResponsiveImageSourceFile
+        """
         return self.get_source_files(fileformat=fileformat)[0]
 
     def get_img_path_list(self):
-        """Return the paths of all source files as list."""
+        """Get a flat list of the sources' paths.
+
+        Returns
+        -------
+        list(str)
+        """
         return {item.img_path for item in self._sources}
 
-    def get_source_files(self, fileformat=None, min_width=0):  # noqa: D102
+    def get_source_files(self, fileformat=None, min_width=0):
+        """Get all images sources, ordered by width.
+
+        The result might be filtered by *fileformat* and/or a *minimum width*.
+
+        Parameters
+        ----------
+        fileformat : str, None
+        min_width : int
+        """
         if fileformat is None:
             source_files = list(
                 {item for item in self._sources if (item.width >= min_width)}
@@ -305,6 +353,7 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
         """
         self.sources = ResponsiveImageSources()
 
+        # Convert the ``str`` to an actual ``Path`` object for processing
         ref_path = Path(ref_path)
 
         for s in size_suffixes:
@@ -378,12 +427,37 @@ def visit_image(self, node, original_visit_image):  # noqa D103
     self.body.append("</picture>")
 
 
-def post_process_images(self, doctree, original_post_process_images):  # noqa D103
-    # logger.debug("custom post_process_images()")
+def post_process_images(self, doctree, original_post_process_images):
+    """Post-process image nodes and add extension-specific processing.
 
-    # call the original function first!
+    This method is a monkey patch around Sphinx's own implementation of
+    ``Builder.post_process_images()`` or more specifically
+    ``StandaloneHTMLBuilder.post_process_images()``. The monkey patching is
+    performed in ``integrate_into_build_process()``.
+
+    This method calls the original method first, to ensure the expected
+    behaviour for non-responsive images and then processes the
+    extension-specific image sources and adds them to the builder's ``images``
+    dictionary, which is used to determine the files that need to be copied
+    during the build.
+
+    Parameters
+    ----------
+    self : sphinx.builders.Builder
+    doctree : docutils.nodes.Node
+    original_post_process_images : func
+        A reference to the original function, as provided by the ``Builder`` or
+        more specifically the ``StandaloneHTMLBuilder`` instace.
+    """
+    # Call the original function first to ensure, that non-responsive images
+    # are processed as usual.
     original_post_process_images(doctree)
 
+    # The extension's custom *post processing* replicates the behaviour of the
+    # original implementation, but instead of working with the node's ``uri``
+    # attribute, the ``responsive_sources`` attribute is processed, which is
+    # added to the node in the ``ResponsiveImageCollector.process_doc()``
+    # method.
     for node in doctree.findall(nodes.image):
         sources = node.get("responsive_sources", [])
 
@@ -391,15 +465,19 @@ def post_process_images(self, doctree, original_post_process_images):  # noqa D1
             logger.debug("nodes.image without responsive sources - skipping!")
             continue
 
-        logger.debug("nodes.image **with** responsive sources: %r", sources)
-
         for s in sources._sources:
             logger.debug("source: %r", s)
             s_img_path = str(s.img_path)
             if s_img_path not in self.env.responsive_images:
                 continue
+            # This is where the magic happens!
+            #
+            # The HTML writer will use its ``self.images`` dictionary to
+            # determine the files that need to be copied over to the build's
+            # image directory.
             self.images[s_img_path] = self.env.responsive_images[s_img_path][1]
 
+        # TODO: Clean this!
         # logger.debug("env.responsive_images: %r", self.env.responsive_images)
         # logger.debug("env.images: %r", self.env.images)
         # logger.debug("self.images: %r", self.images)
