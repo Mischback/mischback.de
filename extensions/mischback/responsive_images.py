@@ -394,6 +394,9 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
 
 
 def visit_image(self, node, original_visit_image):  # noqa D103
+    def _get_path(basedir, img_path):
+        return str(Path(basedir, urllib.parse.quote(img_path)))
+
     # logger.debug("%s", node)
 
     sources = node.get("responsive_sources", [])
@@ -442,11 +445,9 @@ def visit_image(self, node, original_visit_image):  # noqa D103
                 for s in tmp_sources:
                     tmp_srcset.append(
                         "{img_path} {img_width}w".format(
-                            img_path=Path(
+                            img_path=_get_path(
                                 self.builder.imgpath,
-                                urllib.parse.quote(
-                                    self.builder.images[str(s.img_path)]
-                                ),
+                                self.builder.images[str(s.img_path)],
                             ),
                             img_width=s.width,
                         )
@@ -474,9 +475,8 @@ def visit_image(self, node, original_visit_image):  # noqa D103
     alt_text = node.get("alt", "")
     self.body.append(
         '<img src="{img_src}" alt="{alt_text}" width="{img_width}" height="{img_height}">'.format(
-            img_src=Path(
-                self.builder.imgpath,
-                urllib.parse.quote(self.builder.images[str(fallback.img_path)]),
+            img_src=_get_path(
+                self.builder.imgpath, self.builder.images[str(fallback.img_path)]
             ),
             img_width=fallback.width,
             img_height=fallback.height,
