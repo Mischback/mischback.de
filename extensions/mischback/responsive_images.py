@@ -407,11 +407,18 @@ def visit_image(self, node, original_visit_image):  # noqa D103
     self.body.append("<picture>")
 
     # Create the actual <img> element
-    # FIXME: Instead of creating this manually, we could rely on the original
-    #        implementation.
-    #        This does require, that the relevant information is provided in
-    #        the right attributes.
+    #
+    # One might be tempted to re-use ``original_visit_image()`` here, after
+    # setting the node's attributes to matching values. However, this is **not
+    # desired**, as ``docutils`` implementation of ``visit_image()`` (for this
+    # use case this is
+    # ``docutils.writers._html_base.HTMLTranslator.visit_image()``) will apply
+    # a ``style`` attribute to the ``<img>`` tag with the image's dimensions,
+    # which is **not desired**.
+    #
     # TODO: How and when to determine the target path of the image?!
+    # TODO: Apply CSS classes!
+    # TODO: Apply ``loading`` attributes!
     fallback = sources.get_fallback(Path(node["uri"]).suffix)
     alt_text = node.get("alt", "")
     self.body.append(
