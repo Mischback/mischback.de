@@ -339,7 +339,7 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
                             "Could not determine dimensions for %s - skipping!"
                         )
                 except FileNotFoundError:
-                    # logger.debug("File not found: %s - skipping!", work_path)
+                    logger.info("File not found: %s - skipping!", work_path)
                     continue
 
 
@@ -392,11 +392,17 @@ def post_process_images(self, doctree, original_post_process_images):  # noqa D1
             continue
 
         logger.debug("nodes.image **with** responsive sources: %r", sources)
-        # logger.debug(self.env.responsive_images)
-        # logger.debug(self.env.images)
 
         for s in sources._sources:
             logger.debug("source: %r", s)
+            s_img_path = str(s.img_path)
+            if s_img_path not in self.env.responsive_images:
+                continue
+            self.images[s_img_path] = self.env.responsive_images[s_img_path][1]
+
+        # logger.debug("env.responsive_images: %r", self.env.responsive_images)
+        # logger.debug("env.images: %r", self.env.images)
+        # logger.debug("self.images: %r", self.images)
 
 
 def integrate_into_build_process(app):
