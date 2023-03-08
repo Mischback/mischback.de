@@ -1,4 +1,31 @@
-"""Provide *responsive images* for HTML-based output."""
+"""Provide the required HTML markup for *responsive images*.
+
+This is a custom extension, exclusively developed for my very own website. It
+makes certain assumptions about the project's structure. You may freely use it
+at your own risk!
+
+The extension hooks deeply into Sphinx's build process, monkey patching some
+of Sphinx's and docutils' internal functions. It *should work* out of the box,
+as the extension calls the original versions of the functions alongside its
+own processing logic. But there *may be* side effects.
+
+The extension is integrated into Sphinx's logging system.
+
+The extension only provides the required HTML markup for responsive images,
+supporting different sizes aswell as different file formats. The idea is to
+serve highly optimized image files, which are as small as possible, depending
+on the displayed size of the image aswell using the best compressing method
+(depending on browser compatibility). However, the extension **does not
+generate** the required image source files! There is a companion utility script
+(``util/process_image.py``) which may be used to generate the desired image
+versions, applying resizing and compression.
+
+The generated markup is **not suitable** for *art direction* using the
+``<picture>`` element, because the generated markup will add all available
+sources (of a given file format), which have bigger dimensions, as alternatives
+to the ``<source>`` elements (this *should* cover higher pixel density
+displays).
+"""
 
 
 # Python imports
@@ -70,7 +97,7 @@ def _get_sorted_format_list(format_list, reverse=False):
     """Apply sorting to the list of image formats.
 
     This function is meant to be used with the extension's configuration value
-    ``responsive_images_formats``. It applies the sorting and returns a list
+    ``responsive_images_formats``. It applies the priority and returns a list
     of formats, given as :py:`str`.
     """
     tmp = format_list
@@ -294,22 +321,52 @@ class ResponsiveImageSources:
         return source_files
 
 
-class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
-    def clear_doc(self, app, env, docname):  # noqa D102
+class ResponsiveImageCollector(EnvironmentCollector):
+    """An extension-specific implementation of Sphinx's EnvironmentCollector.
+
+    This class is basically a re-implementation of
+    ``sphinx.environment.collectors.asset.ImageCollector`` to take care of the
+    responsive versions of images. It iterates all ``image`` nodes of a given
+    document, determines the (available) responsive image versions, keeps track
+    of them in the build environment and adds them as dependencies of the
+    document.
+
+    The ``responsive_images`` attribute and this class are added to the build
+    environment in ``integrate_into_build_process()``.
+
+    ``EnvironmentCollector`` instances are run during the build after the
+    source file has been parsed into a ``doctree``. ``process_doc()`` is then
+    called for every document (Sphinx's core event ``doctree-read`` is used
+    to run the method).
+    """
+
+    def clear_doc(self, app, env, docname):
+        """Remove a document from ``responsive_images``.
+
+        This method is required to enable parallel builds.
+        """
         env.responsive_images.purge_doc(docname)
 
-    def merge_other(self, app, env, docnames, other):  # noqa D102
+    def merge_other(self, app, env, docnames, other):
+        """Merge one ``responsive_images`` with the one from another ``env``.
+
+        This method is required to enable parallel builds.
+        """
         env.responsive_images.merge_other(docnames, other.responsive_images)
 
-    def process_doc(self, app, doctree):  # noqa D102
+    def process_doc(self, app, doctree):
+        """Process the ``image`` nodes of a document to identify responsive images.
+
+        The real magic is done in ``collect_sources()`` and its result is then
+        added to the processed ``node`` instance and to the document's
+        dependencies.
+        """
         docname = app.env.docname
         formats = _get_sorted_format_list(
             app.config.responsive_images_formats, reverse=True
         )
 
         for node in doctree.findall(nodes.image):
-            # logger.debug("Processing node [%s] in [%s]", node, docname)
-
             # We can't determine, if we're running before or after the built-in
             # ``ImageCollector``, which modifies the node while processing it.
             # We replicate its behaviour, but don't modify the existing
@@ -393,11 +450,25 @@ class ResponsiveImageCollector(EnvironmentCollector):  # noqa D101
                     continue
 
 
-def visit_image(self, node, original_visit_image):  # noqa D103
+def visit_image(self, node, original_visit_image):
+    """Provide the actual HTML markup for responsive images.
+
+    This function handles the generation of the required markup for ``image``
+    nodes. It replaces Sphinx's original implementation by monkey patching the
+    corresponding function in Sphinx's ``Translator``, see
+    ``integrate_into_build_process()``.
+
+    The ``ResponsiveImageCollector`` adds the responsive source files to the
+    ``node`` instance. This function generates the corresponding markup and
+    automatically adjusts the source paths (to be relative to the generated
+    output document).
+
+    If there are no responsive image sources available, the original
+    implementation of ``visit_image()`` is called.
+    """
+
     def _get_path(basedir, img_path):
         return str(Path(basedir, urllib.parse.quote(img_path)))
-
-    # logger.debug("%s", node)
 
     sources = node.get("responsive_sources", [])
 
@@ -593,6 +664,12 @@ def setup(app):
     This function is required by Sphinx's extension interface, see
     https://www.sphinx-doc.org/en/master/development/tutorials/helloworld.html#writing-the-extension
     for reference.
+
+    As the extension is intended to be used with (siblings of) Sphinx's
+    ``StandaloneHTMLBuilder``, most of the actual setup is performed in
+    ``integrate_into_build_process()``, which is hooked to Sphinx's
+    ``builder-inited`` event. At this point, the ``Builder`` is known and the
+    extension performs its setup only, if the builder is an HTML builder.
     """
     # This configuration value maps image formats to their corresponding output
     # priorities (lower priority value = higher logical priority).
