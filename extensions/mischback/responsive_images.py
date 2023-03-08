@@ -609,11 +609,6 @@ def post_process_images(self, doctree, original_post_process_images):
             # image directory.
             self.images[s_img_path] = self.env.responsive_images[s_img_path][1]
 
-        # TODO: Clean this!
-        # logger.debug("env.responsive_images: %r", self.env.responsive_images)
-        # logger.debug("env.images: %r", self.env.images)
-        # logger.debug("self.images: %r", self.images)
-
 
 def integrate_into_build_process(app):
     """Integrate the extension into Sphinx's build process.
@@ -682,6 +677,11 @@ def setup(app):
     #       source files. While *lower* priority values mean a higher logical
     #       output priority, *higher* priority values lead to earlier
     #       processing for candidates.
+    #       This is done, because the library to "read" image's dimensions
+    #       doesn't work with ``avif`` files. But as the avifs are generated
+    #       from JPEG or PNG sources, the dimensions may be looked up from the
+    #       corresponding JPEG/PNG, if that file was already processed. See the
+    #       implementation in ``ResponsiveImageCollector.collect_sources()``.
     app.add_config_value(
         "responsive_images_formats",
         [
@@ -699,6 +699,9 @@ def setup(app):
     # It is recommended to provide a *semantic name*. The values are appended
     # to the *stem* of the given source filename to construct the filenames of
     # the responsive variants with different sizes.
+    #
+    # All elements of the list are processed and used to generate filenames.
+    # If the file is not available, a message of level ``INFO`` is logged.
     app.add_config_value(
         "responsive_images_size_suffixes",
         ["-tiny", "-small", "-medium", "-big", "-large", "-xlarge"],
@@ -711,9 +714,15 @@ def setup(app):
     # During processing, a default *non-breakpoint* ``(0, 0)`` is provided
     # automatically.
     #
+    # The items in the list are of type ``tuple``, where the first element is
+    # the required minimum display width and the second element a corresponding
+    # minimal image width.
+    #
+    # The first value will be applied in the ``<source>`` element's ``media``
+    # attribute as a ``min-width`` in ``px``, the second value is used to
+    # filter the available *responsive image sources*.
+    #
     # TODO: Provide a sane default value, probably even an empty list.
-    # TODO: Add documentation about the required format (tuple, including
-    #       meaning of the elements)
     app.add_config_value(
         "responsive_images_layout_breakpoints",
         [(777, 444), (500, 222)],
