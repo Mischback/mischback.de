@@ -555,6 +555,10 @@ def visit_image(self, node, original_visit_image):
     gen_source.insert(1, 'width="{}"'.format(fallback.width))
     gen_source.insert(1, 'height="{}"'.format(fallback.height))
 
+    # Process the configuration of ``responsive_images_lazy_loading``
+    if self.image_loading == "lazy":
+        gen_source.insert(1, 'loading="lazy"')
+
     self.body.append(" ".join(gen_source))
 
     # Close the <picture> element
@@ -632,6 +636,11 @@ def integrate_into_build_process(app):
     if not hasattr(app.env, "responsive_images"):
         app.env.responsive_images = FilenameUniqDict()
     app.add_env_collector(ResponsiveImageCollector)
+
+    # Process *lazy-loading* of images
+    if app.config.responsive_images_lazy_loading:
+        app.env.settings["image_loading"] = "lazy"
+        logger.debug("lazy-loading: %r", app.env.settings["image_loading"])
 
     # Replace the original ``visit_image()`` with a custom wrapper
     #
@@ -730,6 +739,16 @@ def setup(app):
         [(777, 444), (500, 222)],
         "env",
     )
+
+    # Should the ``loading`` attribute of images be set to ``loading``?
+    #
+    # ``docutils`` can already add this attribute to ``<img>`` tags, but this
+    # is controlled (globally) by a ``Writer``-specific setting, which is not
+    # exposed through Sphinx.
+    #
+    # If this setting is ``True``, the extension will enable lazy-loading of
+    # **all** images.
+    app.add_config_value("responsive_images_lazy_loading", True, "env")
 
     # When the builder is set up, we can determine if we're running an HTML
     # build. Only in this case, all other magic of this extension needs to be
