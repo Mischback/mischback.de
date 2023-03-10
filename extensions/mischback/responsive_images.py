@@ -543,17 +543,19 @@ def visit_image(self, node, original_visit_image):
     # TODO: Apply CSS classes!
     # TODO: Apply ``loading`` attributes!
     fallback = sources.get_fallback(Path(node["uri"]).suffix)
-    alt_text = node.get("alt", "")
-    self.body.append(
-        '<img src="{img_src}" alt="{alt_text}" width="{img_width}" height="{img_height}">'.format(
-            img_src=_get_path(
-                self.builder.imgpath, self.builder.images[str(fallback.img_path)]
-            ),
-            img_width=fallback.width,
-            img_height=fallback.height,
-            alt_text=alt_text,
-        )
+
+    gen_source = ["<img", ">"]
+    gen_source.insert(
+        1,
+        'src="{}"'.format(
+            _get_path(self.builder.imgpath, self.builder.images[str(fallback.img_path)])
+        ),
     )
+    gen_source.insert(1, 'alt="{}"'.format(node.get("alt", "")))
+    gen_source.insert(1, 'width="{}"'.format(fallback.width))
+    gen_source.insert(1, 'height="{}"'.format(fallback.height))
+
+    self.body.append(" ".join(gen_source))
 
     # Close the <picture> element
     self.body.append("</picture>")
