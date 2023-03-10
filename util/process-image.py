@@ -89,7 +89,7 @@ def parse_args():
         nargs=2,
         dest="sizes",
         action="append",
-        required=True,
+        required=False,
         help="The desired output size(s)",
     )
     parser.add_argument(

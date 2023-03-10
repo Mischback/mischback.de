@@ -13,7 +13,7 @@
 Styleguide
 ##########
 
-.. image:: /img/foo.jpg
+.. image:: /img/responsive_test.jpg
    :alt: Just a test image
 
 This page doesn't really provide content. It is meant to include all
