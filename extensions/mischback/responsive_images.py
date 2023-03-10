@@ -447,7 +447,9 @@ class ResponsiveImageCollector(EnvironmentCollector):
                             "Could not determine dimensions for %s - skipping!"
                         )
                 except FileNotFoundError:
-                    logger.info("File not found: %s - skipping!", work_path)
+                    logger.verbose(
+                        "Responsive image source not found: %s - skipping!", work_path
+                    )
                     continue
 
 
@@ -476,7 +478,10 @@ def visit_image(self, node, original_visit_image):
     # The ``ResponsiveImageCollector`` did not find responsive versions of the
     # image, so we just use the original implementation of ``visit_image()``.
     if len(sources) < 1:
-        logger.debug("No responsive_sources, falling back to original visit_node()")
+        logger.info(
+            'No responsive image sources, creating non-responsive image for "%s"!',
+            node["uri"],
+        )
         return original_visit_image(self, node)
 
     # Start the <picture> element
