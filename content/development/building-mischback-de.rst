@@ -328,3 +328,58 @@ There's still a long list of things to do, though. The stylesheet was developed
 with only the content in mind (or technicall speaking: targeting the
 ``article.html`` template). The overview pages are still completely lacking
 any dedicated styling.
+
+
+2023-03-10
+==========
+
+A custom extension to provide
+`responsive images <https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images>`_
+was created.
+
+This extension is working as expected and generates the required markup to make
+the images *responsive*. A matching utility script is used to create the
+scaled and compressed image files.
+
+Actually this was a major effort, with lots of considerations and quite a bunch
+of deadlocks. The implementation can not be considered *rock solid* and would
+require lots of testing, if it were to be actually released.
+
+It deeply hooks into Sphinx's build process, monkey patches several internal
+functions/methods and adds several configuration values.
+
+.. note::
+   I'd really like to turn this into an actual extension and make it available
+   to the community. However, I'm not sure if the implementation is stable
+   enough.
+
+   I'd like to run the extension for a while to see if it is working ok.
+
+The extension requires the image source files to be available while running
+Sphinx's build. This is an actual issue for a CI/CD pipeline, or more
+specifically: How to provide the images for the pipeline?
+
+- Include them in the actual ``git`` repository.
+
+  This is the most straight-forward solution, but though tracking non-text
+  files with ``git`` is possible, it is not *really recommended*, because
+  ``git`` can't effectively *diff* them. This results in a bloated repository,
+  because any change to one of the images adds the new version *again*.
+- Use `GitHub's git-lfs <https://git-lfs.com/>`_.
+
+  This is the preferred solution. It combines the power of ``git``'s version
+  tracking with an external storage for the binary files. In fact, this is
+  already supported out-of-the-box by GitHub. But GitHub has limitations
+  regarding storage capacity and transmission bandwidth.
+
+  There is `GitHub's lfs-server <https://github.com/git-lfs/lfs-test-server>`_
+  implementation, which can be self-hosted. But as of now, GitHub does not
+  support IPv6, while my own server is IPv6-only.
+- Keeping the images like in the 90s, just store them locally.
+
+  This solution is obviously not working with CI/CD in GitHub Actions, which
+  kind of destroys the general idea of the project.
+
+  However, this is the temporarily selected solution until GitHub Actions are
+  working with IPv6. Then, a self-hosted ``lfs-server`` in combination with
+  ``git-lfs`` should be implemented.
