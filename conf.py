@@ -166,6 +166,24 @@ notfound_urls_prefix = "/"
 # file ``content/404.rst``, using the project's internal logic to determine the
 # template to be used.
 
+# The filename suffixes for responsive image sources
+#
+# Basically the source's width is appended to the stem.
+responsive_images_size_suffixes = [
+    "-320",
+    "-480",
+    "-640",
+    "-960",
+    "-1280",
+    "-1600",
+    "-1920",
+]
+
+# Map minimum viewport widths to minimum image widths
+#
+# FIXME: Is this really required?! Most likely the browsers are able to select
+#        a matching image source file even without breakpoints
+responsive_images_layout_breakpoints = [(790, 481), (540, 321)]
 
 # ### HTML configuration
 
