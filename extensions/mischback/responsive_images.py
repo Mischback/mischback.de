@@ -541,25 +541,28 @@ def visit_image(self, node, original_visit_image):
     # which is **not desired**.
     #
     # TODO: Apply CSS classes!
-    # TODO: Apply ``loading`` attributes!
+    atts = {}
     fallback = sources.get_fallback(Path(node["uri"]).suffix)
 
-    gen_source = ["<img", ">"]
-    gen_source.insert(
-        1,
-        'src="{}"'.format(
-            _get_path(self.builder.imgpath, self.builder.images[str(fallback.img_path)])
-        ),
-    )
-    gen_source.insert(1, 'alt="{}"'.format(node.get("alt", "")))
-    gen_source.insert(1, 'width="{}"'.format(fallback.width))
-    gen_source.insert(1, 'height="{}"'.format(fallback.height))
+    atts["alt"] = node.get("alt", "")
+    atts["width"] = fallback.width
+    atts["height"] = fallback.height
 
     # Process the configuration of ``responsive_images_lazy_loading``
     if self.image_loading == "lazy":
-        gen_source.insert(1, 'loading="lazy"')
+        atts["loading"] = "lazy"
 
-    self.body.append(" ".join(gen_source))
+    tag = self.emptytag(
+        node,
+        "img",
+        "\n",
+        src=_get_path(
+            self.builder.imgpath, self.builder.images[str(fallback.img_path)]
+        ),
+        **atts
+    )
+
+    self.body.append(tag)
 
     # Close the <picture> element
     self.body.append("</picture>")
