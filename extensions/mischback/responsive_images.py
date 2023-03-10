@@ -539,8 +539,6 @@ def visit_image(self, node, original_visit_image):
     # ``docutils.writers._html_base.HTMLTranslator.visit_image()``) will apply
     # a ``style`` attribute to the ``<img>`` tag with the image's dimensions,
     # which is **not desired**.
-    #
-    # TODO: Apply CSS classes!
     atts = {}
     fallback = sources.get_fallback(Path(node["uri"]).suffix)
 
@@ -552,6 +550,14 @@ def visit_image(self, node, original_visit_image):
     if self.image_loading == "lazy":
         atts["loading"] = "lazy"
 
+    # Creating the actual <img> tag using docutils' ``emptytag()``.
+    #
+    # By providing the corresponding attributes through ``atts``, the tag's
+    # attributes are automatically created.
+    #
+    # This takes care of handling CSS classes aswell (the ``Image`` directive
+    # will add the ``classes`` attribute to the ``Node`` instance and
+    # ``emptytag()`` will apply them).
     tag = self.emptytag(
         node,
         "img",
