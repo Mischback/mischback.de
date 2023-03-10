@@ -39,7 +39,7 @@ from pathlib import Path
 from sphinx.builders import Builder
 from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.environment.collectors import EnvironmentCollector
-from sphinx.util import FilenameUniqDict
+from sphinx.util import FilenameUniqDict, logging
 from sphinx.util.i18n import search_image_for_language
 
 # external imports
@@ -48,6 +48,7 @@ from sphinx.util.i18n import search_image_for_language
 import imagesize
 from docutils import nodes
 
+# FIXME: Remove this before merging!
 EXTENSION_LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
@@ -77,7 +78,7 @@ EXTENSION_LOGGING = {
 #        system!
 #        ``from sphinx.util import logging`` and remove the configuration of
 #        ``logging`` here!
-logging.config.dictConfig(EXTENSION_LOGGING)
+# logging.config.dictConfig(EXTENSION_LOGGING)
 
 # get a module-level logger
 logger = logging.getLogger(__name__)
