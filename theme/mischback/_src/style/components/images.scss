@@ -1,0 +1,26 @@
+/* General styling of images
+ *
+ * Most importantly, this also provides the actual sizes for the images,
+ * including their responsive versions.
+ *
+ * The default image width (in the actual articles) is ~600px (desktop) and
+ * ~720px (mobile).
+ *
+ * Required image sizes:
+ *   - 320px  -
+ *   - 640px  - 320 x 2 -
+ *   - 960px  - 320 x 3 -
+ *   - 1280px - 320 x 4 - 640 x 2 -
+ *   - 1600px - 320 x 5
+ *   - 1920px - 320 x 6 - 640 x 3 -
+ */
+img {
+  width: calc(100% - 1em);
+  height: auto;
+  margin: $text-content-vertical-rhythm * 2 0.5em;
+
+  @include for-breakpoint("layout-shrink-content") {
+    width: calc(100% - 6em);
+    margin: $text-content-vertical-rhythm * 2 3em;
+  }
+}
