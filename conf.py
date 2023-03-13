@@ -161,6 +161,7 @@ nitpicky = True
 #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-suppress_warnings
 # https://stackoverflow.com/a/61223300
+print("FOOOOO: {}".format(running_ci))
 if running_ci:
     suppress_warnings = [
         "image.not_readable",

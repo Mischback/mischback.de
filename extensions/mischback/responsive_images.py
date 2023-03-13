@@ -501,7 +501,6 @@ def visit_image(self, node, original_visit_image):
         for f in formats:
             gen_source = ["<source", ">"]
             tmp_sources = sources.get_source_files(fileformat=f, min_width=b[1])
-            logger.info("tmp_sources: %r", tmp_sources)
 
             # All further processing is only done, if there are matching source
             # files!
