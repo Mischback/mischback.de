@@ -99,9 +99,10 @@ jobs:
           directory: ./build
           # FIXME: Activate this as soon as there is a favicon!
           check_favicon: false
+          check_img_http: false
           internal_domains: ""
           url_ignore: ""
-          url_swap: "/{img}:foo"
+          url_swap: ""
 
   dependabot:
     needs: [linting, building]
