@@ -90,9 +90,7 @@ deps =
 envdir = {toxworkdir}/sphinx
 setenv =
   PYTHONDONTWRITEBYTECODE=1
-passenv =
-  RUNNING_CI
-  CI
+passenv = CI
 skip_install = true
 commands =
   {posargs:sphinx-build --version}

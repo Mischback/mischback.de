@@ -7,8 +7,6 @@ on:
   pull_request:
     branches:
       - development
-env:
-  RUNNING_CI: "GitHubActions"
 
 jobs:
   linting:
