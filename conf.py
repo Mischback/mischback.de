@@ -29,8 +29,9 @@ sys.path.append(join(REPO_ROOT, "extensions"))
 #
 # GitHub Actions set the environment variable ``CI`` for every action, see
 # https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
+# which is *translated* to ``RUNNING_CI`` in the workflow definition.
 # and https://stackoverflow.com/a/61223300
-running_ci = getenv("CI", False)
+running_ci = getenv("RUNNING_CI", False)
 
 
 def get_current_git_commit_hash():
