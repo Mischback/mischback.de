@@ -181,9 +181,12 @@ responsive_images_size_suffixes = [
 
 # Map minimum viewport widths to minimum image widths
 #
-# FIXME: Is this really required?! Most likely the browsers are able to select
-#        a matching image source file even without breakpoints
-responsive_images_layout_breakpoints = [(790, 481), (540, 321)]
+# Providing an empty list means, that the browser will select the corresponding
+# image source from the provided ``<source>`` elements. The extension generates
+# ``<source>`` elements without a *media query*.
+#
+# As this is already the default value, don't specify it here!
+# responsive_images_layout_breakpoints = []
 
 # ### HTML configuration
 

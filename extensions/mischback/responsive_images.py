@@ -501,6 +501,7 @@ def visit_image(self, node, original_visit_image):
         for f in formats:
             gen_source = ["<source", ">"]
             tmp_sources = sources.get_source_files(fileformat=f, min_width=b[1])
+            logger.info("tmp_sources: %r", tmp_sources)
 
             # All further processing is only done, if there are matching source
             # files!
@@ -747,11 +748,9 @@ def setup(app):
     # The first value will be applied in the ``<source>`` element's ``media``
     # attribute as a ``min-width`` in ``px``, the second value is used to
     # filter the available *responsive image sources*.
-    #
-    # TODO: Provide a sane default value, probably even an empty list.
     app.add_config_value(
         "responsive_images_layout_breakpoints",
-        [(777, 444), (500, 222)],
+        [],
         "env",
     )
 
