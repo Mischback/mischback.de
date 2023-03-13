@@ -16,6 +16,7 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 import datetime
 import subprocess
 import sys
+from os import getenv
 from os.path import abspath, dirname, join
 
 # Determine the absolute path of the repository's root
@@ -23,6 +24,13 @@ REPO_ROOT = dirname(abspath(__file__))
 
 # Add the project-specific extensions directory to Python's path
 sys.path.append(join(REPO_ROOT, "extensions"))
+
+# Determine if this is run in CI (e.g. GitHub Actions)
+#
+# GitHub Actions set the environment variable ``CI`` for every action, see
+# https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
+# and https://stackoverflow.com/a/61223300
+running_ci = getenv("CI", False)
 
 
 def get_current_git_commit_hash():
@@ -145,6 +153,18 @@ needs_sphinx = "4.5"
 #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-nitpicky
 nitpicky = True
+
+# As of now, the images are not provided for CI runs in GitHub Actions.
+#
+# Sphinx will warn about missing images, causing the build to fail (because
+# Sphinx is run with ``-W``). Let's suppress the warning message during CI runs.
+#
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-suppress_warnings
+# https://stackoverflow.com/a/61223300
+if running_ci:
+    suppress_warnings = [
+        "image.not_readable",
+    ]
 
 
 # ### Plugin configuration
