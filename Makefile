@@ -80,7 +80,6 @@ build : $(STAMP_POST)
 # including the actual content source files and the theme files.
 $(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME) $(STAMP_PRE_SASS)
 	$(create_dir)
-	echo $(RUNNING_CI)
 	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
 	touch $@
 

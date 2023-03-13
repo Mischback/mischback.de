@@ -32,6 +32,8 @@ sys.path.append(join(REPO_ROOT, "extensions"))
 # which is *translated* to ``RUNNING_CI`` in the workflow definition.
 # and https://stackoverflow.com/a/61223300
 running_ci = getenv("RUNNING_CI", False)
+print("running_ci: {}".format(running_ci))
+print("env.CI: {}".format(getenv("CI", False)))
 
 
 def get_current_git_commit_hash():
@@ -162,7 +164,6 @@ nitpicky = True
 #
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-suppress_warnings
 # https://stackoverflow.com/a/61223300
-print("FOOOOO: {}".format(running_ci))
 if running_ci:
     suppress_warnings = [
         "image.not_readable",
