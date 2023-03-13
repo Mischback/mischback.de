@@ -48,38 +48,6 @@ from sphinx.util.i18n import search_image_for_language
 import imagesize
 from docutils import nodes
 
-# FIXME: Remove this before merging!
-EXTENSION_LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": True,
-    "formatters": {
-        "console_output": {
-            "format": "[%(levelname)s] [%(name)s:%(lineno)d] %(message)s",
-        },
-    },
-    "handlers": {
-        "default": {
-            "level": "DEBUG",
-            "formatter": "console_output",
-            "class": "logging.StreamHandler",
-            "stream": "ext://sys.stdout",
-        },
-    },
-    "loggers": {
-        "": {
-            "handlers": ["default"],
-            "level": "DEBUG",
-            "propagate": True,
-        },
-    },
-}
-
-# FIXME: Development only! The desired setup integrates into Sphinx's logging
-#        system!
-#        ``from sphinx.util import logging`` and remove the configuration of
-#        ``logging`` here!
-# logging.config.dictConfig(EXTENSION_LOGGING)
-
 # get a module-level logger
 logger = logging.getLogger(__name__)
 

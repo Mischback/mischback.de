@@ -594,8 +594,12 @@ def _compress(
             lossless=args.avif_lossless,
         )
     else:
-        # FIXME: **real** error handling required!
-        print("[ERROR] Unknown target format!")
+        # Is real error handling required here?
+        #
+        # The argument parser should already ensure, that only *known* and
+        # *accepted* target formats are provided. So, this point should
+        # actually never be reached.
+        logger.error("Unknown target format!")
 
 
 def _resize(img, target_width):
