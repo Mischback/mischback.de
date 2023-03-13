@@ -99,6 +99,7 @@ jobs:
           directory: ./build
           # FIXME: Activate this as soon as there is a favicon!
           check_favicon: false
+          # FIXME: Activate this as soon as images can be included in the build!
           check_img_http: false
           internal_domains: ""
           url_ignore: ""
