@@ -8,6 +8,7 @@
  *
  * Required image sizes:
  *   - 320px  -
+ *   - 480px  - 320 x 1.5
  *   - 640px  - 320 x 2 -
  *   - 960px  - 320 x 3 -
  *   - 1280px - 320 x 4 - 640 x 2 -
@@ -15,12 +16,14 @@
  *   - 1920px - 320 x 6 - 640 x 3 -
  */
 img {
+  display: block;
   width: calc(100% - 1em);
+  max-width: $break-layout-shrink-content;
   height: auto;
   margin: $text-content-vertical-rhythm * 2 0.5em;
 
   @include for-breakpoint("layout-shrink-content") {
-    width: calc(100% - 6em);
-    margin: $text-content-vertical-rhythm * 2 3em;
+    width: calc($max-article-width - 2rem - 6em);
+    margin: $text-content-vertical-rhythm * 2 auto;
   }
 }

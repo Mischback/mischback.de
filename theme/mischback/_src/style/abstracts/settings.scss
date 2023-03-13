@@ -4,7 +4,8 @@
  * more specific blocks.
  */
 
-/* Breakpoints
+/* ****************************************************************************
+ * Breakpoints
  *
  * These are the breakpoints that are used to make the layout work on any
  * screen sizes.
@@ -25,7 +26,8 @@ $break-layout-shrink-content: 790px;
 /* At this point the default navigation is *burgerized*. */
 $break-layout-burger-navigation: 565px;
 
-/* Overall coherent visual style
+/* ****************************************************************************
+ * Overall coherent visual style
  *
  * These settings are applied in various places throughout the stylesheet, but
  * have to be coherent/consistent.
@@ -34,7 +36,13 @@ $break-layout-burger-navigation: 565px;
 /* This is the default radius of containers' borders. */
 $default-border-radius: 5px;
 
-/* Colors
+/* The <article> container's width. This has a significant effect on the
+ * layout's line-length, see ``layouts/article.scss``.
+ */
+$max-article-width: 44rem;
+
+/* ****************************************************************************
+ * Colors
  *
  * These are semantic colors, meaning they describe in which context that color
  * is used.
