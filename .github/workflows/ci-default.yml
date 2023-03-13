@@ -101,7 +101,7 @@ jobs:
           check_favicon: false
           internal_domains: ""
           url_ignore: ""
-          url_swap: "/{img\/*.jpg}:foo"
+          url_swap: "/{img}:foo"
 
   dependabot:
     needs: [linting, building]
