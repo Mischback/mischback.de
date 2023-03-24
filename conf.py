@@ -16,6 +16,7 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 import datetime
 import subprocess
 import sys
+from os import getenv
 from os.path import abspath, dirname, join
 
 # Determine the absolute path of the repository's root
@@ -23,6 +24,13 @@ REPO_ROOT = dirname(abspath(__file__))
 
 # Add the project-specific extensions directory to Python's path
 sys.path.append(join(REPO_ROOT, "extensions"))
+
+# Determine if this is run in CI (e.g. GitHub Actions)
+#
+# GitHub Actions set the environment variable ``CI`` for every action, see
+# https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
+# and https://stackoverflow.com/a/61223300
+running_ci = getenv("CI", False)
 
 
 def get_current_git_commit_hash():
@@ -77,6 +85,7 @@ extensions = [
     # https://github.com/readthedocs/sphinx-notfound-page
     "notfound.extension",
     "mischback.content_tags",
+    "mischback.responsive_images",
     "mischback.sphinx_jinja2_debug",
     # "sphinx.ext.graphviz"
     # If there is a use-case for these diagrams.
@@ -145,6 +154,18 @@ needs_sphinx = "4.5"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-nitpicky
 nitpicky = True
 
+# As of now, the images are not provided for CI runs in GitHub Actions.
+#
+# Sphinx will warn about missing images, causing the build to fail (because
+# Sphinx is run with ``-W``). Let's suppress the warning message during CI runs.
+#
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-suppress_warnings
+# https://stackoverflow.com/a/61223300
+if running_ci:
+    suppress_warnings = [
+        "image.not_readable",
+    ]
+
 
 # ### Plugin configuration
 
@@ -165,6 +186,27 @@ notfound_urls_prefix = "/"
 # file ``content/404.rst``, using the project's internal logic to determine the
 # template to be used.
 
+# The filename suffixes for responsive image sources
+#
+# Basically the source's width is appended to the stem.
+responsive_images_size_suffixes = [
+    "-320",
+    "-480",
+    "-640",
+    "-960",
+    "-1280",
+    "-1600",
+    "-1920",
+]
+
+# Map minimum viewport widths to minimum image widths
+#
+# Providing an empty list means, that the browser will select the corresponding
+# image source from the provided ``<source>`` elements. The extension generates
+# ``<source>`` elements without a *media query*.
+#
+# As this is already the default value, don't specify it here!
+# responsive_images_layout_breakpoints = []
 
 # ### HTML configuration
 

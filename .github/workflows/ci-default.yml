@@ -9,6 +9,12 @@ on:
       - development
 
 jobs:
+  # evaluation:
+  #   name: Evaluate GitHub's IPv6
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Ping mischback.de
+  #       run: ping -6 mischback.de
   linting:
     name: Run linters
     runs-on: ubuntu-latest
@@ -99,6 +105,8 @@ jobs:
           directory: ./build
           # FIXME: Activate this as soon as there is a favicon!
           check_favicon: false
+          # FIXME: #61
+          check_img_http: false
           internal_domains: ""
           url_ignore: ""
           url_swap: ""

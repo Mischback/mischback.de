@@ -157,6 +157,11 @@ tree :
 	tree --dirsfirst -I "node_modules|requirements|LICENSE|package-lock.json|README.md"
 .PHONY : tree
 
+responsive-image_src ?= ""
+util/responsive-image :
+	$(MAKE) util/image-processing image-processing_cmd="{toxinidir}/util/process-image.py responsive --source $(responsive-image_src) --destination ./content/img --required-ssim 0.97 --format jpg --jpeg-compression 50 --format webp --webp-compression 45 --format avif --avif-compression 40 --size 320 320 --size 480 480 --size 640 640 --size 960 960 --size 1280 1280 --size 1600 1600 --size 1920 1920"
+.PHONY : util/responsive-image
+
 # Run ``black``
 util/lint/black :
 	$(MAKE) util/pre-commit pre-commit_id="black" pre-commit_files="--all-files"
@@ -245,6 +250,12 @@ util/sphinx/build : conf.py requirements/sphinx.txt pyproject.toml $(TOX_VENV_IN
 	$(TOX_CMD) -q -e sphinx -- sphinx-build $(sphinx-build_options) -b $(sphinx_builder) -c $(sphinx_config-dir) $(CONTENT_DIR) $(BUILD_DIR)
 .PHONY : util/sphinx/build
 
+# Run commands in the ``image-processing`` environment.
+image-processing_cmd ?= ""
+util/image-processing : requirements/image-processing.txt pyproject.toml $(TOX_VENV_INSTALLED)
+	$(TOX_CMD) -q -e image-processing -- $(image-processing_cmd)
+.PHONY : util/image-processing
+
 # Run commands in the ``pre-processing`` environment.
 pre-processing_cmd ?= ""
 util/pre-processing : requirements/pre-processing.txt pyproject.toml $(TOX_VENV_INSTALLED)
@@ -290,6 +301,7 @@ $(PRE_COMMIT_READY) : | $(TOX_VENV_INSTALLED)
 # https://stackoverflow.com/a/58187176
 $(STAMP_NODE_READY) : package.json package-lock.json
 	npm ci --cache .npm --prefer-offline
+	touch $@
 
 # Create a directory as required by other recipes
 create_dir = @mkdir -p $(@D)

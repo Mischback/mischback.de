@@ -26,3 +26,8 @@ node_modules/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# FIXME: #61
+#        Images are not included in the repository. See #61 for reference.
+content/img/**
+!content/img/.gitkeep

@@ -90,6 +90,7 @@ deps =
 envdir = {toxworkdir}/sphinx
 setenv =
   PYTHONDONTWRITEBYTECODE=1
+passenv = CI
 skip_install = true
 commands =
   {posargs:sphinx-build --version}
@@ -116,6 +117,17 @@ setenv =
 skip_install = true
 commands =
   pip-compile --resolver=backtracking {posargs}
+
+[testenv:image-processing]
+basepython = python3
+deps =
+  -r {toxinidir}/requirements/image-processing.txt
+envdir = {toxworkdir}/image-processing
+setenv =
+  PYTHONDONTWRITEBYTECODE=1
+skip_install = true
+commands =
+  {posargs:{toxinidir}/util/process-image.py}
 
 [testenv:pre-processing]
 basepython = python3
