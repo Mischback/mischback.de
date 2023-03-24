@@ -230,6 +230,10 @@ def _compress_jpg(
         candidate = ""
 
         while mssim <= required_ssim:
+            # TODO: Put some more logic into the calculation of the *next*
+            #       compression_factor, e.g. make it dependent on the value
+            #       of ``mssim`` below and jump +5 or +10, depending on the
+            #       deviation.
             compression_factor += 1
 
             # This might seem complex, but is only chaining different operations:
@@ -258,7 +262,7 @@ def _compress_jpg(
                 "Checking compression %d: mssim: %f", compression_factor, mssim
             )
 
-    logger.info("Compressing JPEG with Q = %d", compression_factor)
+    logger.debug("Compressing JPEG with Q = %d", compression_factor)
 
     # at this point, the compression_factor is as high as possible, write the
     # file to disk!
@@ -309,7 +313,7 @@ def _compress_png(
     logger.debug("compression_factor: %d", compression_factor)
     logger.debug("interlace: %r", interlace)
 
-    logger.info("Compressing PNG with Q = %d", compression_factor)
+    logger.debug("Compressing PNG with Q = %d", compression_factor)
 
     img.pngsave(
         dest,
@@ -370,12 +374,12 @@ def _compress_webp(
     if lossless is None:
         if img.get("vips-loader") == "jpegload":
             lossless = False
-            logger.info(
+            logger.debug(
                 "Detected lossy input file, automatically switching to lossy output!"
             )
         else:
             lossless = True
-            logger.info(
+            logger.debug(
                 "Detected lossless input file, automatically switching to lossless output!"
             )
 
@@ -385,6 +389,10 @@ def _compress_webp(
         candidate = ""
 
         while mssim <= required_ssim:
+            # TODO: Put some more logic into the calculation of the *next*
+            #       compression_factor, e.g. make it dependent on the value
+            #       of ``mssim`` below and jump +5 or +10, depending on the
+            #       deviation.
             compression_factor += 1
 
             # This might seem complex, but is only chaining different operations:
@@ -409,7 +417,7 @@ def _compress_webp(
                 "Checking compression %d: mssim: %f", compression_factor, mssim
             )
 
-    logger.info("Compressing WebP with Q = %d", compression_factor)
+    logger.debug("Compressing WebP with Q = %d", compression_factor)
 
     # at this point, the compression_factor is as high as possible, write the
     # file to disk!
@@ -473,12 +481,12 @@ def _compress_avif(
     if lossless is None:
         if img.get("vips-loader") == "jpegload":
             lossless = False
-            logger.info(
+            logger.debug(
                 "Detected lossy input file, automatically switching to lossy output!"
             )
         else:
             lossless = True
-            logger.info(
+            logger.debug(
                 "Detected lossless input file, automatically switching to lossless output!"
             )
 
@@ -488,6 +496,10 @@ def _compress_avif(
         candidate = ""
 
         while mssim <= required_ssim:
+            # TODO: Put some more logic into the calculation of the *next*
+            #       compression_factor, e.g. make it dependent on the value
+            #       of ``mssim`` below and jump +5 or +10, depending on the
+            #       deviation.
             compression_factor += 1
 
             # This might seem complex, but is only chaining different operations:
@@ -510,7 +522,7 @@ def _compress_avif(
                 "Checking compression %d: mssim: %f", compression_factor, mssim
             )
 
-    logger.info("Compressing AVIF with Q = %d", compression_factor)
+    logger.debug("Compressing AVIF with Q = %d", compression_factor)
 
     # at this point, the compression_factor is as high as possible, write the
     # file to disk!
@@ -680,6 +692,8 @@ def cmd_responsive(args):
     img = pyvips.Image.new_from_file(args.source)
     stem = Path(img.filename).stem
     output = []
+
+    logger.info('Source file "%s" (%d x %d)', args.source, img.width, img.height)
 
     for tsize in args.sizes:
         logger.debug("tsize: %r", tsize)

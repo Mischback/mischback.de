@@ -157,8 +157,9 @@ tree :
 	tree --dirsfirst -I "node_modules|requirements|LICENSE|package-lock.json|README.md"
 .PHONY : tree
 
+responsive-image_src ?= ""
 util/responsive-image :
-	$(MAKE) util/image-processing image-processing_cmd="{toxinidir}/util/process-image.py responsive --source ./_imp/source/foo.jpg --destination ./_imp/out --required-ssim 0.97 --format png --png-compression 9 --format jpg --jpeg-compression 50 --format webp --webp-compression 45 --format avif --avif-compression 40 --size small 128 --size medium 256 --size big 512"
+	$(MAKE) util/image-processing image-processing_cmd="{toxinidir}/util/process-image.py responsive --source $(responsive-image_src) --destination ./content/img --required-ssim 0.97 --format jpg --jpeg-compression 50 --format webp --webp-compression 45 --format avif --avif-compression 40 --size 320 320 --size 480 480 --size 640 640 --size 960 960 --size 1280 1280 --size 1600 1600 --size 1920 1920"
 .PHONY : util/responsive-image
 
 # Run ``black``
