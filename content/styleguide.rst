@@ -13,9 +13,6 @@
 Styleguide
 ##########
 
-.. image:: /img/responsive_test.jpg
-   :alt: Just a test image
-
 This page doesn't really provide content. It is meant to include all
 pre-defined *semantic elements* to demonstrate their styling. Having all of
 them available in one document is meant as a reference aswell as the means to
@@ -68,6 +65,38 @@ Available formatting includes
   ``<strong>`` tag
 * *italic*, formatted using ``*`` to enclose the text, resulting in an ``<em>``
   tag
+
+******
+Images
+******
+
+Images are provided *responsively* with a custom Sphinx extension. Below is a
+test image, which provides dedicated versions for the given resolutions and
+formats/compressions.
+
+.. image:: /img/responsive_test.jpg
+   :alt: Just a test image
+
+As of now, the following image sizes are generated (this has to be aligned with
+the overall layout):
+
+* 320px width
+* 480px width
+* 640px width
+* 960px width
+* 1280px width
+* 1600px width
+* 1920px width
+
+The following formats are generated:
+
+* JPEG / PNG (depending on the source file)
+* WebP
+* AVIF
+
+And here's an actual image for reference:
+
+.. image:: /img/photo_example.jpg
 
 *****
 Lists
