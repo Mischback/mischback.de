@@ -24,14 +24,14 @@ repos:
         entry: ":summary:"
         args: [--negate]
         files: ^content/
-        exclude: (index|404).rst
+        exclude: (index|404).rst|.gitkeep
       - id: content_keywords
         name: All articles must have keywords
         language: pygrep
         entry: ":keywords:"
         args: [--negate]
         files: ^content/
-        exclude: (index|404).rst
+        exclude: (index|404).rst|.gitkeep
   # prettier (formatting for various file types)
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v3.0.0-alpha.4

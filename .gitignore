@@ -27,6 +27,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# FIXME: This is just a temporary setup for development of image-processing
-_imp/
-content/img/
+# FIXME: #61
+#        Images are not included in the repository. See #61 for reference.
+content/img/**
+!content/img/.gitkeep
