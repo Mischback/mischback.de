@@ -382,4 +382,14 @@ specifically: How to provide the images for the pipeline?
 
   However, this is the temporarily selected solution until GitHub Actions are
   working with IPv6. Then, a self-hosted ``lfs-server`` in combination with
-  ``git-lfs`` should be implemented.
+  ``git-lfs`` *should*/**might** be implemented (see #61).
+
+2023-03-24
+==========
+
+Implementation of responsive images completed, this has required more effort
+than estimated, but I'm quite happy with the result.
+
+Next step is detail work on the theme, including building an actual color
+scheme. I'm kind of looking forward to this. I like how I can alternate between
+different programming languages and technologies in this project.

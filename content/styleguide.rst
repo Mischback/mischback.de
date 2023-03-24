@@ -97,6 +97,7 @@ The following formats are generated:
 And here's an actual image for reference:
 
 .. image:: /img/photo_example.jpg
+   :alt: Sample photo to visualize the styling
 
 *****
 Lists
