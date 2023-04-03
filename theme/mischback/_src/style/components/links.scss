@@ -2,14 +2,14 @@ a {
   transition: color $animation-timing-color-transition,
     text-decoration-color $animation-timing-color-transition,
     text-underline-offset 300ms;
-
-  /* FIXME: #28 */
-  color: #00e;
+  color: $color-hyperlinks-normal;
   text-decoration: underline currentcolor solid 0.1em;
   text-underline-offset: 0.15em;
 
   &:hover {
-    /* FIXME: #28 */
+    /* FIXME: #28
+     *        Determine a color for **hover** state!
+     */
     color: #e00;
     text-decoration-color: #e00;
     text-underline-offset: 0.35em;
