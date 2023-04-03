@@ -17,8 +17,10 @@ html {
 }
 
 body {
-  /* FIXME: #28 */
-  color: $color-primary-fg;
+  /* FIXME: #28
+   *        This should be overwritten by more specific styles!
+   */
+  color: #f0f;
   font-family: $font-stack-sans;
 }
 

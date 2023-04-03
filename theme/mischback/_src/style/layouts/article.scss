@@ -20,6 +20,8 @@
     grid-area: content;
     max-width: $max-article-width;
     margin-bottom: 2rem;
+    background-color: $color-primary-bg;
+    color: $color-primary-fg;
     font-size: $text-content-font-size;
 
     /* stylelint-disable max-nesting-depth */
