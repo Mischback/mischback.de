@@ -17,9 +17,7 @@ body {
     ". .      main   .      ."
     ". footer footer footer ."
     / 3fr 2fr calc(min(#{$break-layout-full-width}, 100%)) 2fr 3fr;
-
-  /* FIXME: #28 */
-  background-color: #eee;
+  background-color: $color-document-bg;
 
   > header {
     grid-area: header;

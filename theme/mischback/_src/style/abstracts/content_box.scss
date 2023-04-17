@@ -35,6 +35,8 @@
   border-radius: $default-border-radius * 5
     $default-border-radius
     $default-border-radius;
+  background-color: $color-primary-bg;
+  color: $color-dark-grey-lighter;
 
   > :first-child {
     position: relative;

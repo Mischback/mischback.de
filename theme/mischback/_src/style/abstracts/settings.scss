@@ -50,8 +50,9 @@ $max-article-width: 44rem;
  * TODO: related to #28 - Move the actual color definitions (``rgb()``) to a
  *       file ``colors.scss``.
  */
+$color-document-bg: $color-light-grey-darker;
 $color-primary-fg: $color-dark-grey-base;
-$color-primary-bg: $color-light-grey;
+$color-primary-bg: $color-light-grey-base;
 $color-primary-inverted-fg: $color-primary-bg;
 $color-primary-inverted-bg: $color-primary-fg;
 $color-secondary-fg: rgb(184, 184, 184);
