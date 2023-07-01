@@ -6,7 +6,7 @@
 #
 cffi==1.15.1
     # via pyvips
-imageio==2.25.1
+imageio==2.31.1
     # via scikit-image
 lazy-loader==0.2
     # via scikit-image
@@ -32,7 +32,7 @@ pyvips==2.2.1
     # via -r image-processing.in
 pywavelets==1.4.1
     # via scikit-image
-scikit-image==0.20.0
+scikit-image==0.21.0
     # via -r image-processing.in
 scipy==1.10.0
     # via scikit-image
