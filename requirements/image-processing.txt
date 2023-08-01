@@ -12,7 +12,7 @@ lazy-loader==0.2
     # via scikit-image
 networkx==3.0
     # via scikit-image
-numpy==1.25.0
+numpy==1.25.2
     # via
     #   -r image-processing.in
     #   imageio
