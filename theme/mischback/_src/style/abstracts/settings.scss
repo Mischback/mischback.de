@@ -53,6 +53,12 @@ $max-article-width: 44rem;
 $color-document-bg: $color-medium-grey-base;
 $color-primary-fg: $color-dark-grey-base;
 $color-primary-bg: $color-light-grey-base;
+$color-default-box-shadow-outside: $color-dark-grey-lighter;
+
+/* FIXME: #28
+ *
+ * These are still old!
+ */
 $color-primary-inverted-fg: $color-unstyled;
 $color-primary-inverted-bg: $color-unstyled;
 $color-secondary-fg: $color-unstyled;
