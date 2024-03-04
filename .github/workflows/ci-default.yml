@@ -76,7 +76,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build_output
           path: build/
