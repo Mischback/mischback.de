@@ -19,7 +19,12 @@ h6 {
     text-decoration: none;
 
     /* stylelint-disable max-nesting-depth */
+    &:visited {
+      color: $color-headlines-permalink;
+    }
+
     &:hover {
+      color: $color-hyperlinks-hover;
       text-decoration: underline;
     }
     /* stylelint-enable max-nesting-depth */

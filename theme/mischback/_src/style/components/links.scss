@@ -6,12 +6,13 @@ a {
   text-decoration: underline currentcolor solid 0.1em;
   text-underline-offset: 0.15em;
 
+  &:visited {
+    color: $color-hyperlinks-visited;
+  }
+
   &:hover {
-    /* FIXME: #28
-     *        Determine a color for **hover** state!
-     */
-    color: #e00;
-    text-decoration-color: #e00;
+    color: $color-hyperlinks-hover;
+    text-decoration-color: $color-hyperlinks-hover;
     text-underline-offset: 0.35em;
   }
 }
