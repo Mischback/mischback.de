@@ -42,12 +42,12 @@
    * selector, see https://stackoverflow.com/a/8539107 for details.
    */
   a {
-    color: $color-headline-fg;
+    color: $color-header-fg;
     text-decoration: none;
     text-transform: lowercase;
   }
 
   ~ .breadcrumbs a {
-    color: $color-headline-fg;
+    color: $color-header-fg;
   }
 }
