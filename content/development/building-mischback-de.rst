@@ -224,7 +224,7 @@ Usually, blogs have the concept of *tags*, which is something that Sphinx
 doesn't provide out of the box.
 
 A simple search yields
-`a corresponding Stack Overflow question <https://stackoverflow.com/questions/18146107/how-to-add-blog-style-tags-in-restructuredtext-with-sphinx>`_
+`a corresponding Stack Overflow question <https://stackoverflow.com/questions/18146107/>`_
 with two different hints:
 
 #. Use
