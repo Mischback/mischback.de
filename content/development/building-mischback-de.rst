@@ -393,3 +393,11 @@ than estimated, but I'm quite happy with the result.
 Next step is detail work on the theme, including building an actual color
 scheme. I'm kind of looking forward to this. I like how I can alternate between
 different programming languages and technologies in this project.
+
+2024-03-04
+==========
+
+Well, **fuck!** It has been a long time... I got sidetracked, some stuff going
+on IRL, mostly related to work.
+
+Time to pick this up again and make some progress.
