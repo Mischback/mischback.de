@@ -30,10 +30,10 @@
   {% endblock main_container %}
 
   <footer>
-    <nav id="nav-footer">
+    <nav id="nav-footer" aria-label="Footer menu">
       {% include "includes/nav_primary_list.html" %}
     </nav>
-    <nav id="administrative-footer">
+    <nav id="administrative-footer" aria-label="Administrative">
       <ul class="nav-list">
         <li class="li-contact">
           <a href="{{ pathto("contact") }}">
@@ -61,7 +61,7 @@
         </li>
       </ul>
     </nav>
-    <aside id="technical-footer">
+    <aside id="technical-footer" aria-label="Technical Remarks">
       <p>This website is powered by coffee, imagination, geekiness and more coffee. If you're interested in the more juicy technical details, have a look at <a href="{{ pathto("technical-implementation") }}">the technical implementation</a>.</p>
     </aside>
     {# djlint:off

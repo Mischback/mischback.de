@@ -10,7 +10,7 @@
     {% include "includes/breadcrumbs.html" %}
   </article>
 
-  <aside>
+  <aside aria-label="Article Meta">
     {% if meta.published %} {% include "includes/aside_meta.html" %} {% endif %}
     {% if meta.series %} {% include "includes/aside_series.html" %} {% endif %}
     {% if ct_document_tags %} {% include "includes/aside_tags.html" %} {% endif %}
