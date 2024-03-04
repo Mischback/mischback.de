@@ -169,6 +169,13 @@ if running_ci:
 
 # ### Plugin configuration
 
+# Sphinx's ``linkcheck`` module fails on StackOverflow links, causing CI to
+# fail (see
+# https://stackoverflow.com/questions/78009785/github-action-linkcheck-not-passing-due-to-stackoverflow-links).
+#
+# TODO: Hopefully this is just a temporary required fix:
+linkcheck_ignore = [r"https://stackoverflow.com/.*"]
+
 # Prefix the automatically generated section labels with the document.
 autosectionlabel_prefix_document = True
 
