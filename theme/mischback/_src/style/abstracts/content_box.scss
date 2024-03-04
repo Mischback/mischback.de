@@ -38,12 +38,8 @@
   border-radius: $default-border-radius * 5
     $default-border-radius
     $default-border-radius;
-
-  // FIXME: #28
-  background-color: $color-unstyled;
-
-  // FIXME: #28
-  color: $color-unstyled;
+  background-color: $color-primary-bg;
+  color: $color-primary-fg;
 
   > :first-child {
     position: relative;
