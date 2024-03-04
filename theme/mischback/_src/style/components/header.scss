@@ -18,15 +18,11 @@ body > header {
     0
     0
     $default-border-radius * 5;
-
-  /* FIXME: #28
-   *
-   * first: #354253
-   * second: #536781
-   *
-   * Check with ``content-box``!
-   */
-  background-image: linear-gradient(to top, $color-unstyled, $color-unstyled);
+  background-image: linear-gradient(
+    to top,
+    $color-headline-gradient-bottom,
+    $color-headline-gradient-top
+  );
 
   /* FIXME: #28
    *        Using black/white as shadow/highlight colors should be working,
