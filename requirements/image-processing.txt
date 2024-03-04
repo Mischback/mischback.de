@@ -8,7 +8,7 @@ cffi==1.15.1
     # via pyvips
 imageio==2.31.1
     # via scikit-image
-lazy-loader==0.2
+lazy-loader==0.3
     # via scikit-image
 networkx==3.0
     # via scikit-image
@@ -16,7 +16,6 @@ numpy==1.26.0
     # via
     #   -r image-processing.in
     #   imageio
-    #   pywavelets
     #   scikit-image
     #   scipy
     #   tifffile
@@ -30,9 +29,7 @@ pycparser==2.21
     # via cffi
 pyvips==2.2.1
     # via -r image-processing.in
-pywavelets==1.4.1
-    # via scikit-image
-scikit-image==0.21.0
+scikit-image==0.22.0
     # via -r image-processing.in
 scipy==1.10.0
     # via scikit-image
