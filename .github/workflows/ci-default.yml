@@ -107,8 +107,9 @@ jobs:
           check_favicon: false
           # FIXME: #61
           check_images: false
-          ignore_urls: |
-            https://stackoverflow.com
+          # External links are checked by Sphinx's linkcheck already
+          disable_external: true
+          ignore_urls: ""
           swap_urls: ""
 
   dependabot:
