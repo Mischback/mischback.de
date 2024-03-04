@@ -4,13 +4,21 @@
 <main class="main-article">
   <article>
     <div>
-      {% include "includes/breadcrumbs.html" %}
+      {% if theme_show_breadcrumbs %}
+      <nav class="breadcrumbs" aria-label="Top Breadcrumbs">
+        {% include "includes/breadcrumbs.html" %}
+      </nav>
+      {% endif %}
     </div>
     {{ body }}
-    {% include "includes/breadcrumbs.html" %}
+      {% if theme_show_breadcrumbs %}
+      <nav class="breadcrumbs" aria-label="Bottom Breadcrumbs">
+        {% include "includes/breadcrumbs.html" %}
+      </nav>
+      {% endif %}
   </article>
 
-  <aside>
+  <aside aria-label="Article Meta">
     {% if meta.published %} {% include "includes/aside_meta.html" %} {% endif %}
     {% if meta.series %} {% include "includes/aside_series.html" %} {% endif %}
     {% if ct_document_tags %} {% include "includes/aside_tags.html" %} {% endif %}

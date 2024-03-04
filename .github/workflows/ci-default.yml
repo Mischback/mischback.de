@@ -106,10 +106,11 @@ jobs:
           # FIXME: Activate this as soon as there is a favicon!
           check_favicon: false
           # FIXME: #61
-          check_img_http: false
-          internal_domains: ""
-          url_ignore: ""
-          url_swap: ""
+          check_images: false
+          # External links are checked by Sphinx's linkcheck already
+          disable_external: true
+          ignore_urls: ""
+          swap_urls: ""
 
   dependabot:
     needs: [linting, building]
