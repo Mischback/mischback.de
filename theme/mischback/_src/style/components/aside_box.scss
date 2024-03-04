@@ -61,21 +61,34 @@ aside {
             background-color $animation-timing-color-transition;
           border-radius: 0.4em;
 
-          /* FIXME: #28 */
-          background-color: rgb(255, 192, 0);
+          /* FIXME: #28
+           *
+           * was rgb(255 192 0)
+           */
+          background-color: $color-unstyled;
 
-          /* FIXME: #28 */
-          box-shadow: 0 0 1px rgb(128, 96, 0), 1px 1px 2px 1px #333;
+          /* FIXME: #28
+           *
+           * first: rgb(128 96 0)
+           * second: #333
+           */
+          box-shadow: 0 0 1px $color-unstyled, 1px 1px 2px 1px $color-unstyled;
 
-          /* FIXME: #28 */
-          color: rgb(128, 96, 0);
+          /* FIXME: #28
+           *
+           * was rgb(128 96 0)
+           */
+          color: $color-unstyled;
           font-weight: bold;
           text-decoration: none;
 
           &:hover {
-            /* FIXME: #28 */
-            background-color: rgb(175, 255, 0);
-            color: rgb(20, 50, 0);
+            /* FIXME: #28
+             * first: rgb(175 255 0)
+             * second: rgb(20 50 0)
+             */
+            background-color: $color-unstyled;
+            color: $color-unstyled;
           }
         }
       }

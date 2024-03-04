@@ -21,8 +21,12 @@ img {
   max-width: $break-layout-shrink-content;
   height: auto;
   margin: $text-content-vertical-rhythm * 2 0.5em;
-  border: 1px solid #fff;
-  box-shadow: 0 0 2px 2px #000;
+
+  /* FIXME: #28; was #fff */
+  border: 1px solid $color-unstyled;
+
+  /* FIXME: #28; was #000 */
+  box-shadow: 0 0 2px 2px $color-unstyled;
 
   @include for-breakpoint("layout-shrink-content") {
     width: calc($max-article-width - 2rem - 6em);

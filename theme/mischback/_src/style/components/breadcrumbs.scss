@@ -42,12 +42,20 @@
    * selector, see https://stackoverflow.com/a/8539107 for details.
    */
   a {
-    color: #ccc;
+    /* FIXME: #28
+     *
+     * was: #ccc
+     */
+    color: $color-unstyled;
     text-decoration: none;
     text-transform: lowercase;
   }
 
   ~ .breadcrumbs a {
-    color: #333;
+    /* FIXME: #28
+     *
+     * was: #333
+     */
+    color: $color-unstyled;
   }
 }
