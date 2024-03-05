@@ -53,29 +53,16 @@
       $color-header-gradient-bottom,
       $color-header-gradient-top
     );
-
-    /* FIXME: #28
-     *        Using black/white as shadow/highlight colors should be working,
-     *        but the alpha value should be adjustable!
-     *        Keep in mind that this might be dependent on the background's
-     *        color, so this might be a mixin with two or even three parameters
-     *        to control the alphas.
-     */
-    box-shadow: inset 1px 1px 9px rgb(255 255 255 / 40%),
-      inset -1px -1px 9px rgb(0 0 0 / 20%), 0 1px 2px rgb(0 0 0 / 100%);
+    box-shadow: inset 1px 1px 9px $color-overlay-ocher-lightest,
+      inset -1px -1px 9px $color-overlay-brown-darkest,
+      0 1px 2px rgb(0 0 0 / 100%);
     color: $color-header-fg-big;
     font-family: $font-stack-sans;
 
     /* This minimal adjustment helps with the provided ``text-shadow``. */
     letter-spacing: 0.025em;
     line-height: 1.35rem;
-
-    /* FIXME: #28
-     *        Either make the color adjustable (or using a global variable) or
-     *        use black with an alpha channel (which would require to have the
-     *        alpha adjustable).
-     */
-    text-shadow: -0.025rem -0.025rem 0.05rem rgb(255 255 255 / 40%),
+    text-shadow: -0.025rem -0.025rem 0.05rem $color-overlay-ocher-lightest,
       0.025rem 0.025rem 0.025rem rgb(0 0 0 / 100%),
       0.025rem 0.05rem 0.025rem rgb(0 0 0 / 100%),
       0.025rem 0.075rem 0.025rem rgb(0 0 0 / 100%),

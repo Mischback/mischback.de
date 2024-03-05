@@ -24,19 +24,12 @@ body > header {
     $color-header-gradient-top
   );
 
-  /* FIXME: #28
-   *        Using black/white as shadow/highlight colors should be working,
-   *        but the alpha value should be adjustable!
-   *        Keep in mind that this might be dependent on the background's
-   *        color, so this might be a mixin with two or even three parameters
-   *        to control the alphas.
-   *
-   * Note: This ``box-shadow`` combines the ``box-shadow`` settings of the
+  /* Note: This ``box-shadow`` combines the ``box-shadow`` settings of the
    *       ``content-box-visual`` mixin, meaning the *outer* shadows of the
    *       actual box are merged with the *inner* shadows of the box's header
    *       element!
    */
-  box-shadow: inset 1px 1px 9px rgb(255 255 255 / 40%),
+  box-shadow: inset 1px 1px 9px $color-overlay-ocher-lightest,
     inset -1px -1px 9px rgb(0 0 0 / 20%),
     0 0 1px 2px $color-default-box-shadow-outside,
     5px 5px 2px 0 $color-default-box-shadow-outside;
