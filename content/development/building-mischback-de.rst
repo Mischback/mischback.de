@@ -7,7 +7,7 @@
          the text into my machine.
 :tubhrq_origin: Donald E. Knuth
 :published: 2022-11-24
-:modified: 2024-03-04
+:modified: 2024-03-05
 
 .. tags:: internal; log; webdesign;
 
@@ -407,3 +407,24 @@ the way), the repository is fit for further development.
 Where did I leave off? Oh, yeah, colors... Building a tool that will help me
 `develop a colorscheme <https://github.com/Mischback/colorizer>`_ was actually
 one of the aforementioned *sidetracks*. Let's put it to some use.
+
+2024-03-05
+==========
+
+Ok, there was some kind of foundation. I was able to pick up speed quickly and
+implemented a satisfying colorscheme in just one day.
+
+The scheme is heavily inspired by
+`GMK Cream Matcha <https://matrixzj.github.io/docs/gmk-keycaps/Cream-Matcha/>`_,
+which provides the base colors. Mix in some burnt orange, a tiny bit of red and
+a swirl of brown, and you got the theme going.
+
+Obviously, there was some work on the details, but overall I'm quite happy with
+the final result.
+
+.. image:: /img/website_theme_matcha.png
+   :alt: Look of the website with the initial theme
+
+For reference, here's a screenshot, showing the current state of development.
+Colors are done, next steps are the icons and the *special templates*, like
+category overviews.
