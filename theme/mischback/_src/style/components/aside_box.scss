@@ -50,45 +50,22 @@ aside {
       /* stylelint-disable selector-max-compound-selectors */
       li {
         a {
-          /* TODO: Style this!
-           *
-           * The general styling is delayed until #28 is completed.
-           */
           display: inline-block;
           margin: 0.5em 0.25em 0.25em 0;
           padding: 0.25em 0.5em;
           transition: color $animation-timing-color-transition,
             background-color $animation-timing-color-transition;
           border-radius: 0.4em;
-
-          /* FIXME: #28
-           *
-           * was rgb(255 192 0)
-           */
-          background-color: $color-unstyled;
-
-          /* FIXME: #28
-           *
-           * first: rgb(128 96 0)
-           * second: #333
-           */
-          box-shadow: 0 0 1px $color-unstyled, 1px 1px 2px 1px $color-unstyled;
-
-          /* FIXME: #28
-           *
-           * was rgb(128 96 0)
-           */
-          color: $color-unstyled;
+          background-color: $color-tags-bg;
+          box-shadow: 0 0 1px $color-tags-border,
+            1px 1px 2px 1px $color-tags-border;
+          color: $color-tags-fg;
           font-weight: bold;
           text-decoration: none;
 
           &:hover {
-            /* FIXME: #28
-             * first: rgb(175 255 0)
-             * second: rgb(20 50 0)
-             */
-            background-color: $color-unstyled;
-            color: $color-unstyled;
+            background-color: $color-tags-hover-bg;
+            color: $color-tags-hover-fg;
           }
         }
       }
