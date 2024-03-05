@@ -5,7 +5,6 @@
  * visual presentation converts them to a filepath.
  *
  * TODO: Substitute the ``Home`` link with a (custom) symbol?
- * TODO: Provide ``:hover`` and ``:active`` styles (after #28)!
  */
 .breadcrumbs {
   font-family: $font-stack-mono;
@@ -42,12 +41,34 @@
    * selector, see https://stackoverflow.com/a/8539107 for details.
    */
   a {
-    color: #ccc;
+    color: $color-body-breadcrumbs-normal;
     text-decoration: none;
     text-transform: lowercase;
+
+    /* stylelint-disable max-nesting-depth */
+    &:focus,
+    &:hover {
+      color: $color-body-breadcrumbs-hover;
+    }
+    /* stylelint-enable max-nesting-depth */
   }
 
   ~ .breadcrumbs a {
-    color: #333;
+    color: $color-body-breadcrumbs-normal;
   }
 }
+
+/* This is the specific styling for the breadcrumbs *above* the article.
+ *
+ * They are placed in a dedicated ``<div>`` container.
+ */
+/* stylelint-disable no-descending-specificity */
+div > .breadcrumbs a {
+  color: $color-header-breadcrumbs-normal;
+
+  &:focus,
+  &:hover {
+    color: $color-header-breadcrumbs-hover;
+  }
+}
+/* stylelint-enable no-descending-specificity */

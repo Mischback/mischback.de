@@ -7,7 +7,7 @@
          the text into my machine.
 :tubhrq_origin: Donald E. Knuth
 :published: 2022-11-24
-:modified: 2023-02-09
+:modified: 2024-03-04
 
 .. tags:: internal; log; webdesign;
 
@@ -400,4 +400,10 @@ different programming languages and technologies in this project.
 Well, **fuck!** It has been a long time... I got sidetracked, some stuff going
 on IRL, mostly related to work.
 
-Time to pick this up again and make some progress.
+Time to pick this up again and make some progress. After 2 hours of pitifully
+reviewing a year worth of Dependabot pull requests (and fixing some stuff along
+the way), the repository is fit for further development.
+
+Where did I leave off? Oh, yeah, colors... Building a tool that will help me
+`develop a colorscheme <https://github.com/Mischback/colorizer>`_ was actually
+one of the aforementioned *sidetracks*. Let's put it to some use.

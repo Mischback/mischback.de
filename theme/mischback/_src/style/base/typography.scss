@@ -17,8 +17,10 @@ html {
 }
 
 body {
-  /* FIXME: #28 */
-  color: $color-primary-fg;
+  /* Foreground color is **highly visible**, but this color should actually
+   * never be visible, as this should be overwritten by more specific styles.
+   */
+  color: $color-unstyled;
   font-family: $font-stack-sans;
 }
 

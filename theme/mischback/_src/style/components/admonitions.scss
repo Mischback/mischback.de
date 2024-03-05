@@ -4,9 +4,8 @@
   margin: $text-content-vertical-rhythm * 2 0.5em;
   padding: 0.5em 0.5em 0 2em;
   border-radius: $default-border-radius;
-
-  /* FIXME: #28 */
-  box-shadow: 0 0 1px 2px #333;
+  box-shadow: 0 0 1px 2px $color-admonition-border;
+  color: $color-admonition-fg;
 
   @include for-breakpoint("layout-shrink-content") {
     margin: $text-content-vertical-rhythm * 2 3em;
@@ -27,6 +26,7 @@
 
   .admonition-title {
     top: 2.5em;
+    color: $color-admonition-note-caption;
   }
 }
 
@@ -35,8 +35,6 @@
 
   .admonition-title {
     top: 4.75em;
-
-    /* FIXME: #28 */
-    color: #960;
+    color: $color-admonition-important-caption;
   }
 }

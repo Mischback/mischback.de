@@ -46,22 +46,48 @@ $max-article-width: 44rem;
  *
  * These are semantic colors, meaning they describe in which context that color
  * is used.
- *
- * TODO: related to #28 - Move the actual color definitions (``rgb()``) to a
- *       file ``colors.scss``.
  */
-$color-primary-fg: rgb(8, 8, 8);
-$color-primary-bg: rgb(240, 240, 240);
-$color-primary-inverted-fg: $color-primary-bg;
-$color-primary-inverted-bg: $color-primary-fg;
-$color-secondary-fg: rgb(184, 184, 184);
-$color-dev-border: rgb(128, 0, 0);
-$color-dev-highlight: rgb(255, 0, 128);
-$color-admonition-note-bg: rgb(220, 220, 220);
-$color-admonition-important-bg: rgb(220, 220, 128);
-$color-headlines: $color-primary-fg;
-$color-headlines-permalink: $color-secondary-fg;
-$color-hyperlinks-normal: #3f2cdd;
+$color-document-bg: $color-ocher-base;
+$color-primary-fg: $color-brown-lighter;
+$color-primary-bg: $color-ocher-lightest;
+$color-default-box-shadow-outside: $color-brown-darker;
+$color-header-gradient-bottom: $color-brown-darker;
+$color-header-gradient-top: $color-brown-lighter;
+$color-header-overlay-highlight: $color-overlay-ocher-lightest;
+$color-header-overlay-lowlight: $color-overlay-brown-darkest;
+$color-header-fg-big: $color-ocher-base;
+$color-header-fg: $color-ocher-base;
+$color-header-breadcrumbs-normal: $color-matcha-base;
+$color-header-breadcrumbs-hover: $color-burntorange-lightest;
+$color-header-mobile-blocker: $color-blocker-black;
+$color-body-breadcrumbs-normal: $color-brown-lightest;
+$color-body-breadcrumbs-hover: $color-darkred-base;
+$color-headlines: $color-darkmatcha-lighter;
+$color-headlines-permalink: $color-matcha-base;
+$color-hyperlinks-normal: $color-darkmatcha-base;
+$color-hyperlinks-hover: $color-darkred-base;
+$color-hyperlinks-visited: $color-burntorange-base;
+$color-admonition-border: $color-ocher-darkest;
+$color-admonition-fg: $color-brown-darker;
+$color-admonition-note-bg: $color-matcha-lighter;
+$color-admonition-note-caption: $color-darkmatcha-base;
+$color-admonition-important-bg: $color-burntorange-lightest;
+$color-admonition-important-caption: $color-burntorange-darkest;
+$color-blockquote-secondary-fg: $color-brown-lightest;
+$color-image-inner-border: $color-ocher-lightest;
+$color-image-outer-border: $color-ocher-darkest;
+$color-header-navigation-hyperlink-normal: $color-matcha-base;
+$color-header-navigation-hyperlink-hover: $color-burntorange-lightest;
+$color-footer-gradient-bottom: $color-darkmatcha-darker;
+$color-footer-gradient-top: $color-darkmatcha-base;
+$color-footer-fg: $color-matcha-lightest;
+$color-footer-hyperlink-normal: $color-footer-fg;
+$color-footer-hyperlink-hover: $color-burntorange-lightest;
+$color-tags-border: $color-ocher-darkest;
+$color-tags-bg: $color-matcha-lighter;
+$color-tags-fg: $color-matcha-darkest;
+$color-tags-hover-bg: $color-burntorange-lightest;
+$color-tags-hover-fg: $color-darkred-base;
 
 /* Animation timings
  *

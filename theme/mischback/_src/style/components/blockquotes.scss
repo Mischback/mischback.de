@@ -32,9 +32,7 @@ blockquote {
     position: absolute;
     top: -0.1em;
     left: 0.05em;
-
-    /* FIXME: #28 */
-    color: $color-secondary-fg;
+    color: $color-blockquote-secondary-fg;
     font-family: $font-stack-serif;
     font-size: 5em;
     font-weight: bold;
@@ -52,9 +50,7 @@ blockquote {
     margin-bottom: 0.5em;
     margin-left: 1em;
     padding: 0.25em 0 0.25em 1em;
-
-    /* FIXME: #28 */
-    border-left: 2px solid $color-secondary-fg;
+    border-left: 2px solid $color-blockquote-secondary-fg;
     font-size: 0.8em;
   }
 }

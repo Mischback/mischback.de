@@ -2,16 +2,17 @@ a {
   transition: color $animation-timing-color-transition,
     text-decoration-color $animation-timing-color-transition,
     text-underline-offset 300ms;
-
-  /* FIXME: #28 */
-  color: #00e;
+  color: $color-hyperlinks-normal;
   text-decoration: underline currentcolor solid 0.1em;
   text-underline-offset: 0.15em;
 
+  &:visited {
+    color: $color-hyperlinks-visited;
+  }
+
   &:hover {
-    /* FIXME: #28 */
-    color: #e00;
-    text-decoration-color: #e00;
+    color: $color-hyperlinks-hover;
+    text-decoration-color: $color-hyperlinks-hover;
     text-underline-offset: 0.35em;
   }
 }

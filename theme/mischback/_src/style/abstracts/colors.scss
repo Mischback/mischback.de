@@ -1,0 +1,61 @@
+/* Use this as a placeholder for all unstyled stuff aswell as stuff, that is
+ * not yet transferred to the desired semantic way of color definitions.
+ */
+$color-unstyled: #c0f;
+$color-light-grey-base: rgb(222 222 222); // OkLCH (90%, 1%, 115)
+$color-light-grey-lighter: rgb(238 238 238); // OkLCH (95%, 1%, 115)
+$color-light-grey-darker: rgb(206 206 206); // OkLCH (85%, 1%, 115)
+
+$color-medium-grey-base: rgb(174 174 174); // OkLCH (75%, 1%, 115)
+$color-medium-grey-lighter: rgb(189 189 189); // OkLCH (80%, 1%, 115)
+$color-medium-grey-darker: rgb(158 158 158); // OkLCH (70%, 1%, 115)
+
+$color-dark-grey-base: rgb(46 46 46); // OkLCH (30%, 1%, 115)
+$color-dark-grey-lighter: rgb(58 58 58); // OkLCH (35%, 1%, 115)
+$color-dark-grey-darker: rgb(33 33 33); // OkLCH (25%, 1%, 115)
+
+$color-silver-base: rgb(84 84 84); // OkLCH (45%, 1%, 255)
+$color-silver-lighter: rgb(112 112 112); // OkLCH (55%, 1%, 255)
+$color-silver-darker: rgb(57 57 57); // OkLCH (35%, 1%, 255)
+
+$color-ocher-lightest: rgb(251 237 209); // OkLCH (95%, 10%, 85)
+$color-ocher-lighter: rgb(218 204 177); // OkLCH (85%, 10%, 85)
+$color-ocher-base: rgb(186 173 146); // OkLCH (75%, 10%, 85)
+$color-ocher-darker: rgb(154 142 116); // OkLCH (65%, 10%, 85)
+$color-ocher-darkest: rgb(124 112 87); // OkLCH (55%, 10%, 85)
+
+$color-brown-lightest: rgb(113 74 57); // OkLCH (45%, 15%, 45)
+$color-brown-lighter: rgb(84 48 31); // OkLCH (35%, 15%, 45)
+$color-brown-base: rgb(56 23 6); // OkLCH (25%, 15%, 45)
+$color-brown-darker: rgb(43 10 0); // OkLCH (20%, 15%, 45)
+$color-brown-darkest: rgb(30 1 0); // OkLCH (15%, 15%, 45)
+
+$color-matcha-lightest: rgb(212 255 169); // OkLCH (95%, 30%, 130)
+$color-matcha-lighter: rgb(180 222 137); // OkLCH (85%, 30%, 130)
+$color-matcha-base: rgb(149 189 105); // OkLCH (75%, 30%, 130)
+$color-matcha-darker: rgb(119 158 75); // OkLCH (65%, 30%, 130)
+$color-matcha-darkest: rgb(90 127 43); // OkLCH (55%, 30%, 130)
+
+$color-darkmatcha-lighter: rgb(62 97 2); // OkLCH (45%, 30%, 130)
+$color-darkmatcha-base: rgb(36 69 0); // OkLCH (35%, 30%, 130)
+$color-darkmatcha-darker: rgb(11 42 0); // OkLCH (25%, 30%, 130)
+
+$color-burntorange-lightest: rgb(255 137 80); // OkLCH (75%, 40%, 45)
+$color-burntorange-lighter: rgb(185 74 0); // OkLCH (55%, 40%, 45)
+$color-burntorange-base: rgb(148 38 0); // OkLCH (44%, 40%, 45)
+$color-burntorange-darker: rgb(135 22 0); // OkLCH (40%, 40%, 45)
+$color-burntorange-darkest: rgb(86 0 0); // OkLCH (25%, 40%, 45)
+
+$color-darkred-base: rgb(160 0 0); // OkLCH (40%, 60%, 45)
+
+/* These are overlay color, including an alpha value. They are meant to be
+ * applied as inner shadows.
+ */
+$color-overlay-ocher-lightest: rgb(251 237 209 / 40%);
+$color-overlay-brown-darkest: rgb(30 1 0 / 20%);
+
+/* Partly transparent color, meant to be displayed below the mobile navigation.
+ *
+ * This is highly specific, adjust accordingly.
+ */
+$color-blocker-black: rgb(0 0 0 / 95%);
