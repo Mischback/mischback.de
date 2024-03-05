@@ -9,19 +9,12 @@ body > footer {
   margin-left: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-
-  /* FIXME: #28
-   *
-   * first: #0f0f0f
-   * second: #636363
-   */
-  background-image: linear-gradient(to top, $color-unstyled, $color-unstyled);
-
-  /* FIXME: #28
-   *
-   * was: #ddd
-   */
-  color: $color-unstyled;
+  background-image: linear-gradient(
+    to top,
+    $color-footer-gradient-bottom,
+    $color-footer-gradient-top
+  );
+  color: $color-footer-fg;
   font-size: 0.9rem;
 
   @include for-breakpoint(layout-full-width) {
@@ -35,11 +28,17 @@ body > footer {
   }
 
   a {
-    /* FIXME: #28
-     *
-     * was: #e00
-     */
-    color: $color-unstyled;
+    color: $color-footer-hyperlink-normal;
+
+    &:visited {
+      color: $color-footer-hyperlink-normal;
+    }
+
+    &:focus,
+    &:hover {
+      color: $color-footer-hyperlink-hover;
+      text-decoration-color: $color-footer-hyperlink-hover;
+    }
   }
 
   .nav-list {
