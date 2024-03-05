@@ -46,9 +46,6 @@ $max-article-width: 44rem;
  *
  * These are semantic colors, meaning they describe in which context that color
  * is used.
- *
- * TODO: related to #28 - Move the actual color definitions (``rgb()``) to a
- *       file ``colors.scss``.
  */
 $color-document-bg: $color-ocher-base;
 $color-primary-fg: $color-brown-lighter;

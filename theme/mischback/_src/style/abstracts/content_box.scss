@@ -9,14 +9,6 @@
 @mixin content-box-shadow {
   /* Apply minimal default margins to make room for the shadows */
   margin: 5px 10px 10px 5px;
-
-  /* FIXME: #28
-   *        Either make the color adjustable (or using a global variable) or
-   *        use black with an alpha channel (which would require to have the
-   *        alpha adjustable).
-   *
-   *        BOTH were #333
-   */
   box-shadow: 0 0 1px 2px $color-default-box-shadow-outside,
     5px 5px 2px 0 $color-default-box-shadow-outside;
 }
