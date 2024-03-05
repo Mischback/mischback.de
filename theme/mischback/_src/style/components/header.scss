@@ -36,7 +36,6 @@ body > header {
    *       actual box are merged with the *inner* shadows of the box's header
    *       element!
    */
-  // FIXME: #38; both were #333
   box-shadow: inset 1px 1px 9px rgb(255 255 255 / 40%),
     inset -1px -1px 9px rgb(0 0 0 / 20%),
     0 0 1px 2px $color-default-box-shadow-outside,
@@ -171,12 +170,7 @@ body > header {
 
         a {
           padding: 0 0.5em;
-
-          /* FIXME: #28
-           *
-           * was: #c00
-           */
-          color: $color-unstyled;
+          color: $color-header-navigation-hyperlink-normal;
           font-weight: bold;
           text-decoration: none;
           text-shadow: 0.025rem 0.025rem 0.025rem rgb(0 0 0 / 100%),
@@ -186,11 +180,7 @@ body > header {
 
           &:focus,
           &:hover {
-            /* FIXME: #28
-             *
-             * was: #0c0
-             */
-            color: $color-unstyled;
+            color: $color-header-navigation-hyperlink-hover;
           }
         }
       }
