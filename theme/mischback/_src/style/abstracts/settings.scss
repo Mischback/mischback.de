@@ -50,16 +50,20 @@ $max-article-width: 44rem;
  * TODO: related to #28 - Move the actual color definitions (``rgb()``) to a
  *       file ``colors.scss``.
  */
-$color-document-bg: $color-medium-grey-base;
-$color-primary-fg: $color-dark-grey-base;
-$color-primary-bg: $color-light-grey-base;
-$color-default-box-shadow-outside: $color-dark-grey-lighter;
-$color-header-gradient-bottom: $color-silver-darker;
-$color-header-gradient-top: $color-silver-lighter;
-$color-header-fg-big: $color-light-grey-darker;
-$color-header-fg: $color-light-grey-lighter;
-$color-headlines: $color-dark-grey-lighter;
-$color-headlines-permalink: $color-silver-lighter;
+$color-document-bg: $color-ocher-base;
+$color-primary-fg: $color-brown-lighter;
+$color-primary-bg: $color-ocher-lightest;
+$color-default-box-shadow-outside: $color-brown-darker;
+$color-header-gradient-bottom: $color-brown-darker;
+$color-header-gradient-top: $color-brown-lighter;
+$color-header-fg-big: $color-ocher-base;
+$color-header-fg: $color-ocher-base;
+$color-header-fg-breadcrumbs: $color-matcha-base;
+$color-headlines: $color-matcha-black;
+$color-headlines-permalink: $color-matcha-base;
+$color-hyperlinks-normal: $color-green-darkest;
+$color-hyperlinks-hover: $color-darkred-base;
+$color-hyperlinks-visited: $color-burntorange-base;
 
 /* FIXME: #28
  *
@@ -72,9 +76,6 @@ $color-dev-border: $color-unstyled;
 $color-dev-highlight: $color-unstyled;
 $color-admonition-note-bg: $color-unstyled;
 $color-admonition-important-bg: $color-unstyled;
-$color-hyperlinks-normal: $color-unstyled;
-$color-hyperlinks-hover: $color-unstyled;
-$color-hyperlinks-visited: $color-unstyled;
 
 /* Animation timings
  *

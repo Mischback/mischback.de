@@ -6,6 +6,8 @@
  *
  * TODO: Substitute the ``Home`` link with a (custom) symbol?
  * TODO: Provide ``:hover`` and ``:active`` styles (after #28)!
+ * TODO: Breadcrumbs are displayed *above* and *below* the article. Both
+ *       instances require dedicated styling!
  */
 .breadcrumbs {
   font-family: $font-stack-mono;
@@ -42,12 +44,12 @@
    * selector, see https://stackoverflow.com/a/8539107 for details.
    */
   a {
-    color: $color-header-fg;
+    color: $color-header-fg-breadcrumbs;
     text-decoration: none;
     text-transform: lowercase;
   }
 
   ~ .breadcrumbs a {
-    color: $color-header-fg;
+    color: $color-header-fg-breadcrumbs;
   }
 }
