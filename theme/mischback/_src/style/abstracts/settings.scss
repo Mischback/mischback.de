@@ -64,6 +64,12 @@ $color-headlines-permalink: $color-matcha-base;
 $color-hyperlinks-normal: $color-green-darkest;
 $color-hyperlinks-hover: $color-darkred-base;
 $color-hyperlinks-visited: $color-burntorange-base;
+$color-admonition-border: $color-ocher-darkest;
+$color-admonition-fg: $color-brown-darker;
+$color-admonition-note-bg: $color-matcha-lighter;
+$color-admonition-note-caption: $color-green-darkest;
+$color-admonition-important-bg: $color-burntorange-lightest;
+$color-admonition-important-caption: $color-burntorange-darkest;
 
 /* FIXME: #28
  *
@@ -74,8 +80,6 @@ $color-primary-inverted-bg: $color-unstyled;
 $color-secondary-fg: $color-unstyled;
 $color-dev-border: $color-unstyled;
 $color-dev-highlight: $color-unstyled;
-$color-admonition-note-bg: $color-unstyled;
-$color-admonition-important-bg: $color-unstyled;
 
 /* Animation timings
  *
