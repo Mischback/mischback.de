@@ -6,6 +6,12 @@
   filter: drop-shadow(2px 2px 2px rgb(0 0 0 / 40%));
 }
 
+.icon-development use {
+  --color-one: #939393;
+  --color-two: #c6c6c6;
+  --color-three: #444;
+}
+
 /* Quotes
  *
  * This icon is applied in the following locations:
