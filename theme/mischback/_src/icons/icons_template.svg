@@ -26,33 +26,33 @@
      showgrid="true"
      units="px"
      inkscape:zoom="0.98520767"
-     inkscape:cx="147.17709"
-     inkscape:cy="198.94283"
+     inkscape:cx="260.85871"
+     inkscape:cy="269.99384"
      inkscape:window-width="1842"
      inkscape:window-height="1011"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1">
-    <sodipodi:guide
-       position="-0.26458333,127"
-       orientation="0,512"
-       id="guide1090" />
-    <sodipodi:guide
-       position="127,-0.26458333"
-       orientation="512,0"
-       id="guide1092" />
-    <sodipodi:guide
-       position="135.73125,8.4666666"
-       orientation="0,-512"
-       id="guide1094" />
-    <sodipodi:guide
-       position="8.4666666,135.73125"
-       orientation="-512,0"
-       id="guide1096" />
     <inkscape:grid
        type="xygrid"
        id="grid1098" />
+    <sodipodi:guide
+       position="-5,496"
+       orientation="0,512"
+       id="guide15909" />
+    <sodipodi:guide
+       position="494,513"
+       orientation="512,0"
+       id="guide15911" />
+    <sodipodi:guide
+       position="513,16"
+       orientation="0,-512"
+       id="guide15913" />
+    <sodipodi:guide
+       position="16,-1"
+       orientation="-512,0"
+       id="guide15915" />
   </sodipodi:namedview>
   <defs
      id="defs1026" />
