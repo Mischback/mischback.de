@@ -1,3 +1,18 @@
+/* These settings are applied to all SVG-based icons. */
+.svg-icon use {
+  --outline-color: rgb(0 0 0);
+  --color-one-base: #f0c;
+  --color-two-base: #f0c;
+  --color-three-base: #f0c;
+
+  stroke-linecap: round;
+  stroke-dasharray: none;
+  fill-opacity: 1;
+  stroke-linejoin: round;
+  stroke-miterlimit: 4;
+  stroke-opacity: 1;
+}
+
 /* This class is applied to all icons that decorate headers. */
 .header-icon {
   /* FIXME: #42
@@ -7,9 +22,10 @@
 }
 
 .icon-development use {
-  --color-one: #939393;
-  --color-two: #c6c6c6;
-  --color-three: #444;
+  --color-one-base: #afafaf; // #afafaf
+  --color-two-base: #606060; // #606060
+  --color-three-base: #838383; // #838383
+  --outline-width: 20; // 20
 }
 
 /* Quotes
