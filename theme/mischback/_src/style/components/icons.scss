@@ -1,9 +1,11 @@
 /* These settings are applied to all SVG-based icons. */
 .svg-icon use {
   --outline-color: rgb(0 0 0);
-  --color-one-base: #f0c;
-  --color-two-base: #f0c;
-  --color-three-base: #f0c;
+  --color-one: #f0c;
+  --color-two: #f0c;
+  --color-three: #f0c;
+  --color-four: #f0c;
+  --color-five: #f0c;
 
   stroke-linecap: round;
   stroke-dasharray: none;
@@ -21,10 +23,18 @@
   filter: drop-shadow(2px 2px 2px rgb(0 0 0 / 40%));
 }
 
+.icon-logo use {
+  --color-one: #af281e;
+  --color-two: #672425;
+  --color-three: #6b2227;
+  --color-four: #563947;
+  --color-five: #b34841;
+}
+
 .icon-development use {
-  --color-one-base: #afafaf; // #afafaf
-  --color-two-base: #606060; // #606060
-  --color-three-base: #838383; // #838383
+  --color-one: #afafaf; // #afafaf
+  --color-two: #606060; // #606060
+  --color-three: #838383; // #838383
   --outline-width: 20; // 20
 }
 
