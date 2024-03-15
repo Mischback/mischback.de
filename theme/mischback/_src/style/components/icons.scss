@@ -25,11 +25,17 @@
   --outline-width: 10;
 }
 
+.icon-contact use {
+  --color-one: #ffe81d;
+  --color-two: #968a19;
+  --outline-width: 10;
+}
+
 .icon-development use {
-  --color-one: #afafaf; // #afafaf
-  --color-two: #606060; // #606060
-  --color-three: #838383; // #838383
-  --outline-width: 20; // 20
+  --color-one: #afafaf;
+  --color-two: #606060;
+  --color-three: #838383;
+  --outline-width: 20;
 }
 
 /* Quotes
