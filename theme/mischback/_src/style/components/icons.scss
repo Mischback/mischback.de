@@ -1,6 +1,7 @@
 /* These settings are applied to all SVG-based icons. */
 .svg-icon use {
   --outline-color: rgb(0 0 0);
+  --outline-width: 1;
   --color-one: #f0c;
   --color-two: #f0c;
   --color-three: #f0c;
@@ -15,20 +16,13 @@
   stroke-opacity: 1;
 }
 
-/* This class is applied to all icons that decorate headers. */
-.header-icon {
-  /* FIXME: #42
-   * Keep the black but make the alpha channel adjustable!
-   */
-  filter: drop-shadow(2px 2px 2px rgb(0 0 0 / 40%));
-}
-
 .icon-logo use {
   --color-one: #af281e;
   --color-two: #672425;
   --color-three: #6b2227;
   --color-four: #563947;
   --color-five: #b34841;
+  --outline-width: 10;
 }
 
 .icon-development use {
@@ -64,4 +58,14 @@
   --third-color: #aaf;
   --stroke-color: #0a0a0a;
   --stroke-width: 3%;
+}
+
+/* This class is applied to all icons that decorate headers. */
+.header-icon {
+  /* FIXME: #42 Keep the black but make the alpha channel adjustable!
+   *
+   * TODO: Is this the correct position or should it be provided in the header
+   *       component?
+   */
+  filter: drop-shadow(2px 2px 2px rgb(0 0 0 / 40%));
 }
