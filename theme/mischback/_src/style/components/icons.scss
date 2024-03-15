@@ -7,6 +7,8 @@
   --color-three: #f0c;
   --color-four: #f0c;
   --color-five: #f0c;
+  --color-six: #f0c;
+  --detail-stroke-width: 1;
 
   stroke-linecap: round;
   stroke-dasharray: none;
@@ -53,6 +55,17 @@
   --color-three: #b34841;
   --color-four: #563947;
   --outline-width: 15;
+}
+
+.icon-meta use {
+  --color-one: #b4b1ab;
+  --color-two: #dddcd6;
+  --color-three: #fffdf3;
+  --color-four: #f0e7a6;
+  --color-five: #b5b5b5;
+  --color-six: #f4efc8;
+  --outline-width: 15;
+  --detail-stroke-width: 4;
 }
 
 /* Quotes
