@@ -428,3 +428,35 @@ the final result.
 For reference, here's a screenshot, showing the current state of development.
 Colors are done, next steps are the icons and the *special templates*, like
 category overviews.
+
+2024-03-15
+==========
+
+An initial set of icons was created. What's the general idea?
+
+While the overall design is pretty straight forward, with clear structure and
+high readability in mind, the icons are used as pure eye-candy. They do not
+follow the general colorscheme and are meant to be a lot more *playful* than
+the base design.
+
+I suck at designing icons, so these are heavily inspired by one of my favourite
+icon sets of all time,
+`Buuf icons <https://www.deviantart.com/mattahan/art/Buuf-37966044>`_ by
+`Paul Davey (mattahan) <http://www.mattahan.com/>`_.
+
+.. image:: /img/website_icons_overview.png
+   :alt: Current icon set overview
+
+Some icons are simply vector-based versions of actual *Buuf* icons, while
+others are created by myself, but trying to mimic the *Buuf-style* of coloring.
+
+After creating the SVGs with ``Inkscape``, they were manually post-processed to
+make them usable for the website. All icons are provided in a single file in
+order to optimize page load time. They are then applied throughout the layout
+using SVG's ``<use>`` method and the final styling is applied using the site's
+``stylesheet``.
+`This guide on SVG sprites <https://medium.com/@hayavuk/complete-guide-to-svg-sprites-7e202e215d34>`_
+covers all bases and is highly recommended.
+
+I don't consider the icon set complete. More icons will have to be added during
+the further development, but the technical implementation is covered by now.
