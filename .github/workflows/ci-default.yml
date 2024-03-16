@@ -109,7 +109,8 @@ jobs:
           check_images: false
           # External links are checked by Sphinx's linkcheck already
           disable_external: true
-          ignore_urls: "http://mattahan.com"
+          enforce_https: false
+          ignore_urls: ""
           swap_urls: ""
 
   dependabot:
