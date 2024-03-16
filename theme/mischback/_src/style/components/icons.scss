@@ -1,35 +1,115 @@
+/* These settings are applied to all SVG-based icons. */
+.svg-icon use {
+  --outline-color: rgb(0 0 0);
+  --outline-width: 1;
+  --color-one: #f0c;
+  --color-two: #f0c;
+  --color-three: #f0c;
+  --color-four: #f0c;
+  --color-five: #f0c;
+  --color-six: #f0c;
+  --detail-stroke-width: 1;
+
+  stroke-linecap: round;
+  stroke-dasharray: none;
+  fill-opacity: 1;
+  stroke-linejoin: round;
+  stroke-miterlimit: 4;
+  stroke-opacity: 1;
+}
+
+.icon-logo use {
+  --color-one: #af281e;
+  --color-two: #672425;
+  --color-three: #6b2227;
+  --color-four: #563947;
+  --color-five: #b34841;
+  --outline-width: 10;
+}
+
+.icon-contact use {
+  --color-one: #ffe81d;
+  --color-two: #968a19;
+  --outline-width: 10;
+}
+
+.icon-development use {
+  --color-one: #afafaf;
+  --color-two: #606060;
+  --color-three: #838383;
+  --outline-width: 20;
+}
+
+.icon-home use {
+  --color-one: #deaa87;
+  --color-two: #c83737;
+  --color-three: #782121;
+  --color-four: #004d00;
+  --color-five: #171717;
+  --outline-width: 12;
+}
+
+.icon-menu use {
+  --color-one: #{$color-ocher-base}; // #ad3a32;
+  --color-two: #{$color-ocher-darker}; // #6b2227;
+  --color-three: #{$color-ocher-lighter}; // #b34841;
+  --color-four: #{$color-ocher-darkest}; // #563947;
+  --outline-width: 15;
+}
+
+.icon-meta use {
+  --color-one: #b4b1ab;
+  --color-two: #dddcd6;
+  --color-three: #fffdf3;
+  --color-four: #f0e7a6;
+  --color-five: #b5b5b5;
+  --color-six: #f4efc8;
+  --outline-width: 15;
+  --detail-stroke-width: 4;
+}
+
+.icon-misc use {
+  --color-one: #b2bdc9;
+  --color-two: #5881ae;
+  --color-three: #dfefff;
+  --outline-width: 10;
+}
+
+.icon-privacy use {
+  --color-one: #00db0e;
+  --color-two: #1b4fff;
+  --color-three: #1f7824;
+  --color-four: #7cf782;
+  --outline-width: 15;
+  --detail-stroke-width: 10;
+}
+
+.icon-quote use {
+  --color-one: #ffaa1c;
+  --color-two: #cb7f00;
+  --color-three: #ffcd79;
+  --outline-width: 15;
+}
+
+.icon-sitemap use {
+  --color-one: #ffe29c;
+  --color-two: #d1b778;
+  --color-three: #7e6606;
+  --color-four: #540;
+  --outline-width: 15;
+}
+
+.icon-tags use {
+  --color-one: #9d9165;
+  --color-two: #746c4e;
+  --color-three: #bbb293;
+  --color-four: #4b421d;
+  --outline-width: 20;
+  --detail-stroke-width: 10;
+  --detail-stroke-width-two: 25;
+}
+
 /* This class is applied to all icons that decorate headers. */
 .header-icon {
-  /* FIXME: #42
-   * Keep the black but make the alpha channel adjustable!
-   */
   filter: drop-shadow(2px 2px 2px rgb(0 0 0 / 40%));
-}
-
-/* Quotes
- *
- * This icon is applied in the following locations:
- *   - ``<aside>`` -> *tubhrq* box
- */
-.icon-quote {
-  /* FIXME: #42 */
-  --primary-color: #fff;
-  --stroke-color: #333;
-  --stroke-width: 5%;
-}
-
-/* Series
- *
- * This icon is applied in the following locations:
- *   - ``<aside>`` -> *Also in this series* box
- */
-.icon-series {
-  /* FIXME: This icon needs size adjustments in the actual aside box! */
-
-  /* FIXME: #42 */
-  --first-color: #c00;
-  --second-color: #fc0;
-  --third-color: #aaf;
-  --stroke-color: #0a0a0a;
-  --stroke-width: 3%;
 }

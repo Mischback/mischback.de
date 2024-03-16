@@ -98,11 +98,7 @@ body > header {
     /* stylelint-enable selector-max-compound-selectors */
 
     &:hover {
-      /* FIXME: #42
-       *
-       * was: #ccc
-       */
-      background-color: $color-unstyled;
+      background-color: $color-matcha-base;
       box-shadow: inset 0 0 2px 1px rgb(0 0 0 / 40%);
     }
     /* stylelint-enable max-nesting-depth */

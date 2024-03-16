@@ -3,18 +3,18 @@
 {% block html_body %}
   <header>
     <a href="{{ pathto("index") }}" aria-label="Return to Home" title="Home" class="logo">
-      <svg aria-hidden="true" focusable="false">
+      <svg class="svg-icon icon-logo" aria-hidden="true" focusable="false">
         <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#logo-head" />
       </svg>
     </a>
     <a href="#main-menu" id="main-menu-toggle" class="menu-toggle" aria-label="Open main menu">
-      <svg aria-hidden="true" focusable="false">
+      <svg class="svg-icon icon-menu" aria-hidden="true" focusable="false">
         <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-menu" />
       </svg>
     </a>
     <nav id="main-menu" aria-label="Main menu">
       <a href="#main-menu-toggle" id="main-menu-close" class="menu-close" aria-label="Close main menu">
-        <svg aria-hidden="true" focusable="false">
+        <svg class="svg-icon" aria-hidden="true" focusable="false">
           <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-menu-close" />
         </svg>
       </a>
@@ -37,7 +37,7 @@
       <ul class="nav-list">
         <li class="li-contact">
           <a href="{{ pathto("contact") }}">
-            <svg class="nav-icon icon-contact" aria-hidden="true" focusable="false">
+            <svg class="svg-icon nav-icon icon-contact" aria-hidden="true" focusable="false">
               <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-contact" />
             </svg>
             Contact
@@ -45,7 +45,7 @@
         </li>
         <li class="li-privacy">
           <a href="{{ pathto("privacy") }}">
-            <svg class="nav-icon icon-privacy" aria-hidden="true" focusable="false">
+            <svg class="svg-icon nav-icon icon-privacy" aria-hidden="true" focusable="false">
               <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-privacy" />
             </svg>
             Privacy
@@ -53,7 +53,7 @@
         </li>
         <li class="li-sitemap">
           <a href="{{ pathto("sitemap") }}">
-            <svg class="nav-icon icon-sitemap" aria-hidden="true" focusable="false">
+            <svg class="svg-icon nav-icon icon-sitemap" aria-hidden="true" focusable="false">
               <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#icon-sitemap" />
             </svg>
             Sitemap
@@ -73,8 +73,8 @@
        For reference: ``&copy;`` is the copyright symbol (a ``c`` in a circle).
     #}
     <div id="copyright-footer">
-      &copy; 2023 by Mischback
-      <svg aria-hidden="true" focusable="false">
+      &copy; 2024 by Mischback
+      <svg class="svg-icon icon-logo" aria-hidden="true" focusable="false">
         <use xlink:href="{{ pathto("_static/icons/sprite.svg", 1) }}#logo-foot" />
       </svg>
     </div>
