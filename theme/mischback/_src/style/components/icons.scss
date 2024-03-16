@@ -50,10 +50,10 @@
 }
 
 .icon-menu use {
-  --color-one: #ad3a32;
-  --color-two: #6b2227;
-  --color-three: #b34841;
-  --color-four: #563947;
+  --color-one: #{$color-ocher-base}; // #ad3a32;
+  --color-two: #{$color-ocher-darker}; // #6b2227;
+  --color-three: #{$color-ocher-lighter}; // #b34841;
+  --color-four: #{$color-ocher-darkest}; // #563947;
   --outline-width: 15;
 }
 
