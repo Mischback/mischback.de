@@ -109,40 +109,7 @@
   --detail-stroke-width-two: 25;
 }
 
-/* Quotes
- *
- * This icon is applied in the following locations:
- *   - ``<aside>`` -> *tubhrq* box
- */
-.icon-quote {
-  /* FIXME: #42 */
-  --primary-color: #fff;
-  --stroke-color: #333;
-  --stroke-width: 5%;
-}
-
-/* Series
- *
- * This icon is applied in the following locations:
- *   - ``<aside>`` -> *Also in this series* box
- */
-.icon-series {
-  /* FIXME: This icon needs size adjustments in the actual aside box! */
-
-  /* FIXME: #42 */
-  --first-color: #c00;
-  --second-color: #fc0;
-  --third-color: #aaf;
-  --stroke-color: #0a0a0a;
-  --stroke-width: 3%;
-}
-
 /* This class is applied to all icons that decorate headers. */
 .header-icon {
-  /* FIXME: #42 Keep the black but make the alpha channel adjustable!
-   *
-   * TODO: Is this the correct position or should it be provided in the header
-   *       component?
-   */
   filter: drop-shadow(2px 2px 2px rgb(0 0 0 / 40%));
 }
