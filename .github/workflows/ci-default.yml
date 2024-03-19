@@ -9,12 +9,12 @@ on:
       - development
 
 jobs:
-  evaluation:
-    name: Evaluate GitHub's IPv6
-    runs-on: ubuntu-latest
-    steps:
-      - name: Ping mischback.de
-        run: ping -6 mischback.de
+  # evaluation:
+  #   name: Evaluate GitHub's IPv6
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Ping mischback.de
+  #       run: ping -6 mischback.de
   linting:
     name: Run linters
     runs-on: ubuntu-latest
