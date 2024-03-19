@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block main_container %}
+<main class="main-category">
+  <section class="spotlight">
+    <header>
+      {{ title }} Spotlight
+    </header>
+    <div>
+      <a href="{{ pathto(meta.spotlight_uri) }}">spotlight</a>
+    </div>
+  </section>
+
+  <section class="category-body">
+    <div>
+      {% if theme_show_breadcrumbs %}
+      <nav class="breadcrumbs" aria-label="Top Breadcrumbs">
+        {% include "includes/breadcrumbs.html" %}
+      </nav>
+      {% endif %}
+    </div>
+    {{ body }}
+  </section>
+</main>
+{% endblock main_container %}

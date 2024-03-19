@@ -1,0 +1,31 @@
+/* This is the styling of the category overview pages.
+ *
+ * The corresponding template is ``theme/mischback/category.html``.
+ */
+
+.main-category {
+  display: grid;
+  grid-template:
+    ". spotlight ."
+    ". cat_body  ."
+    / 1fr calc(min($max-article-width, 100%)) 1fr;
+
+  @include for-breakpoint(layout-single-column) {
+    grid-template:
+      ". spotlight spotlight spotlight ."
+      ". cat_body  cat_body  cat_body  ."
+      / 1fr $max-article-width 3fr 20rem 1fr;
+  }
+
+  .spotlight {
+    @include content-box-visual;
+
+    grid-area: spotlight;
+  }
+
+  .category-body {
+    @include content-box-visual;
+
+    grid-area: cat_body;
+  }
+}
