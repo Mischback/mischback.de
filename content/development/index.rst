@@ -9,10 +9,16 @@
 Development
 ###########
 
-* :doc:`building-mischback-de`
-* fooo
-* bar
-* This is another thing
+* :doc:`[Project] mischback.de <projects/mischback-de>`:
+  Project synopsis
+* :doc:`building-mischback-de`:
+  The complementary log file, maintained while building this website
+
+..
+   This is the actual ToC for the category. It is ``:hidden:`` from the actual
+   rendering but required to provide the required structure for the project.
+   This document is included in the project's ``root_toc``, which is provided
+   in the file ``content/sitemap.rst``.
 
 .. toctree::
    :titlesonly:
@@ -20,3 +26,4 @@ Development
    :hidden:
 
    *
+   projects/index
