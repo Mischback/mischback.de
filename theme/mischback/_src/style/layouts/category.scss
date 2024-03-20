@@ -62,7 +62,11 @@
       margin: 0 2rem 2rem;
 
       ul {
-        columns: 2 auto;
+        columns: 1 auto;
+
+        @include for-breakpoint(layout-single-column) {
+          columns: 2 auto;
+        }
       }
     }
     /* stylelint-enable max-nesting-depth, selector-max-compound-selectors */
