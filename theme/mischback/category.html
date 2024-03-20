@@ -2,14 +2,18 @@
 
 {% block main_container %}
 <main class="main-category">
+  {% if meta.spotlight_uri and meta.spotlight_img %}
   <section class="spotlight">
     <header>
       {{ title }} Spotlight
     </header>
     <div>
-      <a href="{{ pathto(meta.spotlight_uri) }}">spotlight</a>
+      <a href="{{ pathto(meta.spotlight_uri) }}">
+        <img src="{{ pathto(meta.spotlight_img, 1) }}" alt="Spotlight image" width="44rem" height="10rem">
+      </a>
     </div>
   </section>
+  {% endif %}
 
   <section class="category-body">
     <div>
@@ -19,7 +23,9 @@
       </nav>
       {% endif %}
     </div>
-    {{ body }}
+    <div class="content-container">
+      {{ body }}
+    </div>
   </section>
 </main>
 {% endblock main_container %}
