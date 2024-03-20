@@ -9,8 +9,14 @@
 Development
 ###########
 
+* :doc:`building-mischback-de`
+* fooo
+* bar
+* This is another thing
+
 .. toctree::
    :titlesonly:
    :glob:
+   :hidden:
 
    *

@@ -57,10 +57,14 @@
     grid-area: cat_body;
     margin: 2rem 0;
 
-    /* stylelint-disable max-nesting-depth */
+    /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
     .content-container {
       margin: 0 2rem 2rem;
+
+      ul {
+        columns: 2 auto;
+      }
     }
-    /* stylelint-enable max-nesting-depth */
+    /* stylelint-enable max-nesting-depth, selector-max-compound-selectors */
   }
 }

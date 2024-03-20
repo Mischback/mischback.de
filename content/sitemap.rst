@@ -10,6 +10,7 @@ Sitemap (Humans)
    :caption: Table of Contents
    :name: mastertoc
    :titlesonly:
+   :includehidden:
    :glob:
 
    Home <../index>
