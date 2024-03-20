@@ -25,5 +25,5 @@ Development
    :glob:
    :hidden:
 
-   *
    projects/index
+   *
