@@ -2,7 +2,7 @@
 
 {% block main_container %}
 <main class="main-category">
-  {% if meta.spotlight_uri and meta.spotlight_img %}
+  {% if meta.spotlight_uri and meta.spotlight_img and meta.spotlight_caption %}
   <section class="spotlight">
     <header>
       {{ title }} Spotlight
@@ -10,6 +10,7 @@
     <div>
       <a href="{{ pathto(meta.spotlight_uri) }}">
         <img src="{{ pathto(meta.spotlight_img, 1) }}" alt="Spotlight image" width="44rem" height="10rem">
+        <div class="caption">{{ meta.spotlight_caption }}</div>
       </a>
     </div>
   </section>

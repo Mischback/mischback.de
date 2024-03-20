@@ -20,6 +20,7 @@
   .spotlight {
     @include content-box-visual;
 
+    position: relative;
     grid-area: spotlight;
 
     /* stylelint-disable max-nesting-depth */
@@ -33,6 +34,19 @@
       border-bottom-left-radius: $default-border-radius;
       box-shadow: none;
       object-fit: cover;
+    }
+
+    .caption {
+      position: absolute;
+      bottom: 1rem;
+      left: 0;
+      padding: 0.25em 2em 0.25em 1em;
+      border-top-right-radius: $default-border-radius * 2;
+      border-bottom-right-radius: $default-border-radius * 2;
+      background-color: rgb(218 204 177 / 90%);
+      font-family: $font-stack-sans;
+      font-size: 1.7em;
+      font-weight: bold;
     }
     /* stylelint-enable max-nesting-depth */
   }
