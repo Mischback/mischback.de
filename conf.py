@@ -239,3 +239,6 @@ html_copy_source = False
 # Add permalinks to all headings and make them available with a custom icon.
 html_permalinks = True
 html_permalinks_icon = "#"
+
+# Add additional static files that are not processed by Sphinx
+html_static_path = ["theme/mischback/static/icons/favicon.ico"]
