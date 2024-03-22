@@ -112,6 +112,8 @@ class CTTag:
     _docs : set
         A set of ``CTDoc`` instances. This should not be accessed directly,
         instead the methods ``add_doc`` and ``get_docs`` should be used.
+    doc_count : number
+        The count of documents for a given tag.
     """
 
     def __init__(self, name):
@@ -131,6 +133,7 @@ class CTTag:
         # been fully evaluated.
         self.pagename = None
         self._docs = set()
+        self.doc_count = len(self._docs)
 
     def add_doc(self, docname, doctitle, pagename_template="tags/{}"):
         """Add a document to the tag.
@@ -151,6 +154,7 @@ class CTTag:
         if self.pagename is None:
             self.pagename = pagename_template.format(self.name)
         self._docs.add(CTDoc(docname, doctitle))
+        self.doc_count = len(self._docs)
 
     def rm_doc(self, docname):
         """Remove a document from this tag.
@@ -163,6 +167,7 @@ class CTTag:
         docname : str
         """
         self._docs = {doc for doc in self._docs if not doc.docname == docname}
+        self.doc_count = len(self._docs)
 
     def set_doc_titles(self, titles):
         """Set the titles of all tagged documents.
@@ -195,6 +200,7 @@ class CTTag:
         if not self.name == other.name:
             raise Exception("Name mismatch")
         self._docs.update(other._docs)
+        self.doc_count = len(self._docs)
 
     def contains(self, docname):
         """Determine if a document is associated with a tag.
