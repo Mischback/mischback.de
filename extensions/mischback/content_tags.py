@@ -284,7 +284,7 @@ def add_tag_pages(app):
         tag_pages.append(
             (
                 tags[tag].pagename,
-                {"ct_tag_docs": tags[tag]},
+                {"ct_tag": tag, "ct_tag_docs": tags[tag]},
                 "tag.html",
             )
         )
