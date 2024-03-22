@@ -16,6 +16,7 @@
   {% if ct_tag %}
   <section>
     <h1>Tag: {{ ct_tag }}</h1>
+    <p>The following articles are tagged with <strong>{{ ct_tag }}</strong>:</p>
     {% if ct_tag_docs %}
     <ul>
       {% for doc in ct_tag_docs -%}

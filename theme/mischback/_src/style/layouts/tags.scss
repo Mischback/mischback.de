@@ -1,0 +1,39 @@
+/* This is the styling of the tag-related pages.
+ *
+ * The corresponding templates are ``theme/mischback/tag.html`` and
+ * ``theme/mischback/tag_index.html``.
+ */
+
+.main-tags {
+  display: grid;
+  grid-template:
+    ". content ."
+    / 1fr calc(min($max-article-width, 100%)) 1fr;
+
+  @include for-breakpoint(layout-single-column) {
+    grid-template:
+      ". content content content ."
+      / 1fr $max-article-width 3fr 20rem 1fr;
+  }
+
+  article {
+    @include content-box-visual;
+
+    grid-area: content;
+    margin: 2rem 0;
+
+    /* stylelint-disable max-nesting-depth, selector-max-compound-selectors */
+    section {
+      margin: 0 2rem 2rem;
+
+      ul {
+        columns: 1 auto;
+
+        @include for-breakpoint(layout-single-column) {
+          columns: 2 auto;
+        }
+      }
+    }
+    /* stylelint-enable max-nesting-depth, selector-max-compound-selectors */
+  }
+}

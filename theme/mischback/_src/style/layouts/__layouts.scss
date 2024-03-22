@@ -12,3 +12,8 @@
  * ``theme/mischback/category.html``.
  */
 @import "category";
+
+/* Specify styling for tag-related documents. This corresponds to the templates
+ * ``theme/mischback/tag.html`` and ``theme/mischback/tag_index.html``.
+ */
+@import "tags";
