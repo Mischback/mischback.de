@@ -11,11 +11,11 @@
       {% endif %}
     </div>
     {{ body }}
-      {% if theme_show_breadcrumbs %}
-      <nav class="breadcrumbs" aria-label="Bottom Breadcrumbs">
-        {% include "includes/breadcrumbs.html" %}
-      </nav>
-      {% endif %}
+    {% if theme_show_breadcrumbs %}
+    <nav class="breadcrumbs" aria-label="Bottom Breadcrumbs">
+      {% include "includes/breadcrumbs.html" %}
+    </nav>
+    {% endif %}
   </article>
 
   <aside aria-label="Article Meta">

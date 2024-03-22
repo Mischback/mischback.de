@@ -1,13 +1,31 @@
 {% extends "layout.html" %}
 
 {% block main_container %}
-<main>
-  {% if ct_tag_docs %}
-  <ul>
-    {% for doc in ct_tag_docs -%}
-    <li><a href="{{ pathto(doc.docname) }}">{{ doc.title }}</a></li>
-    {% endfor %}
-  </ul>
+<main class="main-tags">
+  <article>
+    <div>
+      {% if theme_show_breadcrumbs %}
+      <nav class="breadcrumbs" aria-label="Top Breadcrumbs">
+        <ul>
+          <li><a href="{{ pathto("index") }}">Home</a></li>
+          <li><a href="{{ pathto("tags") }}">Tags</a></li>
+        </ul>
+      </nav>
+      {% endif %}
+    </div>
+  {% if ct_tag %}
+  <section>
+    <h1>Tag: {{ ct_tag }}</h1>
+    <p>The following articles are tagged with <strong>{{ ct_tag }}</strong>:</p>
+    {% if ct_tag_docs %}
+    <ul>
+      {% for doc in ct_tag_docs -%}
+      <li><a href="{{ pathto(doc.docname) }}">{{ doc.title }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
   {% endif %}
+  </article>
 </main>
 {% endblock main_container %}

@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block main_container %}
+<main class="main-category">
+  {% if meta.spotlight_uri and meta.spotlight_img and meta.spotlight_caption %}
+  <section class="spotlight">
+    <header>
+      {{ title }} Spotlight
+    </header>
+    <div>
+      <a href="{{ pathto(meta.spotlight_uri) }}">
+        <img src="{{ pathto(meta.spotlight_img, 1) }}" alt="Spotlight image" width="704" height="160">
+        <div class="caption">{{ meta.spotlight_caption }}</div>
+      </a>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="category-body">
+    <div>
+      {% if theme_show_breadcrumbs %}
+      <nav class="breadcrumbs" aria-label="Top Breadcrumbs">
+        {% include "includes/breadcrumbs.html" %}
+      </nav>
+      {% endif %}
+    </div>
+    <div class="content-container">
+      {{ body }}
+    </div>
+  </section>
+</main>
+{% endblock main_container %}
