@@ -107,8 +107,6 @@ $(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
 	touch $@
 
 # Compile SASS sources to an actual stylesheet
-#
-# FIXME: #49
 $(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS) $(STAMP_NODE_READY)
 	$(create_dir)
 	npx sass --embed-sources --stop-on-error --verbose $< $@
