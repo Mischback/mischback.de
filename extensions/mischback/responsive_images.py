@@ -341,7 +341,17 @@ class ResponsiveImageCollector(EnvironmentCollector):
             # We replicate its behaviour, but don't modify the existing
             # attributes of the node. Hopefully this does not interfere with
             # Sphinx's existing codebase.
-            imguri = search_image_for_language(node["uri"], app.env)
+            #
+            # But beacuse the original ``ImageCollector`` is modifying the
+            # ``node[uri], we first try to access the ``node[original_uri]``,
+            # which is set by ``ImageCollector``.
+            # This fixes #120
+            try:
+                node_uri = node["original_uri"]
+            except KeyError:
+                node_uri = node["uri"]
+
+            imguri = search_image_for_language(node_uri, app.env)
 
             img_path, _ = app.env.relfn2path(imguri, docname)
 
