@@ -460,3 +460,10 @@ covers all bases and is highly recommended.
 
 I don't consider the icon set complete. More icons will have to be added during
 the further development, but the technical implementation is covered by now.
+
+2024-03-23
+==========
+
+Major milestone reached:
+`Issue #13 <https://github.com/Mischback/mischback.de/issues/13>`_ was completed.
+Ladies and Gentleman, we have a basically working custom ``Sphinx`` theme!
