@@ -28,6 +28,9 @@ SRC_CONTENT := $(shell find $(CONTENT_DIR) -type f)
 SRC_THEME := $(shell find $(THEME_DIR) -type f -not \( -name "_src" -prune \))
 SRC_STYLE := $(shell find $(STYLE_DIR) -type f)
 
+# Internal Settings
+BUSTING_PATTERN := "[BUSTING]"
+
 # Stamps
 #
 # Track certain things with artificial *stamps*.
@@ -102,12 +105,12 @@ $(STAMP_PRE_FONTS) : $(FONT_SRC_DIR)/Mona-Sans.woff2 $(FONT_SRC_DIR)/CrimsonPro-
 	touch $@
 
 # Meta target to track all required stylesheets
-$(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.css
+$(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.$(BUSTING_PATTERN).css
 	$(create_dir)
 	touch $@
 
 # Compile SASS sources to an actual stylesheet
-$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS) $(STAMP_NODE_READY)
+$(THEME_DIR)/static/%.$(BUSTING_PATTERN).css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS) | $(STAMP_NODE_READY)
 	$(create_dir)
 	npx sass --embed-sources --stop-on-error --verbose $< $@
 
@@ -131,8 +134,8 @@ clean :
 	rm -rf $(STAMP_SPHINX)
 	rm -rf $(STAMP_POST)
 	rm -rf $(STAMP_POST_PRETTIFY)
-	rm -rf $(THEME_DIR)/static/style.css
-	rm -rf $(THEME_DIR)/static/style.css.map
+	rm -rf $(THEME_DIR)/static/style.[BUSTING].css
+	rm -rf $(THEME_DIR)/static/style.[BUSTING].css.map
 .PHONY : clean
 
 # Remove build environments
