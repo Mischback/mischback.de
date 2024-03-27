@@ -104,7 +104,7 @@ srv/dev : | $(TOX_VENV_INSTALLED)
 $(STAMP_BUILD_COMPLETED) : $(STAMP_HTML_PRETTIFIED)
 	$(create_dir)
 	echo "BUILD_COMPLETED: $(BUILD_MODE)"
-	echo "Commit: $(shell git rev-parse HEAD), $(shell date --iso=seconds)" > $@
+	echo "Commit: $(shell git rev-parse HEAD); Timestamp:  $(shell date --iso=seconds)" > $@
 
 # Prettify the (HTML) build artifacts
 #
