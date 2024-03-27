@@ -40,19 +40,15 @@ BUILD_MODE ?=
 #
 # Track certain things with artificial *stamps*.
 STAMP_DIR := $(REPO_ROOT)/.make-stamps
-STAMP_SPHINX := $(STAMP_DIR)/sphinx-build
-STAMP_PRE_FONTS := $(STAMP_DIR)/fonts-ready
-STAMP_PRE_SASS := $(STAMP_DIR)/pre-sass
-STAMP_POST := $(STAMP_DIR)/post-processing
-STAMP_POST_PRETTIFY := $(STAMP_DIR)/post-prettify
-STAMP_NODE_READY := $(STAMP_DIR)/node-ready
 
 # This stamp is **not** placed in the (internal) stamp directory. Instead, it
 # is used to *tag* the build, providing the source commit SHA1 and the time of
 # the build.
 STAMP_BUILD_COMPLETED := $(BUILD_DIR)/build-source.txt
-STAMP_HTML_PRETTIFIED := $(STAMP_DIR)/html-prettified
 STAMP_CACHE_BUSTED := $(STAMP_DIR)/cache-busted
+STAMP_HTML_PRETTIFIED := $(STAMP_DIR)/html-prettified
+STAMP_NODE_READY := $(STAMP_DIR)/node-ready
+STAMP_PRE_FONTS := $(STAMP_DIR)/fonts-ready
 STAMP_SPHINX_COMPLETED := $(STAMP_DIR)/sphinx-completed
 STAMP_THEME_READY := $(STAMP_DIR)/theme-ready
 STAMP_THEME_STYLES_READY := $(STAMP_DIR)/theme-styles-ready
@@ -82,19 +78,12 @@ MAKEFLAGS += --no-builtin-rules
 
 # ### RECIPES
 
-# Build and serve the actual generated website
-#
-# FIXME: DELETE after implementing the new process!
-dev/srv : $(STAMP_POST_PRETTIFY)
-	$(TOX_CMD) -q -e sphinx -- python -m http.server 8082 --directory $(BUILD_DIR)
-.PHONY : dev/srv
-
-# Create the actual build
+# Create the actual build artifact.
 build : $(STAMP_BUILD_COMPLETED)
 .PHONY : build
 
 # Build and serve in production mode.
-srv/prod :
+srv/prod : | $(TOX_VENV_INSTALLED)
 	$(MAKE) build && \
 	$(TOX_CMD) -q -e sphinx -- python -m http.server 8082 --directory $(BUILD_DIR)
 .PHONY : srv/prod
@@ -104,7 +93,7 @@ srv/prod :
 # In development mode some build steps are skipped, e.g. the minification of
 # assets like the stylesheet. This speeds up the build process, but foremost
 # it enables better developing/debugging.
-srv/dev :
+srv/dev : | $(TOX_VENV_INSTALLED)
 	BUILD_MODE=$(DEV_FLAG) \
 	$(MAKE) build && \
 	$(TOX_CMD) -q -e sphinx -- python -m http.server 8082 --directory $(BUILD_DIR)
@@ -174,19 +163,6 @@ $(STAMP_THEME_STYLES_READY) : $(THEME_DIR)/static/style.$(BUSTING_PATTERN).css
 	echo "THEME_STYLES_READY: $(BUILD_MODE)"
 	touch $@
 
-
-# Run ``Sphinx`` to build HTML output from reST sources
-#
-# This is the primary build recipe, as it will generate the HTML output by
-# running ``Sphinx``. It is (obviously) dependent on a plethora of things,
-# including the actual content source files and the theme files.
-#
-# FIXME: DELETE after implementing the new process!
-$(STAMP_SPHINX) : $(SRC_CONTENT) $(SRC_THEME) $(STAMP_PRE_SASS)
-	$(create_dir)
-	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
-	touch $@
-
 # Prepare the fonts
 #
 # In order to optimize the fonts, the provided glyphs may be reduced
@@ -206,13 +182,6 @@ $(STAMP_PRE_FONTS) : $(FONT_SRC_DIR)/Mona-Sans.woff2 $(FONT_SRC_DIR)/CrimsonPro-
 	cp $(FONT_SRC_DIR)/hack-bold-subset.woff2 $(THEME_DIR)/static/fonts/HackBold.woff2
 	touch $@
 
-# Meta target to track all required stylesheets
-#
-# FIXME: DELETE after implementing the new process!
-$(STAMP_PRE_SASS) : $(THEME_DIR)/static/style.$(BUSTING_PATTERN).css
-	$(create_dir)
-	touch $@
-
 # Compile SASS sources to an actual stylesheet
 #
 # During development, the sources are embedded into the stylesheet. For
@@ -226,36 +195,15 @@ else
 	npx sass --stop-on-error --verbose $< $@
 endif
 
-# FIXME: DELETE after implementing the new process!
-$(STAMP_POST) : $(STAMP_POST_PRETTIFY)
-	$(create_dir)
-	touch $@
-
-# Prettify the (HTML) build artifacts
-#
-# See ``util/prettify-html.py`` for implementation details. As of now this is a
-# wrapper around ``tidylib``.
-#
-# FIXME: DELETE after implementing the new process!
-$(STAMP_POST_PRETTIFY) : $(STAMP_SPHINX)
-	$(create_dir)
-	$(MAKE) util/post-processing post-processing_cmd="{toxinidir}/util/prettify-html.py $(BUILD_DIR)"
-	touch $@
-
 # Remove build artifacts
-#
-# FIXME: Remove obsolete stamps!
 clean :
-	rm -rf $(STAMP_HTML_PRETTIFIED)
+	rm -rf $(BUILD_DIR)
 	rm -rf $(STAMP_CACHE_BUSTED)
+	rm -rf $(STAMP_HTML_PRETTIFIED)
+	rm -rf $(STAMP_PRE_FONTS)
 	rm -rf $(STAMP_SPHINX_COMPLETED)
 	rm -rf $(STAMP_THEME_READY)
 	rm -rf $(STAMP_THEME_STYLES_READY)
-	rm -rf $(BUILD_DIR)
-	rm -rf $(STAMP_PRE_SASS)
-	rm -rf $(STAMP_SPHINX)
-	rm -rf $(STAMP_POST)
-	rm -rf $(STAMP_POST_PRETTIFY)
 	rm -rf $(THEME_DIR)/static/style.[BUSTING].css
 	rm -rf $(THEME_DIR)/static/style.[BUSTING].css.map
 .PHONY : clean
