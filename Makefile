@@ -139,7 +139,7 @@ endif
 # This is the primary build recipe, as it will generate the HTML output by
 # running ``Sphinx``. It is (obviously) dependent on a plethora of things,
 # including the actual content source files and the theme files.
-$(STAMP_SPHINX_COMPLETED) : $(SRC_CONTENT) $(STAMP_THEME_READY) | $(TOX_VENV_INSTALLED)
+$(STAMP_SPHINX_COMPLETED) : $(SRC_CONTENT) $(STAMP_THEME_READY)
 	$(create_dir)
 	echo "SPHINX_COMPLETED: $(BUILD_MODE)"
 	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
@@ -301,7 +301,7 @@ util/lint/stylelint :
 # ``pre-commit_files`` variables.
 pre-commit_id ?= ""
 pre-commit_files ?= ""
-util/pre-commit : $(PRE_COMMIT_READY)
+util/pre-commit : | $(PRE_COMMIT_READY)
 	$(TOX_CMD) -q -e pre-commit -- pre-commit run $(pre-commit_files) $(pre-commit_id)
 .PHONY : util/pre-commit
 
@@ -317,25 +317,25 @@ util/pre-commit : $(PRE_COMMIT_READY)
 sphinx_builder ?= "dirhtml"
 sphinx_config-dir ?= "./"
 sphinx-build_options ?= ""
-util/sphinx/build : conf.py requirements/sphinx.txt pyproject.toml $(TOX_VENV_INSTALLED)
+util/sphinx/build : conf.py requirements/sphinx.txt pyproject.toml | $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e sphinx -- sphinx-build $(sphinx-build_options) -b $(sphinx_builder) -c $(sphinx_config-dir) $(CONTENT_DIR) $(BUILD_DIR)
 .PHONY : util/sphinx/build
 
 # Run commands in the ``image-processing`` environment.
 image-processing_cmd ?= ""
-util/image-processing : requirements/image-processing.txt pyproject.toml $(TOX_VENV_INSTALLED)
+util/image-processing : requirements/image-processing.txt pyproject.toml | $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e image-processing -- $(image-processing_cmd)
 .PHONY : util/image-processing
 
 # Run commands in the ``pre-processing`` environment.
 pre-processing_cmd ?= ""
-util/pre-processing : requirements/pre-processing.txt pyproject.toml $(TOX_VENV_INSTALLED)
+util/pre-processing : requirements/pre-processing.txt pyproject.toml | $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e pre-processing -- $(pre-processing_cmd)
 .PHONY : util/pre-processing
 
 # Run commands in the ``post-processing`` environment.
 post-processing_cmd ?= ""
-util/post-processing : requirements/post-processing.txt pyproject.toml $(TOX_VENV_INSTALLED)
+util/post-processing : requirements/post-processing.txt pyproject.toml | $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e post-processing -- $(post-processing_cmd)
 .PHONY : util/post-processing
 
@@ -345,7 +345,7 @@ util/post-processing : requirements/post-processing.txt pyproject.toml $(TOX_VEN
 # included in ``tox``'s configuration in ``pyproject.toml``. That's why that
 # file is an additional prerequisite. This may lead to additional
 # regenerations, but these will most likely not affect the generated files.
-requirements/%.txt : requirements/%.in pyproject.toml $(TOX_VENV_INSTALLED)
+requirements/%.txt : requirements/%.in pyproject.toml | $(TOX_VENV_INSTALLED)
 	$(TOX_CMD) -q -e pip-tools -- $<
 
 
