@@ -72,6 +72,23 @@ class BusterAsset:
         self.file_hash = sha256sum(self.original_source_path)
         logger.debug("hash: %s (%s)", self.file_hash, self.original_rel_path)
 
+        # FIXME: Make the length of the hash configurable!
+        self.rel_path = Path(self.original_rel_path.parent).joinpath(
+            Path(
+                "{}-{}{}".format(
+                    self.original_rel_path.stem,
+                    self.file_hash[:10],
+                    self.original_rel_path.suffix,
+                )
+            )
+        )
+        logger.debug("rel_path: %s (%s)", self.rel_path, self.original_rel_path)
+
+        self.source_path = self.original_source_path.rename(
+            self.source_dir.joinpath(self.rel_path)
+        )
+        logger.debug("source_path: %s (%s)", self.source_path, self.original_rel_path)
+
     def __str__(self):  # noqa D105
         return "{} ({})".format(self.original_rel_path, self.original_source_path)
 
