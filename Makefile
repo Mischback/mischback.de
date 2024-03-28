@@ -120,13 +120,13 @@ $(STAMP_HTML_PRETTIFIED) : $(STAMP_CACHE_BUSTED)
 # Cache Busting relies on the fact, that modified assets like the stylesheets
 # will have a unique name by including a hash of the file's content in the
 # filename.
-$(STAMP_CACHE_BUSTED) : $(STAMP_SPHINX_COMPLETED)
+$(STAMP_CACHE_BUSTED) : $(STAMP_SPHINX_COMPLETED) $(BUILD_DIR)/_static/style.css $(BUILD_DIR)/_static/sprite.svg
 	$(create_dir)
 	echo "CACHE_BUSTED: $(BUILD_MODE)"
 ifeq ($(BUILD_MODE), $(DEV_FLAG))
 	echo "[SKIPPED] Cache Busting is skipped in development mode"
 else
-	echo "[prod] run posthtml to perform the cache busting..."
+	$(MAKE) util/post-processing post-processing_cmd="{toxinidir}/util/cache-busting.py --source $(BUILD_DIR) --asset _static/style.css --asset _static/sprite.svg"
 endif
 	touch $@
 
