@@ -49,6 +49,7 @@ STAMP_HTML_PRETTIFIED := $(STAMP_DIR)/html-prettified
 STAMP_NODE_READY := $(STAMP_DIR)/node-ready
 STAMP_PRE_FONTS := $(STAMP_DIR)/fonts-ready
 STAMP_SPHINX_COMPLETED := $(STAMP_DIR)/sphinx-completed
+STAMP_STYLESHEET_MINIFIED := $(STAMP_DIR)/stylesheet-minified
 STAMP_THEME_READY := $(STAMP_DIR)/theme-ready
 STAMP_THEME_STYLES_READY := $(STAMP_DIR)/theme-styles-ready
 
@@ -120,13 +121,23 @@ $(STAMP_HTML_PRETTIFIED) : $(STAMP_CACHE_BUSTED)
 # Cache Busting relies on the fact, that modified assets like the stylesheets
 # will have a unique name by including a hash of the file's content in the
 # filename.
-$(STAMP_CACHE_BUSTED) : $(STAMP_SPHINX_COMPLETED) $(BUILD_DIR)/_static/style.css $(BUILD_DIR)/_static/sprite.svg
+$(STAMP_CACHE_BUSTED) : $(STAMP_SPHINX_COMPLETED) $(STAMP_STYLESHEET_MINIFIED) $(BUILD_DIR)/_static/sprite.svg
 	$(create_dir)
 	echo "CACHE_BUSTED: $(BUILD_MODE)"
 ifeq ($(BUILD_MODE), $(DEV_FLAG))
 	echo "[SKIPPED] Cache Busting is skipped in development mode"
 else
 	$(MAKE) util/post-processing post-processing_cmd="{toxinidir}/util/cache-busting.py --source $(BUILD_DIR) --asset _static/style.css --asset _static/sprite.svg"
+endif
+	touch $@
+
+$(STAMP_STYLESHEET_MINIFIED) : $(BUILD_DIR)/_static/style.css $(STAMP_SPHINX_COMPLETED)
+	$(create_dir)
+	echo "STYLESHEET_MINIFIED: $(BUILD_MODE)"
+ifeq ($(BUILD_MODE), $(DEV_FLAG))
+	echo "[SKIPPED] Stylesheet minification is skipped in development mode"
+else
+	echo "TODO: Minify stylesheet..."
 endif
 	touch $@
 
