@@ -4,6 +4,7 @@
 
 # Python imports
 import argparse
+import hashlib
 import logging
 import logging.config
 from pathlib import Path
@@ -37,6 +38,22 @@ LOGGING_DEFAULT_CONFIG = {
 }
 
 
+def sha256sum(filename):
+    """Determine a hash of a file's content.
+
+    The implementation should be quite memory-efficient and is directly fetched from
+    https://stackoverflow.com/a/44873382 (please note: This is the implementation with
+    compatibility to Python 3.8 (and above)).
+    """
+    h = hashlib.sha256()
+    b = bytearray(128 * 1024)
+    mv = memoryview(b)
+    with open(filename, "rb", buffering=0) as f:
+        while n := f.readinto(mv):
+            h.update(mv[:n])
+    return h.hexdigest()
+
+
 class InvalidArgumentError(Exception):
     """Indicate invalid arguments."""
 
@@ -49,6 +66,11 @@ class BusterAsset:
         self.source_dir = source_dir
 
         self.original_source_path = source_dir.joinpath(rel_path)
+
+    def process(self):
+        """Process the asset file."""
+        self.file_hash = sha256sum(self.original_source_path)
+        logger.debug("hash: %s (%s)", self.file_hash, self.original_rel_path)
 
     def __str__(self):  # noqa D105
         return "{} ({})".format(self.original_rel_path, self.original_source_path)
@@ -126,7 +148,8 @@ def buster(source_dir, asset_paths, pattern="**/*.html"):
 
         assets.append(BusterAsset(rel_path, source_dir))
 
-    logger.debug("assets: %r", assets)
+    for a in assets:
+        a.process()
 
 
 def main():
