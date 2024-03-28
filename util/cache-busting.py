@@ -37,6 +37,10 @@ LOGGING_DEFAULT_CONFIG = {
 }
 
 
+class InvalidArgumentError(Exception):
+    """Indicate invalid arguments."""
+
+
 def parse_args():
     """Parse the command line arguments."""
     # create the main parser
@@ -64,6 +68,51 @@ def parse_args():
     return parser.parse_args()
 
 
+def buster(source_dir, asset_paths, pattern="**/*.html"):
+    """Perform the cache busting.
+
+    Cache Busting is performed in two steps:
+    1) Processing assets by hashing their content and injecting the hash into
+       their filename.
+    2) Processing all files in ``source_dir`` as specified by ``pattern`` and
+       replace references to assets with the (new) filename from step 1.
+
+    Parameters
+    ----------
+    source_dir : pathlib.Path
+    asset_paths : { pathlib.Path }
+    pattern : str
+    """
+    if not source_dir.is_dir():
+        raise InvalidArgumentError("'source' must be a directory")
+
+    # determine the source files
+    source_files = {f for f in source_dir.glob(pattern) if f.is_file()}
+    logger.info(
+        "Found %d files matching the pattern '%s' in source directory '%s'",
+        len(source_files),
+        pattern,
+        source_dir,
+    )
+    logger.debug("source files: %r", source_files)
+
+    # Step 1: Process the assets
+    assets = []
+
+    # build a list of assets
+    for rel_path in asset_paths:
+        source_path = source_dir.joinpath(rel_path)
+
+        # assets **must not** be included in ``source_files``
+        if source_path in source_files:
+            logger.error("Asset '%s' is included in source files", rel_path)
+            raise InvalidArgumentError("Assets must not be included in source files")
+
+        assets.append(rel_path)
+
+    logger.debug("assets: %r", assets)
+
+
 def main():
     """Perform the cache busting when executing the script from command line."""
     args = parse_args()
@@ -74,6 +123,8 @@ def main():
 
     assets = {Path(a) for a in args.assets}
     logger.debug("assets: %r", assets)
+
+    return buster(source, assets)
 
 
 if __name__ == "__main__":
