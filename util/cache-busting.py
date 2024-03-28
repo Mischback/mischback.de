@@ -41,6 +41,22 @@ class InvalidArgumentError(Exception):
     """Indicate invalid arguments."""
 
 
+class BusterAsset:
+    """A single asset that requires hashing/renaming."""
+
+    def __init__(self, rel_path, source_dir):
+        self.original_rel_path = rel_path
+        self.source_dir = source_dir
+
+        self.original_source_path = source_dir.joinpath(rel_path)
+
+    def __str__(self):  # noqa D105
+        return "{} ({})".format(self.original_rel_path, self.original_source_path)
+
+    def __repr__(self):  # noqa D105
+        return "BusterAsset(rel_path={})".format(self.original_rel_path)
+
+
 def parse_args():
     """Parse the command line arguments."""
     # create the main parser
@@ -108,7 +124,7 @@ def buster(source_dir, asset_paths, pattern="**/*.html"):
             logger.error("Asset '%s' is included in source files", rel_path)
             raise InvalidArgumentError("Assets must not be included in source files")
 
-        assets.append(rel_path)
+        assets.append(BusterAsset(rel_path, source_dir))
 
     logger.debug("assets: %r", assets)
 
