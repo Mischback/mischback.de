@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
-"""Custom script to perform cache busting for static assets."""
+"""Custom script to perform cache busting for static assets.
+
+This script accepts a list of assets that require cache busting (parameter
+``--asset``) and a source directory (``--source``). It will then hash the
+assets' file contents, inject the hash into the filenames and then substitute
+the original filename for all matching files in the source directory.
+"""
 
 # Python imports
 import argparse
@@ -60,7 +66,17 @@ class InvalidArgumentError(Exception):
 
 
 class BusterAsset:
-    """A single asset that requires hashing/renaming."""
+    """A single asset that requires hashing/renaming.
+
+    Parameters
+    ----------
+    rel_path : pathlib.Path
+        The path to the asset as specified by the command line argument. This
+        will be used as search pattern/needle for the substitution and to
+        construct the substitute.
+    source_dir : pathlib.Path
+        The path to the source directory.
+    """
 
     def __init__(self, rel_path, source_dir):
         self.original_rel_path = rel_path
@@ -69,7 +85,11 @@ class BusterAsset:
         self.original_source_path = source_dir.joinpath(rel_path)
 
     def process(self):
-        """Process the asset file."""
+        """Process the asset file.
+
+        1) Determine the hash of the file's content.
+        2) Inject the hash into the filename.
+        """
         self.file_hash = sha256sum(self.original_source_path)
         logger.debug("hash: %s (%s)", self.file_hash, self.original_rel_path)
 
@@ -138,6 +158,8 @@ def buster(source_dir, asset_paths, pattern="**/*.html"):
     source_dir : pathlib.Path
     asset_paths : { pathlib.Path }
     pattern : str
+        The pattern is used in a call to ``Path.glob()`` to find the source
+        files that need processing. Default: ``"**/*.html"``.
     """
     if not source_dir.is_dir():
         raise InvalidArgumentError("'source' must be a directory")
