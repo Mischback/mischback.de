@@ -197,6 +197,9 @@ def buster(source_dir, asset_paths, pattern="**/*.html"):
         substitutes[str(a.original_rel_path)] = str(a.rel_path)
 
     # Step 2: Apply new asset paths to the source files
+    #
+    # This is based on the following SO answer:
+    # https://stackoverflow.com/a/15175239
 
     # prepare the substitutions regular expression
     logger.debug("substitutes: %r", substitutes)
