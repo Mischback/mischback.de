@@ -32,7 +32,6 @@ SRC_THEME := $(shell find $(THEME_DIR) -type f -not \( -name "_src" -prune \))
 SRC_STYLE := $(shell find $(STYLE_DIR) -type f)
 
 # Internal Settings
-BUSTING_PATTERN := "[BUSTING]"
 DEV_FLAG := dev
 BUILD_MODE ?=
 
@@ -121,9 +120,6 @@ $(STAMP_HTML_PRETTIFIED) : $(STAMP_CACHE_BUSTED)
 # Cache Busting relies on the fact, that modified assets like the stylesheets
 # will have a unique name by including a hash of the file's content in the
 # filename.
-#
-# The assets to be busted are identified by the $(BUSTING_PATTERN) in their
-# filenames.
 $(STAMP_CACHE_BUSTED) : $(STAMP_SPHINX_COMPLETED)
 	$(create_dir)
 	echo "CACHE_BUSTED: $(BUILD_MODE)"
@@ -158,7 +154,7 @@ $(STAMP_THEME_READY) : $(STAMP_THEME_STYLES_READY) $(STAMP_PRE_FONTS) $(SRC_THEM
 #
 # This is only a meta-target to collect the stylesheets. In fact it is desired
 # to have exactly **one** stylesheet.
-$(STAMP_THEME_STYLES_READY) : $(THEME_DIR)/static/style.$(BUSTING_PATTERN).css
+$(STAMP_THEME_STYLES_READY) : $(THEME_DIR)/static/style.css
 	$(create_dir)
 	echo "THEME_STYLES_READY: $(BUILD_MODE)"
 	touch $@
@@ -186,7 +182,7 @@ $(STAMP_PRE_FONTS) : $(FONT_SRC_DIR)/Mona-Sans.woff2 $(FONT_SRC_DIR)/CrimsonPro-
 #
 # During development, the sources are embedded into the stylesheet. For
 # production a raw stylesheet is generated.
-$(THEME_DIR)/static/%.$(BUSTING_PATTERN).css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS) | $(STAMP_NODE_READY)
+$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS) | $(STAMP_NODE_READY)
 	$(create_dir)
 	echo "build the stylesheet: $(BUILD_MODE)"
 ifeq ($(BUILD_MODE), $(DEV_FLAG))
