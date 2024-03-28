@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import logging
 import logging.config
+import re
 from pathlib import Path
 
 # get a module-level logger
@@ -31,7 +32,7 @@ LOGGING_DEFAULT_CONFIG = {
     "loggers": {
         __name__: {
             "handlers": ["default"],
-            "level": "DEBUG",
+            "level": "INFO",
             "propagate": True,
         },
     },
@@ -165,8 +166,26 @@ def buster(source_dir, asset_paths, pattern="**/*.html"):
 
         assets.append(BusterAsset(rel_path, source_dir))
 
+    # process the assets and prepare substitution in the source files
+    substitutes = {}
     for a in assets:
         a.process()
+
+        # add the asset to the dictionary of substitutes
+        substitutes[str(a.original_rel_path)] = str(a.rel_path)
+
+    # Step 2: Apply new asset paths to the source files
+
+    # prepare the substitutions regular expression
+    logger.debug("substitutes: %r", substitutes)
+    subst_regex = re.compile("(%s)" % "|".join(map(re.escape, substitutes.keys())))
+
+    # process the source files
+    for f in source_files:
+        logger.debug("processing '%s'", f)
+        buf, n = subst_regex.subn(lambda mo: substitutes[mo.group(1)], f.read_text())
+        f.write_text(buf)
+        logger.info("Processed '%s', %d substitutions", f, n)
 
 
 def main():
