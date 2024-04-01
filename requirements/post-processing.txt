@@ -4,5 +4,5 @@
 #
 #    pip-compile --resolver=backtracking requirements/post-processing.in
 #
-utidylib==0.9
-    # via -r requirements/post-processing.in
+utidylib==0.10
+    # via -r post-processing.in
