@@ -135,9 +135,9 @@ $(STAMP_STYLESHEET_MINIFIED) : $(BUILD_DIR)/_static/style.css $(STAMP_SPHINX_COM
 	$(create_dir)
 	echo "STYLESHEET_MINIFIED: $(BUILD_MODE)"
 ifeq ($(BUILD_MODE), $(DEV_FLAG))
-	echo "[SKIPPED] Stylesheet minification is skipped in development mode"
+	DEV_FLAG=$(DEV_FLAG) npx postcss -o $< $<
 else
-	echo "TODO: Minify stylesheet..."
+	npx postcss -o $< $<
 endif
 	touch $@
 
