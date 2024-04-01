@@ -1,5 +1,6 @@
 /* These settings are applied to all SVG-based icons. */
 .svg-icon use {
+  /* purgecss ignore current */
   --outline-color: rgb(0 0 0);
   --outline-width: 1;
   --color-one: #f0c;
@@ -19,6 +20,7 @@
 }
 
 .icon-logo use {
+  /* purgecss ignore current */
   --color-one: #af281e;
   --color-two: #672425;
   --color-three: #6b2227;
@@ -28,12 +30,14 @@
 }
 
 .icon-contact use {
+  /* purgecss ignore current */
   --color-one: #ffe81d;
   --color-two: #968a19;
   --outline-width: 10;
 }
 
 .icon-development use {
+  /* purgecss ignore current */
   --color-one: #afafaf;
   --color-two: #606060;
   --color-three: #838383;
@@ -41,6 +45,7 @@
 }
 
 .icon-home use {
+  /* purgecss ignore current */
   --color-one: #deaa87;
   --color-two: #c83737;
   --color-three: #782121;
@@ -50,6 +55,7 @@
 }
 
 .icon-menu use {
+  /* purgecss ignore current */
   --color-one: #{$color-ocher-base}; // #ad3a32;
   --color-two: #{$color-ocher-darker}; // #6b2227;
   --color-three: #{$color-ocher-lighter}; // #b34841;
@@ -58,6 +64,7 @@
 }
 
 .icon-meta use {
+  /* purgecss ignore current */
   --color-one: #b4b1ab;
   --color-two: #dddcd6;
   --color-three: #fffdf3;
@@ -69,6 +76,7 @@
 }
 
 .icon-misc use {
+  /* purgecss ignore current */
   --color-one: #b2bdc9;
   --color-two: #5881ae;
   --color-three: #dfefff;
@@ -76,6 +84,7 @@
 }
 
 .icon-privacy use {
+  /* purgecss ignore current */
   --color-one: #00db0e;
   --color-two: #1b4fff;
   --color-three: #1f7824;
@@ -85,6 +94,7 @@
 }
 
 .icon-quote use {
+  /* purgecss ignore current */
   --color-one: #ffaa1c;
   --color-two: #cb7f00;
   --color-three: #ffcd79;
@@ -92,6 +102,7 @@
 }
 
 .icon-sitemap use {
+  /* purgecss ignore current */
   --color-one: #ffe29c;
   --color-two: #d1b778;
   --color-three: #7e6606;
@@ -100,6 +111,7 @@
 }
 
 .icon-tags use {
+  /* purgecss ignore current */
   --color-one: #9d9165;
   --color-two: #746c4e;
   --color-three: #bbb293;
@@ -111,5 +123,6 @@
 
 /* This class is applied to all icons that decorate headers. */
 .header-icon {
+  /* purgecss ignore current */
   filter: drop-shadow(2px 2px 2px rgb(0 0 0 / 40%));
 }
