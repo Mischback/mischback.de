@@ -27,7 +27,7 @@ pillow==9.4.0
     #   scikit-image
 pycparser==2.21
     # via cffi
-pyvips==2.2.1
+pyvips==2.2.2
     # via -r image-processing.in
 scikit-image==0.22.0
     # via -r image-processing.in
