@@ -32,15 +32,18 @@ repos:
         args: [--negate]
         files: ^content/
         exclude: (index|404).rst|.gitkeep
-  # prettier (formatting for various file types)
-  - repo: local
-    hooks:
       - id: prettier
-        name: Run prettier
+        name: prettier (local)
         entry: npx prettier --write --ignore-unknown
         language: system
         args: []
         "types": [text]
+      - id: stylelint
+        name: stylelint (local)
+        entry: npx stylelint
+        language: system
+        args: [--fix]
+        files: ^theme/mischback/_src/style/
   # black (Python: code formatting)
   - repo: https://github.com/psf/black
     rev: 24.3.0
@@ -78,15 +81,6 @@ repos:
       - id: curlylint
         files: ^theme/mischback/
         types_or: ["html"]
-  # lint SASS
-  - repo: local
-    hooks:
-      - id: stylelint
-        name: Run stylelint
-        entry: npx stylelint
-        language: system
-        args: [--fix]
-        files: ^theme/mischback/_src/style/
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
