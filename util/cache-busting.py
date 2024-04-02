@@ -110,10 +110,10 @@ class BusterAsset:
         )
         logger.debug("source_path: %s (%s)", self.source_path, self.original_rel_path)
 
-    def __str__(self):  # noqa D105
+    def __str__(self):  # noqa: D105
         return "{} ({})".format(self.original_rel_path, self.original_source_path)
 
-    def __repr__(self):  # noqa D105
+    def __repr__(self):  # noqa: D105
         return "BusterAsset(rel_path={})".format(self.original_rel_path)
 
 
