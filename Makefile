@@ -146,10 +146,31 @@ endif
 # This is the primary build recipe, as it will generate the HTML output by
 # running ``Sphinx``. It is (obviously) dependent on a plethora of things,
 # including the actual content source files and the theme files.
+#
+# Please note that some of the automatically generated documents are
+# **removed** here, as they are not used/desired for the final build artifact:
+# - genindex/*.*
+# - objects.inv
+# - search/*.*
+# - searchindex.js
+# - _static/pygments.css
+# - .buildinfo
+# - .doctrees/*.*
+# - output.[json|txt]  -> this is from the linkcheck builder and only present
+#                         during CI runs
 $(STAMP_SPHINX_COMPLETED) : $(SRC_CONTENT) $(STAMP_THEME_READY)
 	$(create_dir)
 	echo "SPHINX_COMPLETED: $(BUILD_MODE)"
-	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going"
+	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going" && \
+	rm -rf $(BUILD_DIR)/genindex && \
+	rm -rf $(BUILD_DIR)/objects.inv && \
+	rm -rf $(BUILD_DIR)/search && \
+	rm -rf $(BUILD_DIR)/searchindex.js && \
+	rm -rf $(BUILD_DIR)/_static/pygments.css && \
+	rm -rf $(BUILD_DIR)/.buildinfo && \
+	rm -rf $(BUILD_DIR)/.doctrees && \
+	rm -rf $(BUILD_DIR)/output.json && \
+	rm -rf $(BUILD_DIR)/output.txt
 	touch $@
 
 # Track and create the additional assets of the theme.
@@ -199,7 +220,7 @@ $(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS) 
 ifeq ($(BUILD_MODE), $(DEV_FLAG))
 	npx sass --embed-sources --embed-source-map --stop-on-error --verbose $< $@
 else
-	npx sass --stop-on-error --verbose $< $@
+	npx sass --no-source-map --stop-on-error --verbose $< $@
 endif
 
 # Remove build artifacts
@@ -211,8 +232,8 @@ clean :
 	rm -rf $(STAMP_SPHINX_COMPLETED)
 	rm -rf $(STAMP_THEME_READY)
 	rm -rf $(STAMP_THEME_STYLES_READY)
-	rm -rf $(THEME_DIR)/static/style.[BUSTING].css
-	rm -rf $(THEME_DIR)/static/style.[BUSTING].css.map
+	rm -rf $(THEME_DIR)/static/style.css
+	rm -rf $(THEME_DIR)/static/style.css.map
 .PHONY : clean
 
 # Remove build environments
