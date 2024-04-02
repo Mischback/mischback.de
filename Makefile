@@ -240,6 +240,11 @@ util/responsive-image :
 	$(MAKE) util/image-processing image-processing_cmd="{toxinidir}/util/process-image.py responsive --source $(responsive-image_src) --destination ./content/img --required-ssim 0.97 --format jpg --jpeg-compression 50 --format webp --webp-compression 45 --format avif --avif-compression 40 --size 320 320 --size 480 480 --size 640 640 --size 960 960 --size 1280 1280 --size 1600 1600 --size 1920 1920"
 .PHONY : util/responsive-image
 
+# Run all linters through ``pre-commit``
+util/lint/all : | $(STAMP_NODE_READY)
+	$(MAKE) util/pre-commit pre-commit_files="--all-files"
+.PHONY : util/lint/all
+
 # Run ``black``
 util/lint/black :
 	$(MAKE) util/pre-commit pre-commit_id="black" pre-commit_files="--all-files"
