@@ -9,7 +9,8 @@
 @mixin content-box-shadow {
   /* Apply minimal default margins to make room for the shadows */
   margin: 5px 10px 10px 5px;
-  box-shadow: 0 0 1px 2px $color-default-box-shadow-outside,
+  box-shadow:
+    0 0 1px 2px $color-default-box-shadow-outside,
     5px 5px 2px 0 $color-default-box-shadow-outside;
 }
 
@@ -53,7 +54,8 @@
       $color-header-gradient-bottom,
       $color-header-gradient-top
     );
-    box-shadow: inset 1px 1px 9px $color-overlay-ocher-lightest,
+    box-shadow:
+      inset 1px 1px 9px $color-overlay-ocher-lightest,
       inset -1px -1px 9px $color-overlay-brown-darkest,
       0 1px 2px rgb(0 0 0 / 100%);
     color: $color-header-fg-big;
@@ -62,7 +64,8 @@
     /* This minimal adjustment helps with the provided ``text-shadow``. */
     letter-spacing: 0.025em;
     line-height: 1.35rem;
-    text-shadow: -0.025rem -0.025rem 0.05rem $color-overlay-ocher-lightest,
+    text-shadow:
+      -0.025rem -0.025rem 0.05rem $color-overlay-ocher-lightest,
       0.025rem 0.025rem 0.025rem rgb(0 0 0 / 100%),
       0.025rem 0.05rem 0.025rem rgb(0 0 0 / 100%),
       0.025rem 0.075rem 0.025rem rgb(0 0 0 / 100%),

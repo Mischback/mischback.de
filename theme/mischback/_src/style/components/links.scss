@@ -1,5 +1,6 @@
 a {
-  transition: color $animation-timing-color-transition,
+  transition:
+    color $animation-timing-color-transition,
     text-decoration-color $animation-timing-color-transition,
     text-underline-offset 300ms;
   color: $color-hyperlinks-normal;

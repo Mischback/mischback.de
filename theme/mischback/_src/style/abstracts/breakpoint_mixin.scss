@@ -17,6 +17,7 @@ $media-queries: (
 
 @mixin for-breakpoint($breakpoints) {
   $conditions: ();
+
   @each $breakpoint in $breakpoints {
     $conditions: append(
       $conditions,
