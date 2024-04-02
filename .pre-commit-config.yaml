@@ -44,6 +44,14 @@ repos:
         language: system
         args: [--fix]
         files: ^theme/mischback/_src/style/
+  # various Python-related hooks
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      # prohibit blank "noqa"
+      - id: python-check-blanket-noqa
+      # eval() is evil
+      - id: python-no-eval
   # black (Python: code formatting)
   - repo: https://github.com/psf/black
     rev: 24.3.0
