@@ -35,6 +35,12 @@ jobs:
             .npm
             ${{ env.pythonLocation }}
           key: build-${{ hashFiles( env.pythonLocation, 'requirements/tox.txt', 'requirements/sphinx.txt', 'requirements/post-processing.txt', 'requirements/pre-commit.txt', 'pyproject.toml', 'package.json', 'package-lock.json') }}
+      - name: Cache pre-commit environment
+        id: cache-pre-commit
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles( env.pythonLocation, '.pre-commit-config.yaml' ) }}
       - name: Run pre-commit
         run: make util/lint/all
 
