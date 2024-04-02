@@ -383,6 +383,7 @@ $(PRE_COMMIT_READY) : | $(TOX_VENV_INSTALLED)
 #
 # https://stackoverflow.com/a/58187176
 $(STAMP_NODE_READY) : package.json package-lock.json
+	$(create_dir)
 	npm ci --cache .npm --prefer-offline
 	touch $@
 
