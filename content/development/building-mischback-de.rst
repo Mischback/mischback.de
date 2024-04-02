@@ -7,7 +7,7 @@
          the text into my machine.
 :tubhrq_origin: Donald E. Knuth
 :published: 2022-11-24
-:modified: 2024-03-05
+:modified: 2024-04-02
 
 .. tags:: internal; log; webdesign;
 
@@ -467,3 +467,43 @@ the further development, but the technical implementation is covered by now.
 Major milestone reached:
 `Issue #13 <https://github.com/Mischback/mischback.de/issues/13>`_ was completed.
 Ladies and Gentleman, we have a basically working custom ``Sphinx`` theme!
+
+2024-04-02
+==========
+
+Put some effort into the build process, specifically into the optimisation of
+the static assets.
+
+Compilation of SASS/SCSS sources to an actual stylesheet was already working.
+In order to further improve the stylesheet, it is post-processed with
+`PostCSS <https://github.com/postcss/postcss>`_:
+
+* `PurgeCSS <https://purgecss.com/>`_ is used to get rid of unused CSS
+  directives and reduce the filesize of the (compiled) stylesheet. In fact,
+  this tool *should not* be required, as the stylesheet is developed
+  specifically for the theme. However, sometimes directives sneak into the
+  compiled stylesheet that are not (yet) required. Beside optimisation, this
+  provides hints for development.
+* `Autoprefixer <https://github.com/postcss/autoprefixer>`_ enhances
+  browser-compatibility without the need for dedicated code in the SASS/SCSS
+  sources. It automatically adds vendor-specific prefixes, if required.
+* `cssnano <https://github.com/cssnano/cssnano>`_ minifies the stylesheet and
+  reduces its filesize significantly.
+
+Beside these *file-level* optimisations, the build process provides the
+required techniques to perform *cache busting* for static assets.
+
+.. note::
+   FIXME: Write a note about caches and why cache busting may be required.
+
+The first idea was to use `PostHTML <https://posthtml.org/>`_ with a dedicated
+`plugin for cache-busting <https://github.com/posthtml/posthtml-hash>`_, like
+it was already done for
+`colorizer v2 <https://github.com/Mischback/colorizer/tree/feat/v2-overall>`_.
+However, I could not make it work for ``Sphinx``'s build artifact. The asset's
+path was only updated in one of the HTML files, instead of in all of them.
+
+The general idea is simple and could be implemented in various languages,
+probably even with bare OS-level tools. However, I kluged a Python script for
+the job, which is integrated into the overall build process, controlled by the
+project's ``Makefile``.
