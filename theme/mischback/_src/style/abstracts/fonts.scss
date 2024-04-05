@@ -52,6 +52,8 @@
 }
 
 /* The actual font stacks. */
-$font-stack-sans: "Mona Sans", verdana, sans-serif;
-$font-stack-serif: "Crimson Pro", serif;
-$font-stack-mono: hack, monospace;
+$font-stack-sans: inter, roboto, "Helvetica Neue", "Arial Nova", "Nimbus Sans",
+  arial, sans-serif;
+$font-stack-serif: charter, "Bitstream Charter", "Sitka Text", cambria, serif;
+$font-stack-mono: ui-monospace, "Cascadia Code", "Source Code Pro", menlo,
+  consolas, "DejaVu Sans Mono", monospace;
