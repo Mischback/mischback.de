@@ -21,7 +21,7 @@ numpy==1.26.4
     #   tifffile
 packaging==23.0
     # via scikit-image
-pillow==9.4.0
+pillow==10.3.0
     # via
     #   imageio
     #   scikit-image
