@@ -53,11 +53,13 @@ aside {
           display: inline-block;
           margin: 0.5em 0.25em 0.25em 0;
           padding: 0.25em 0.5em;
-          transition: color $animation-timing-color-transition,
+          transition:
+            color $animation-timing-color-transition,
             background-color $animation-timing-color-transition;
           border-radius: 0.4em;
           background-color: $color-tags-bg;
-          box-shadow: 0 0 1px $color-tags-border,
+          box-shadow:
+            0 0 1px $color-tags-border,
             1px 1px 2px 1px $color-tags-border;
           color: $color-tags-fg;
           font-weight: bold;

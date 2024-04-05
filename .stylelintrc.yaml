@@ -2,9 +2,7 @@ extends:
   - stylelint-config-standard-scss
   - stylelint-config-sass-guidelines
   - stylelint-config-property-sort-order-smacss
-  - stylelint-config-prettier
 
 rules:
   color-function-notation: "modern"
-  indentation: 2
   scss/no-global-function-names: null

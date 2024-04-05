@@ -12,7 +12,8 @@
   font-family: "Mona Sans";
   font-stretch: 75% 125%;
   font-weight: 200 900;
-  src: url("fonts/MonaSans.woff2") format("woff2 supports variations"),
+  src:
+    url("fonts/MonaSans.woff2") format("woff2 supports variations"),
     url("fonts/MonaSans.woff2") format("woff2-variations");
 }
 

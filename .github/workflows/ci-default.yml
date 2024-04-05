@@ -25,8 +25,24 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
+      - name: Cache build environment
+        id: cache-tox
+        uses: actions/cache@v4
+        with:
+          path: |
+            .tox
+            .tox-venv
+            .npm
+            ${{ env.pythonLocation }}
+          key: build-${{ hashFiles( env.pythonLocation, 'requirements/tox.txt', 'requirements/sphinx.txt', 'requirements/post-processing.txt', 'requirements/pre-commit.txt', 'pyproject.toml', 'package.json', 'package-lock.json') }}
+      - name: Cache pre-commit environment
+        id: cache-pre-commit
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles( env.pythonLocation, '.pre-commit-config.yaml' ) }}
       - name: Run pre-commit
-        uses: pre-commit/action@v3.0.1
+        run: make util/lint/all
 
   building:
     name: Build with Sphinx
@@ -47,7 +63,7 @@ jobs:
             .tox-venv
             .npm
             ${{ env.pythonLocation }}
-          key: build-${{ hashFiles( env.pythonLocation, 'requirements/tox.txt', 'requirements/sphinx.txt', 'requirements/post-processing.txt', 'pyproject.toml', 'package.json', 'package-lock.json') }}
+          key: build-${{ hashFiles( env.pythonLocation, 'requirements/tox.txt', 'requirements/sphinx.txt', 'requirements/post-processing.txt', 'requirements/pre-commit.txt', 'pyproject.toml', 'package.json', 'package-lock.json') }}
       - name: Run Sphinx's linkcheck
         run: make util/lint/sphinx-linkcheck
       - name: Build HTML output

@@ -29,7 +29,8 @@ body > header {
    *       actual box are merged with the *inner* shadows of the box's header
    *       element!
    */
-  box-shadow: inset 1px 1px 9px $color-overlay-ocher-lightest,
+  box-shadow:
+    inset 1px 1px 9px $color-overlay-ocher-lightest,
     inset -1px -1px 9px rgb(0 0 0 / 20%),
     0 0 1px 2px $color-default-box-shadow-outside,
     5px 5px 2px 0 $color-default-box-shadow-outside;
@@ -38,9 +39,8 @@ body > header {
   @include for-breakpoint(layout-burger-nav) {
     /* This is for the full navigation. */
     display: flex;
-    align-content: center;
+    place-content: center flex-start;
     align-items: center;
-    justify-content: flex-start;
   }
 
   @include for-breakpoint(layout-full-width) {
@@ -112,8 +112,7 @@ body > header {
     top: 4rem;
     left: -100vw;
     margin: 0;
-    overflow-x: visible;
-    overflow-y: scroll;
+    overflow: visible scroll;
 
     @include for-breakpoint(layout-burger-nav) {
       /* This is for the full navigation. */
@@ -162,7 +161,8 @@ body > header {
           color: $color-header-navigation-hyperlink-normal;
           font-weight: bold;
           text-decoration: none;
-          text-shadow: 0.025rem 0.025rem 0.025rem rgb(0 0 0 / 100%),
+          text-shadow:
+            0.025rem 0.025rem 0.025rem rgb(0 0 0 / 100%),
             0.025rem 0.05rem 0.025rem rgb(0 0 0 / 100%),
             0.025rem 0.075rem 0.025rem rgb(0 0 0 / 100%),
             0.025rem 0.1rem 0.025rem rgb(0 0 0 / 100%);
@@ -178,12 +178,14 @@ body > header {
     /* stylelint-disable selector-no-qualifying-type */
     &:target,
     &[aria-expanded="true"] {
+      /* purgecss ignore current */
       display: block;
       position: fixed;
       left: 0;
       width: 100vw;
 
       .menu-close {
+        /* purgecss ignore current */
         position: absolute;
         z-index: 1001;
         top: 0.25em;
@@ -192,12 +194,14 @@ body > header {
         height: 2em;
 
         svg {
+          /* purgecss ignore current */
           width: 100%;
           height: 100%;
         }
       }
 
       + .menu-backdrop {
+        /* purgecss ignore current */
         display: block;
         position: fixed;
         z-index: 998;
@@ -210,6 +214,7 @@ body > header {
       }
 
       .nav-list {
+        /* purgecss ignore current */
         position: relative;
         z-index: 1000;
         margin-top: 2em;

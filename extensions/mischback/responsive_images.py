@@ -27,7 +27,6 @@ to the ``<source>`` elements (this *should* cover higher pixel density
 displays).
 """
 
-
 # Python imports
 import logging
 import logging.config

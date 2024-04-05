@@ -8,18 +8,18 @@
 @charset "utf-8";
 
 /* The ``vendor`` directory contains 3rd party code. */
-@import "vendor/__vendor"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
+@import "vendor/__vendor"; /* stylelint-disable-line scss/load-no-partial-leading-underscore */
 
 /* The ``abstracts`` directory contains non-output snippets, mixins and utility
  * functions.
  */
-@import "abstracts/__abstracts"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
+@import "abstracts/__abstracts"; /* stylelint-disable-line scss/load-no-partial-leading-underscore */
 
 /* The ``base`` directory provides global styles. */
-@import "base/__base"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
+@import "base/__base"; /* stylelint-disable-line scss/load-no-partial-leading-underscore */
 
 /* The ``components`` directory provides reusable elements. */
-@import "components/__components"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
+@import "components/__components"; /* stylelint-disable-line scss/load-no-partial-leading-underscore */
 
 /* The ``layout`` directory provides overall site layout. */
-@import "layouts/__layouts"; /* stylelint-disable-line scss/at-import-no-partial-leading-underscore */
+@import "layouts/__layouts"; /* stylelint-disable-line scss/load-no-partial-leading-underscore */
