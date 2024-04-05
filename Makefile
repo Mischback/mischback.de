@@ -20,7 +20,7 @@ BUILD_DIR := $(REPO_ROOT)/.build
 CONTENT_DIR := $(REPO_ROOT)/content
 THEME_DIR := $(REPO_ROOT)/theme/mischback
 FONT_SRC_DIR := $(THEME_DIR)/_src/fonts
-STYLE_DIR := $(REPO_ROOT)/theme/mischback/_src/style
+STYLE_DIR := $(THEME_DIR)/_src/style
 
 # The source files for the actual content
 SRC_CONTENT := $(shell find $(CONTENT_DIR) -type f)
@@ -103,7 +103,6 @@ srv/dev : | $(TOX_VENV_INSTALLED)
 # current timestamp to a dedicated file in the $(BUILD_DIR).
 $(STAMP_BUILD_COMPLETED) : $(STAMP_HTML_PRETTIFIED)
 	$(create_dir)
-	echo "BUILD_COMPLETED: $(BUILD_MODE)"
 	echo "Commit: $(shell git rev-parse HEAD); Timestamp:  $(shell date --iso=seconds)" > $@
 
 # Prettify the (HTML) build artifacts
@@ -112,7 +111,6 @@ $(STAMP_BUILD_COMPLETED) : $(STAMP_HTML_PRETTIFIED)
 # wrapper around ``tidylib``.
 $(STAMP_HTML_PRETTIFIED) : $(STAMP_CACHE_BUSTED)
 	$(create_dir)
-	echo "HTML_PRETTIFIED: $(BUILD_MODE)"
 	$(MAKE) util/post-processing post-processing_cmd="{toxinidir}/util/prettify-html.py $(BUILD_DIR)"
 	touch $@
 
@@ -123,7 +121,6 @@ $(STAMP_HTML_PRETTIFIED) : $(STAMP_CACHE_BUSTED)
 # filename.
 $(STAMP_CACHE_BUSTED) : $(STAMP_SPHINX_COMPLETED) $(STAMP_STYLESHEET_MINIFIED) $(BUILD_DIR)/_static/sprite.svg
 	$(create_dir)
-	echo "CACHE_BUSTED: $(BUILD_MODE)"
 ifeq ($(BUILD_MODE), $(DEV_FLAG))
 	echo "[SKIPPED] Cache Busting is skipped in development mode"
 else
@@ -131,9 +128,8 @@ else
 endif
 	touch $@
 
-$(STAMP_STYLESHEET_MINIFIED) : $(BUILD_DIR)/_static/style.css $(STAMP_SPHINX_COMPLETED)
+$(STAMP_STYLESHEET_MINIFIED) : $(BUILD_DIR)/_static/style.css $(STAMP_SPHINX_COMPLETED) | $(STAMP_NODE_READY)
 	$(create_dir)
-	echo "STYLESHEET_MINIFIED: $(BUILD_MODE)"
 ifeq ($(BUILD_MODE), $(DEV_FLAG))
 	DEV_FLAG=$(DEV_FLAG) npx postcss -o $< $<
 else
@@ -160,7 +156,6 @@ endif
 #                         during CI runs
 $(STAMP_SPHINX_COMPLETED) : $(SRC_CONTENT) $(STAMP_THEME_READY)
 	$(create_dir)
-	echo "SPHINX_COMPLETED: $(BUILD_MODE)"
 	$(MAKE) util/sphinx/build sphinx-build_options="-W --keep-going" && \
 	rm -rf $(BUILD_DIR)/genindex && \
 	rm -rf $(BUILD_DIR)/objects.inv && \
@@ -179,7 +174,6 @@ $(STAMP_SPHINX_COMPLETED) : $(SRC_CONTENT) $(STAMP_THEME_READY)
 # source code
 $(STAMP_THEME_READY) : $(STAMP_THEME_STYLES_READY) $(STAMP_PRE_FONTS) $(SRC_THEME)
 	$(create_dir)
-	echo "THEME_READY: $(BUILD_MODE)"
 	touch $@
 
 # Track and create the theme's stylesheets
@@ -188,7 +182,6 @@ $(STAMP_THEME_READY) : $(STAMP_THEME_STYLES_READY) $(STAMP_PRE_FONTS) $(SRC_THEM
 # to have exactly **one** stylesheet.
 $(STAMP_THEME_STYLES_READY) : $(THEME_DIR)/static/style.css
 	$(create_dir)
-	echo "THEME_STYLES_READY: $(BUILD_MODE)"
 	touch $@
 
 # Prepare the fonts
@@ -216,7 +209,6 @@ $(STAMP_PRE_FONTS) : $(FONT_SRC_DIR)/Mona-Sans.woff2 $(FONT_SRC_DIR)/CrimsonPro-
 # production a raw stylesheet is generated.
 $(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS) | $(STAMP_NODE_READY)
 	$(create_dir)
-	echo "build the stylesheet: $(BUILD_MODE)"
 ifeq ($(BUILD_MODE), $(DEV_FLAG))
 	npx sass --embed-sources --embed-source-map --stop-on-error --verbose $< $@
 else
@@ -307,7 +299,7 @@ util/lint/isort :
 .PHONY : util/lint/isort
 
 # Run ``prettier``
-util/lint/prettier :
+util/lint/prettier : | $(STAMP_NODE_READY)
 	$(MAKE) util/pre-commit pre-commit_id="prettier" pre-commit_files="--all-files"
 .PHONY : util/lint/prettier
 
@@ -322,7 +314,7 @@ util/lint/sphinx-lint :
 .PHONY : util/lint/sphinx-lint
 
 # Run ``stylelint``
-util/lint/stylelint :
+util/lint/stylelint : | $(STAMP_NODE_READY)
 	$(MAKE) util/pre-commit pre-commit_id="stylelint" pre-commit_files="--all-files"
 .PHONY : util/lint/stylelint
 
