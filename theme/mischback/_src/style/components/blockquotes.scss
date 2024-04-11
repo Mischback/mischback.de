@@ -23,7 +23,7 @@ blockquote {
 
   /* stylelint-disable declaration-block-no-redundant-longhand-properties */
 
-  padding-left: 2.5em !important;
+  padding-left: 2.75em !important;
   /* stylelint-enable declaration-block-no-redundant-longhand-properties */
 
   &::before {
@@ -40,7 +40,7 @@ blockquote {
 
   p {
     font-family: $font-stack-serif;
-    font-size: 1.1em;
+    font-size: 1em;
     line-height: 1.25;
   }
 
@@ -51,6 +51,6 @@ blockquote {
     margin-left: 1em;
     padding: 0.25em 0 0.25em 1em;
     border-left: 2px solid $color-blockquote-secondary-fg;
-    font-size: 0.8em;
+    font-size: 0.7em;
   }
 }

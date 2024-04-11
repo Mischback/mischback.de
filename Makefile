@@ -47,7 +47,6 @@ STAMP_BUILD_COMPLETED := $(BUILD_DIR)/build-source.txt
 STAMP_CACHE_BUSTED := $(STAMP_DIR)/cache-busted
 STAMP_HTML_PRETTIFIED := $(STAMP_DIR)/html-prettified
 STAMP_NODE_READY := $(STAMP_DIR)/node-ready
-STAMP_PRE_FONTS := $(STAMP_DIR)/fonts-ready
 STAMP_SPHINX_COMPLETED := $(STAMP_DIR)/sphinx-completed
 STAMP_STYLESHEET_MINIFIED := $(STAMP_DIR)/stylesheet-minified
 STAMP_THEME_READY := $(STAMP_DIR)/theme-ready
@@ -172,7 +171,7 @@ $(STAMP_SPHINX_COMPLETED) : $(SRC_CONTENT) $(STAMP_THEME_READY)
 #
 # This is meant to trigger the creation of stylesheets and script files from
 # source code
-$(STAMP_THEME_READY) : $(STAMP_THEME_STYLES_READY) $(STAMP_PRE_FONTS) $(SRC_THEME)
+$(STAMP_THEME_READY) : $(STAMP_THEME_STYLES_READY) $(SRC_THEME)
 	$(create_dir)
 	touch $@
 
@@ -184,30 +183,11 @@ $(STAMP_THEME_STYLES_READY) : $(THEME_DIR)/static/style.css
 	$(create_dir)
 	touch $@
 
-# Prepare the fonts
-#
-# In order to optimize the fonts, the provided glyphs may be reduced
-# significantly.
-#
-# FIXME: RENAME after implementing the new process! STAMP_THEME_FONTS_READY
-# FIXME: #34
-$(STAMP_PRE_FONTS) : $(FONT_SRC_DIR)/Mona-Sans.woff2 $(FONT_SRC_DIR)/CrimsonPro-Regular.woff2 $(FONT_SRC_DIR)/hack-regular-subset.woff2 $(FONT_SRC_DIR)/hack-bold-subset.woff2
-	$(create_dir)
-	# TODO: Should require just subsetting!
-	#       License issues! See https://github.com/github/mona-sans/issues/19
-	cp $(FONT_SRC_DIR)/Mona-Sans.woff2 $(THEME_DIR)/static/fonts/MonaSans.woff2
-	# TODO: Apply subsetting! Might have license issues aswell!
-	cp $(FONT_SRC_DIR)/CrimsonPro-Regular.woff2 $(THEME_DIR)/static/fonts/CrimsonProRegular.woff2
-	# TODO This is already a subsetted font. Evaluate again!
-	cp $(FONT_SRC_DIR)/hack-regular-subset.woff2 $(THEME_DIR)/static/fonts/HackRegular.woff2
-	cp $(FONT_SRC_DIR)/hack-bold-subset.woff2 $(THEME_DIR)/static/fonts/HackBold.woff2
-	touch $@
-
 # Compile SASS sources to an actual stylesheet
 #
 # During development, the sources are embedded into the stylesheet. For
 # production a raw stylesheet is generated.
-$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) $(STAMP_PRE_FONTS) | $(STAMP_NODE_READY)
+$(THEME_DIR)/static/%.css : $(STYLE_DIR)/%.scss $(SRC_STYLE) | $(STAMP_NODE_READY)
 	$(create_dir)
 ifeq ($(BUILD_MODE), $(DEV_FLAG))
 	npx sass --embed-sources --embed-source-map --stop-on-error --verbose $< $@
@@ -220,7 +200,6 @@ clean :
 	rm -rf $(BUILD_DIR)
 	rm -rf $(STAMP_CACHE_BUSTED)
 	rm -rf $(STAMP_HTML_PRETTIFIED)
-	rm -rf $(STAMP_PRE_FONTS)
 	rm -rf $(STAMP_SPHINX_COMPLETED)
 	rm -rf $(STAMP_THEME_READY)
 	rm -rf $(STAMP_THEME_STYLES_READY)
