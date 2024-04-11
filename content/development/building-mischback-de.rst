@@ -507,3 +507,40 @@ The general idea is simple and could be implemented in various languages,
 probably even with bare OS-level tools. However, I kluged a Python script for
 the job, which is integrated into the overall build process, controlled by the
 project's ``Makefile``.
+
+2024-04-05
+==========
+
+Switched from custom (web) fonts to *system font stacks*. Font selection was a
+major issue and I invested quite some time. However, using web fonts has some
+serious drawbacks, including page load time, licensing issues and build
+complexity.
+
+Using *system font stacks* on the other hand means that I can't control the
+visual appearance of the website fully, as the available fonts are
+device- and user-specific. It's impossible to know beforehand, which fonts are
+available.
+
+I feel pretty confident that the overall layout is flexible enough to deal with
+that issue, though.
+
+So, how to implement a (or several) system font stacks? I'm standing on the
+shoulders of giants here, because all of the heavy lifting was already done by
+others.
+
+The basic idea is, to use fonts that are already present on the user's device.
+And here's the problem. Different devices ship with different operating systems
+of different vendors with different *stock* (meaning: installed alongside with
+the operating system) fonts. And because these are not already enough
+combinations, the user may have installed some fonts manually. **Meh.**
+
+.. image:: /img/website_font_comparison.png
+   :alt: Comparison of the different font stacks
+
+The image shows the old font stack (left) and the new font stack on an Ubuntu
+OS with Firefox and Chrome.
+
+Dan Klammer did an amazing job with his compilation of
+`modern font stacks <https://modernfontstacks.com/>`_ and it was easy enough to
+substitute the originally selected fonts with good looking, system-based
+alternatives.
