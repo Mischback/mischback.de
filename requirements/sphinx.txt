@@ -34,11 +34,11 @@ snowballstemmer==2.2.0
     # via sphinx
 sphinx==7.2.6
     # via
-    #   -r requirements/sphinx.in
+    #   -r sphinx.in
     #   sphinx-notfound-page
     #   sphinxcontrib-serializinghtml
-sphinx-notfound-page==1.0.0
-    # via -r requirements/sphinx.in
+sphinx-notfound-page==1.0.2
+    # via -r sphinx.in
 sphinxcontrib-applehelp==1.0.4
     # via sphinx
 sphinxcontrib-devhelp==1.0.2
