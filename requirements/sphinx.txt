@@ -37,7 +37,7 @@ sphinx==7.2.6
     #   -r sphinx.in
     #   sphinx-notfound-page
     #   sphinxcontrib-serializinghtml
-sphinx-notfound-page==1.0.2
+sphinx-notfound-page==1.0.4
     # via -r sphinx.in
 sphinxcontrib-applehelp==1.0.4
     # via sphinx
